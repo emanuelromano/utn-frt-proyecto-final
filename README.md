@@ -1,8 +1,5 @@
 ## UTN - FRT
 
-Comisión 23511 <br>
-Grupo 2
-
 ## Integrantes:
 
 Nombre: Romano, Marcos Emanuel<br>

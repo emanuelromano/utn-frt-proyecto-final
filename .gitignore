@@ -9,4 +9,5 @@
 /img/img-productos-backup
 
 # misc
+.vscode/
 VS Code.bat*
