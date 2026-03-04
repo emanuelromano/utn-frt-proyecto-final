@@ -4,7 +4,7 @@
 
 Nombre: Romano, Marcos Emanuel<br>
 DNI: 36534279 <br>
-Legajo: 55066
+Legajo: 55066 <br>
 E-mail: eromanox@gmail.com <br>
 
 ## Información sobre el proyecto:
