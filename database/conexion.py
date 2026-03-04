@@ -113,8 +113,8 @@ class Conexion:
 # Datos conexión ----------------------------------------------------------------------------------
 
 host = 'localhost'
-usuario = 'server'
-passw = '1234'
+usuario = 'root'
+passw = 'root'
 baseDatos = 'pasteleria'
 
 # host = 'emanuel.mysql.pythonanywhere-services.com'
@@ -130,8 +130,8 @@ def inicio():
     # return render_template("inicio.html") - Se puede crear un archivo HTML para mostrar en una ruta determinada usando este método
     return "<h1>Servidor</h1> \
             <p> \
-            Codo a Codo 2023 <br> \
-            Trabajo Práctico Obligatorio <br> \
+            UTN-FRT <br> \
+            Trabajo Final <br> \
             'La Pastelería' <br> \
             </p>"
 
