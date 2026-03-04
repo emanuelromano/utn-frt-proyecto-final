@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>Pastelería · Completar Compra</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <!-- Scripts y JSON -->
+    <script src="./javascript/compra.js"></script>
+    <script src="./json/productos.json"></script>
+    <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="contenedor">
+        <header class="cabecera">
+            <div class="cabecera-izq">
+                <img src="./img/cake2.svg" alt="Pastel" draggable="false">
+                <h1>La Pastelería</h1>
+            </div>
+
+            <div class="cabecera-der" onclick="menuHamburguesa()">
+                <img src="./img/menu2.svg" alt="Menu" draggable="false">
+            </div>
+        </header>
+
+        <nav class="menu">
+            <ul type="none">
+                <li><a id="menu-item-1" href="./index.html">Inicio</a></li>
+                <li><a id="menu-item-2" href="./productos.html">Productos</a></li>
+                <li><a id="menu-item-3" href="./nosotros.html">Sobre Nosotros</a></li>
+                <li><a id="menu-item-4" href="./contacto.html">Contacto</a></li>
+                <li><a class="boton-carrito-contador-selecc" href="./carro.html">Carro (0)</a></li>
+            </ul>
+        </nav>
+
+        <div class="caja"></div>
+
+        <aside class="aside">
+            <div class="aside-in">
+                <div class="promo-1">
+                    <img src="./img/flor.png" alt="Flor" class="imagen-oferta-1" draggable="false">
+                    <div class="titulo-oferta-1">¡Oferta de Primavera!</div>
+                    <div class="texto-oferta-1"><b>20% DE DESCUENTO</b> ingresando el código <b>PRIMAVERA</b> en
+                        cualquiera de
+                        tus compras</div>
+                </div>
+
+                <div class="promo-2">
+                    <img src="./img/delivery.png" alt="Delivery" class="imagen-oferta-2" draggable="false">
+                    <div class="titulo-oferta-2">¡Promo delivery!</div>
+                    <div class="texto-oferta-2"><b>ENVÍO GRATIS</b> en compras que superen los <b>$15000</b></div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="contenido">
+            <div class="contenido-in">
+                <div class="producto-atras-div">
+                    <h2>Completar Compra:</h2>
+                    <div class="atras-div" onclick="atras()"><i class="fa-solid fa-arrow-left"
+                            style="color: #9d4a07;"></i> Atrás</div>
+                </div>
+
+                <!-- Aquí va el contenido -->
+
+                <div class="info-compra">
+                    <div class="info-a-pagar">
+                        <div class="productos-div">Productos: 0</div>
+                        <div class="total-div">Total productos: $0,00</div>
+                        <div class="envio-div">Envío: $0,00</div>
+                    </div>
+
+                    <div class="info-total-a-pagar">
+                        <div class="total-a-pagar"><b><i class="fa-solid fa-money-bill-wave"
+                                    style="color: #07b032;"></i> Total a pagar:</b></div>
+                        <div class="total-a-pagar-num"><b>$0,00</b></div>
+                    </div>
+                </div>
+
+                <div class="datos-envio">
+                    <div class="datos-envio-checkbox-div">
+                        <div class="datos-texto-div">Datos de envío:</div>
+
+                        <div class="retirar-div">
+                            <input class="checkbox" type="checkbox" id="retirar" onchange="retirarEnLocal()">
+
+                            <label for="retirar" class="texto-retirar">
+                                Deseo retirar el pedido en el local
+                            </label>
+                        </div>
+                    </div>
+
+                    <form target="_self" action="gracias.html" onsubmit="botonPagar()">
+
+                        <!-- Datos de envío -->
+                        <div class="datos-envio-cliente">
+                            <div class="input-compra-out">
+                                <div class="input-compra-in">
+                                    <div class="texto-in"><i class="fa-solid fa-user" style="color: #000000;"></i>
+                                        Nombre/s:</div>
+                                    <input id="nombre" class="input-in" type="text" required maxlength="30">
+                                </div>
+
+                                <div class="input-compra-in">
+                                    <div class="texto-in"><i class="fa-solid fa-user" style="color: #000000;"></i>
+                                        Apellido/s:</div>
+                                    <input id="apellido" class="input-in" type="text" required maxlength="30">
+                                </div>
+                            </div>
+
+                            <div class="input-compra-out">
+                                <div class="input-compra-in">
+                                    <div class="texto-in"><i class="fa-solid fa-book" style="color: #000000;"></i>
+                                        D.N.I.:</div>
+                                    <input id="dni" class="input-in-num"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        type="number" required maxlength="9">
+                                </div>
+
+                                <div class="input-compra-vacio">
+                                </div>
+                            </div>
+
+                            <div class="input-compra-out">
+                                <div class="input-compra-in">
+                                    <div class="texto-in"><i class="fa-solid fa-phone" style="color: #000000;"></i>
+                                        Teléfono (sin 0 ni 15):</div>
+                                    <input id="telefono" class="input-in-num"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        type="number" required maxlength="13">
+                                </div>
+
+                                <div class="input-compra-in">
+                                    <div class="texto-in"><i class="fa-solid fa-at" style="color: #000000;"></i> E-mail:
+                                    </div>
+                                    <input id="email" class="input-in" type="email" required maxlength="50">
+                                </div>
+                            </div>
+
+                            <!-- Direccion (ocultable) -->
+                            <div class="datos-envio-info">
+                                <div class="input-compra-out">
+                                    <div class="input-compra-in">
+                                        <div class="texto-in"><i class="fa-solid fa-house" style="color: #000000;"></i>
+                                            Dirección:</div>
+                                        <input id="direccion" class="input-in" type="text" required maxlength="50">
+                                    </div>
+
+                                    <div class="input-compra-in">
+                                        <div class="texto-in"><i class="fa-solid fa-house-user"
+                                                style="color: #000000;"></i> Barrio (opcional):</div>
+                                        <input id="barrio" class="input-in" type="text" maxlength="50">
+                                    </div>
+                                </div>
+
+                                <div class="input-compra-out">
+                                    <div class="input-compra-in">
+                                        <div class="texto-in"><i class="fa-solid fa-city" style="color: #000000;"></i>
+                                            Ciudad:</div>
+                                        <input id="ciudad" class="input-in" type="text" required maxlength="30">
+                                    </div>
+
+                                    <div class="valido-hasta-tarj">
+                                        <div class="valido-hasta-tarj-in">
+                                            <div class="texto-in"><i class="fa-solid fa-envelope-open-text"
+                                                    style="color: #000000;"></i> Cód. postal:</div>
+                                            <input id="codpos" class="input-in-num"
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                type="number" required maxlength="6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <!-- Retiro en local -->
+                        <div class="datos-retiro">
+                            <div class="datos-retiro-in">
+                                <div class="retiro-titulo">
+                                    ¡Retirá gratis tu pedido en nuestro local!
+                                </div>
+
+                                <div class="retiro-horarios-mapa">
+                                    <div class="retiro-horarios">
+                                        <div class="info-retirar">
+                                            Podés retirar antes tu pedido en nuestro local, totalmente sin cargo. En
+                                            cuanto
+                                            esté listo, te notificaremos al teléfono / mail que nos indiques. Para
+                                            retirarlo, deberás traer
+                                            tu D.N.I.
+                                        </div>
+
+                                        <div>
+                                            <br>
+                                            <b><i class="fa-regular fa-clock" style="color: #000000;"></i> Horarios:</b>
+                                            <br>
+                                            Lunes a Viernes: 8:00 a 13:00 / 17:00 a 21:00 <br>
+                                            Sábados: 8:00 a 13:00
+                                        </div>
+
+                                        <div>
+                                            <br>
+                                            <b><i class="fa-solid fa-house" style="color: #000000;"></i> Dirección:</b>
+                                            <br>
+                                            Laprida 101, San Miguel de Tucumán
+                                        </div>
+                                    </div>
+
+                                    <div class="retiro-mapa">
+                                        <iframe
+                                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1904.2377468554464!2d-65.20243765034884!3d-26.83098350346789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1697848568909!5m2!1ses-419!2sar"
+                                            width="100%" height="300"
+                                            style="border: 1px solid #fa9600; border-radius: 8px;" allowfullscreen=""
+                                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Datos de facturación -->
+                        <div class="datos-envio-tarj">
+                            <div class="datos-envio-checkbox-div">
+                                <div class="datos-texto-div">Datos de facturación:</div>
+
+                                <div class="retirar-div">
+                                    <div>
+                                        Medios de pago:
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-compra-out">
+                                <div class="input-compra-in">
+                                    <div class="texto-in"><i class="fa-solid fa-credit-card"
+                                            style="color: #000000;"></i> N° de tarjeta:</div>
+                                    <input id="nrotarj" class="input-in-num"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        type="number" required maxlength="16">
+                                </div>
+
+                                <div class="valido-hasta-tarj">
+                                    <div class="valido-hasta-tarj-in">
+                                        <div class="texto-in"><i class="fa-regular fa-calendar-days"
+                                                style="color: #000000;"></i> Mes venc.:</div>
+                                        <input id="mesvenc" class="input-in-num"
+                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            type="number" required maxlength="2">
+                                    </div>
+
+                                    <div class="valido-hasta-tarj-in">
+                                        <div class="texto-in"><i class="fa-solid fa-calendar"
+                                                style="color: #000000;"></i> Año venc.:</div>
+                                        <input id="añovenc" class="input-in-num"
+                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            type="number" required maxlength="2">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-compra-out">
+                                <div class="input-compra-in">
+                                    <div class="texto-in"><i class="fa-solid fa-user" style="color: #000000;"></i>
+                                        Nombre titular:</div>
+                                    <input id="nombretitular" class="input-in" type="text" required maxlength="60">
+                                </div>
+
+                                <div class="valido-hasta-tarj">
+                                    <div class="valido-hasta-tarj-in">
+                                        <div class="texto-in"><i class="fa-solid fa-book" style="color: #000000;"></i>
+                                            D.N.I. titular:</div>
+                                        <input id="dnititular" class="input-in-num"
+                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            type="number" required maxlength="9">
+                                    </div>
+
+                                    <div class="valido-hasta-tarj-in">
+                                        <div class="texto-in"><i class="fa-solid fa-lock" style="color: #000000;"></i>
+                                            Cód. seg.:</div>
+                                        <input id="codseg" class="input-in-num"
+                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            type="number" required maxlength="3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="boton-pagar-div">
+                            <input type="submit" value="Pagar" class="boton-pagar">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="foot">
+            <hr />
+            <div>Sitio creado por <a href="./nosotros.html">Grupo 2 / Codo a Codo</a> · <a
+                    href="./contacto.html">Contacto</a> · 2023</div>
+        </footer>
+
+    </div>
+</body>
+
+</html>

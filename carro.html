@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>Pastelería · Carro de Compras</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <!-- Scripts y JSON -->
+    <script src="./javascript/carro.js"></script>
+    <script src="./json/productos.json"></script>
+    <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div class="contenedor">
+        <header class="cabecera">
+            <div class="cabecera-izq">
+                <img src="./img/cake2.svg" alt="Pastel" draggable="false">
+                <h1>La Pastelería</h1>
+            </div>
+
+            <div class="cabecera-der" onclick="menuHamburguesa()">
+                <img src="./img/menu2.svg" alt="Menu" draggable="false">
+            </div>
+        </header>
+
+        <nav class="menu">
+            <ul type="none">
+                <li><a id="menu-item-1" href="./index.html">Inicio</a></li>
+                <li><a id="menu-item-2" href="./productos.html">Productos</a></li>
+                <li><a id="menu-item-3" href="./nosotros.html">Sobre Nosotros</a></li>
+                <li><a id="menu-item-4" href="./contacto.html">Contacto</a></li>
+                <li><a class="boton-carrito-contador-selecc" href="./carro.html">Carro (0)</a></li>
+            </ul>
+        </nav>
+
+        <div class="caja"></div>
+
+        <aside class="aside">
+            <div class="aside-in">
+                <div class="promo-1">
+                    <img src="./img/flor.png" alt="Flor" class="imagen-oferta-1" draggable="false">
+                    <div class="titulo-oferta-1">¡Oferta de Primavera!</div>
+                    <div class="texto-oferta-1"><b>20% DE DESCUENTO</b> ingresando el código <b>PRIMAVERA</b> en
+                        cualquiera de
+                        tus compras</div>
+                </div>
+
+                <div class="promo-2">
+                    <img src="./img/delivery.png" alt="Delivery" class="imagen-oferta-2" draggable="false">
+                    <div class="titulo-oferta-2">¡Promo delivery!</div>
+                    <div class="texto-oferta-2"><b>ENVÍO GRATIS</b> en compras que superen los <b>$15000</b></div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="contenido">
+            <div class="contenido-in">
+                <h2>Carro de Compras:</h2>
+                <br>
+
+                <!-- Aquí va el contenido -->
+
+                <div class="items-contenedor">
+
+                    <table class="items-carro"></table>
+
+                    <div class="total-compra">
+                        <div class="total"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> Total:
+                        </div>
+                        <div class="descuento-div"></div>
+                        <div class="total-num">$0,00</div>
+
+                        <div class="cuadro-cupon">
+                            <div class="texto-cupon">Cupón de descuento:</div>
+                            <div class="cupon-in">
+                                <input class="input-cupon" type="text" style="text-transform:uppercase"
+                                    oninput="this.value = this.value.toUpperCase()"> <button class="boton-cupon"
+                                    onclick="verificarCupon()">✓</button>
+                            </div>
+                            <div class="info-cupon-div"></div>
+                            <div class="info-cupon-aplicado-div"></div>
+                        </div>
+
+                        <button class="comprar" onclick="efectuarCompra()">Comprar</button>
+                        <div class="alerta-compra"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="foot">
+            <hr />
+            <div>Sitio creado por <a href="./nosotros.html">Grupo 2 / Codo a Codo</a> · <a
+                    href="./contacto.html">Contacto</a> · 2023</div>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>Pastelería · ¡Gracias por tu compra!</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <!-- Scripts y JSON -->
+    <script src="./javascript/gracias.js"></script>
+    <script src="./javascript/html2canvas.js"></script>
+    <script src="./javascript/jspdf.min.js"></script>
+    <script src="./json/productos.json"></script>
+    <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="contenedor">
+        <header class="cabecera">
+            <div class="cabecera-izq">
+                <img src="./img/cake2.svg" alt="Pastel" draggable="false">
+                <h1>La Pastelería</h1>
+            </div>
+
+            <div class="cabecera-der" onclick="menuHamburguesa()">
+                <img src="./img/menu2.svg" alt="Menu" draggable="false">
+            </div>
+        </header>
+
+        <nav class="menu">
+            <ul type="none">
+                <li><a id="menu-item-1" href="./index.html">Inicio</a></li>
+                <li><a id="menu-item-2" href="./productos.html">Productos</a></li>
+                <li><a id="menu-item-3" href="./nosotros.html">Sobre Nosotros</a></li>
+                <li><a id="menu-item-4" href="./contacto.html">Contacto</a></li>
+                <li><a class="boton-carrito-contador-selecc" href="./carro.html">Carro (0)</a></li>
+            </ul>
+        </nav>
+
+        <div class="caja"></div>
+
+        <aside class="aside">
+            <div class="aside-in">
+                <div class="promo-1">
+                    <img src="./img/flor.png" alt="Flor" class="imagen-oferta-1" draggable="false">
+                    <div class="titulo-oferta-1">¡Oferta de Primavera!</div>
+                    <div class="texto-oferta-1"><b>20% DE DESCUENTO</b> ingresando el código <b>PRIMAVERA</b> en
+                        cualquiera de
+                        tus compras</div>
+                </div>
+
+                <div class="promo-2">
+                    <img src="./img/delivery.png" alt="Delivery" class="imagen-oferta-2" draggable="false">
+                    <div class="titulo-oferta-2">¡Promo delivery!</div>
+                    <div class="texto-oferta-2"><b>ENVÍO GRATIS</b> en compras que superen los <b>$15000</b></div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="contenido">
+            <div class="contenido-in">
+                <h2 class="gracias-nombre">¡Gracias por tu compra!</h2>
+
+                <!-- Aquí va el contenido -->
+
+                <div class="resumen">
+                    <div class="resumen-in">
+                        <div class="exito-div">
+                            <div class="tilde">✓</div>
+                            <div class="pedido-text">Tu pedido fue recibido.</div>
+                            <div class="texto-gracias">Aquí podés visualizar y guardar el ticket de tu compra. Recordá que tu pedido estará disponible a partir de los <b>cuatro días hábiles</b> desde que lo encargaste.<br><br>
+                                Por cualquier consulta, no dudes en contactarnos o dirigirte a nuestro local.</div>
+                            <div class="gracias-div"><i class="fa-solid fa-heart" style="color: #000000;"></i> <b>¡Gracias por elegirnos!</b></div>
+                        </div>
+
+                        <div class="info-compra-div">
+                            <div id="ticket-imprimir" class="info-compra-imp">
+                                <div class="logo-titulo-pasteleria">
+                                    <img class="logo-pasteleria" src="./img/pasteleria.png" alt="Pastelería logo" draggable="false">
+                                    <div class="titulo-pasteleria">La Pastelería</div>
+                                </div>
+
+                                <div class="pedido-info-datos">
+                                    <div id="nroPedido">Nro. de pedido: </div>
+                                    <div id="fechaCompra">Fecha: </div>
+                                    <div id="fechaEntrega">Fecha entrega (aprox.): </div>
+                                    <div id="productos">Productos: </div>
+                                    <div id="totalProductos">Total productos: </div>
+                                    <div id="envio">Envío: </div>
+                                    <div id="totalAPagar"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> Total a pagar: </div>
+                                </div>
+
+                                <div class="pedido-info-datos">
+                                    <div><b>Datos:</b></div>
+                                    <div id="nombre">Nombre: </div>
+                                    <div id="apellido">Apellido: </div>
+                                    <div id="dni">D.N.I.: </div>
+                                    <div id="telefono">Teléfono: </div>
+                                    <div id="email">E-mail: </div>
+                                </div>
+
+                                <div id="pedido-info-datos-x" class="pedido-info-datos-x">
+                                    <div><b>Enviar a:</b></div>
+                                    <div id="direccion">Dirección: </div>
+                                    <div id="barrio">Barrio: </div>
+                                    <div id="ciudad">Ciudad: </div>
+                                    <div id="codpos">Código postal: </div>
+                                </div>
+
+                                <div id="pedido-info-datos-y" class="pedido-info-datos-y">
+                                    Elegiste retirar tu pedido en nuestro local. En cuanto
+                                    esté listo, te notificaremos al teléfono / mail que nos indicaste. Para
+                                    retirarlo, deberás traer tu D.N.I.
+                                    <br><br>
+                                    <b>Horarios:</b>
+                                    Lunes a Viernes: 8:00 a 13:00 / 17:00 a 21:00 <br>
+                                    Sábados: 8:00 a 13:00
+
+                                    <br><br>
+                                    <b>Dirección:</b> <br>
+                                    Laprida 101, San Miguel de Tucumán
+                                </div>
+                            </div>
+
+                            <button class="boton-imprimir" onclick="guardarTicket()">Guardar ticket</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="foot">
+            <hr />
+            <div>Sitio creado por <a href="./nosotros.html">Grupo 2 / Codo a Codo</a> · <a
+                    href="./contacto.html">Contacto</a> · 2023</div>
+        </footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>Pastelería · Sobre Nosotros</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <!-- Scripts y JSON -->
+    <script src="./javascript/nosotros.js"></script>
+    <script src="./json/productos.json"></script>
+
+</head>
+
+<body>
+    <div class="contenedor">
+        <header class="cabecera">
+            <div class="cabecera-izq">
+                <img src="./img/cake2.svg" alt="Pastel" draggable="false">
+                <h1>La Pastelería</h1>
+            </div>
+
+            <div class="cabecera-der" onclick="menuHamburguesa()">
+                <img src="./img/menu2.svg" alt="Menu" draggable="false">
+            </div>
+        </header>
+
+        <nav class="menu">
+            <ul type="none">
+                <li><a id="menu-item-1" href="./index.html">Inicio</a></li>
+                <li><a id="menu-item-2" href="./productos.html">Productos</a></li>
+                <li><a href="./nosotros.html" class="selecc">Sobre Nosotros</a></li>
+                <li><a id="menu-item-3" href="./contacto.html">Contacto</a></li>
+                <li><a id="menu-item-4" class="boton-carrito-contador" href="./carro.html">Carro (0)</a></li>
+            </ul>
+        </nav>
+
+        <div class="caja"></div>
+
+        <aside class="aside">
+            <div class="aside-in">
+                <div class="promo-1">
+                    <img src="./img/flor.png" alt="Flor" class="imagen-oferta-1" draggable="false">
+                    <div class="titulo-oferta-1">¡Oferta de Primavera!</div>
+                    <div class="texto-oferta-1"><b>20% DE DESCUENTO</b> ingresando el código <b>PRIMAVERA</b> en
+                        cualquiera de
+                        tus compras</div>
+                </div>
+
+                <div class="promo-2">
+                    <img src="./img/delivery.png" alt="Delivery" class="imagen-oferta-2" draggable="false">
+                    <div class="titulo-oferta-2">¡Promo delivery!</div>
+                    <div class="texto-oferta-2"><b>ENVÍO GRATIS</b> en compras que superen los <b>$15000</b></div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="contenido">
+            <div class="contenido-in">
+                <h2>Sobre Nosotros:</h2>
+
+                <div class="img-pasteleros-div">
+                    <img class="pasteleros" src="./img/pasteleros.png" title="Pasteleros" alt="Pasteleros decorando." draggable="false">
+                </div>
+
+                <div>
+                    <p class="parrafo"><b style="color: #fa9600; font-weight: bolder; font-size: 20px;">La
+                            Pastelería</b> es un negocio familiar que lleva más de <b>20 años</b> ofreciendo productos
+                        de calidad y sabor a
+                        nuestros
+                        clientes. Nuestra <b>pasión por la repostería</b> nos ha llevado a elaborar todo de forma
+                        artesanal,
+                        utilizando
+                        <b>ingredientes naturales</b> y <b>recetas tradicionales</b>.
+                    </p>
+
+                    <p class="parrafo">En nuestra pastelería podrás encontrar una gran variedad de <b>pasteles,
+                            galletas, tartas, bollería</b>
+                        y
+                        otros
+                        productos deliciosos que harán las delicias de tu paladar. Además, nos adaptamos a las
+                        necesidades y
+                        gustos de nuestros clientes, ofreciendo opciones <b>sin gluten, sin lactosa, veganas y
+                            personalizadas</b>.
+                        Nuestro objetivo es satisfacer a nuestros clientes con un servicio cercano, profesional y de
+                        confianza.
+                    </p>
+
+                    <p class="parrafo">Te invitamos a visitar nuestra pastelería y a probar nuestros productos. Estamos
+                        seguros de que
+                        te
+                        encantarán y querrás repetir.</p>
+
+                    <div class="esperamos-div">¡Te esperamos!</div>
+
+                    <div class="info-proyecto">
+                        <div class="img-proyecto">
+                            <img class="img-cac" src="./img/codoacodo.png" alt="Logo Codo a Codo" draggable="false">
+                        </div>
+
+                        <div class="texto-cac">
+                            <h2>Info Proyecto:</h2> <br>
+
+                            <b>Proyecto final</b> <br>
+                            Tecnicatura Universitaria en Programación <br>
+                            UTN - FRT <br><br>
+
+                            <b>Programado por:</b> <br>
+                            Romano, Marcos Emanuel <br>
+                            DNI: 36534279 <br>
+                            Legajo: 55066 <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="foot">
+            <hr />
+            <div>Sitio creado por <a href="./nosotros.html">Grupo 2 / Codo a Codo</a> · <a
+                    href="./contacto.html">Contacto</a> · 2023</div>
+        </footer>
+
+    </div>
+</body>
+
+</html>
