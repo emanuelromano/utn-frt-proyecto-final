@@ -62,12 +62,12 @@ function menuHamburguesa() {
         document.getElementById("menu-item-1").style.display = "none"
         document.getElementById("menu-item-2").style.display = "none"
         document.getElementById("menu-item-3").style.display = "none"
-        document.getElementById("menu-item-4").style.display = "none"
+        //document.getElementById("menu-item-4").style.display = "none"
     } else if (menuItemDisplay === "none") {
         document.getElementById("menu-item-1").style.display = "flex"
         document.getElementById("menu-item-2").style.display = "flex"
         document.getElementById("menu-item-3").style.display = "flex"
-        document.getElementById("menu-item-4").style.display = "flex"
+        //document.getElementById("menu-item-4").style.display = "flex"
     }
 }
 

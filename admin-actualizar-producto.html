@@ -4,72 +4,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
-    <title>Pastelería · Agregar Producto</title>
+    <title>Pastelería · Actualizar Producto</title>
+
     <link rel="stylesheet" href="./style/style.css">
     <link rel="icon" type="image/x-icon" href="/img/favicon.png">
-    <!-- Scripts y JSON -->
+
+    <!-- Scripts -->
     <script src="./javascript/admin-actualizar-producto.js"></script>
     <script src="./javascript/previsu.js"></script>
     <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
+
 </head>
 
-<body id="bdyform1">
+<body>
 
-    <header class="cabecera">
+    <div class="contenedor">
 
-        <div class="cabecera-izq">
-            <img src="./img/cake2.svg" alt="Pastel" draggable="false">
-            <h1>La Pastelería</h1>
+        <header class="cabecera">
+
+            <div class="cabecera-izq">
+                <img src="./img/cake2.svg" alt="Pastel" draggable="false">
+                <h1>La Pastelería</h1>
+            </div>
+
+            <div class="cabecera-der" onclick="menuHamburguesa()">
+                <img src="./img/menu2.svg" alt="Menu" draggable="false">
+            </div>
+
+        </header>
+
+
+        <nav class="menu">
+
+            <ul type="none">
+                <li><a id="menu-item-1" href="./admin-inicio.html">Inicio</a></li>
+                <li><a id="menu-item-2" href="./admin-productos.html">Productos</a></li>
+                <li> <a id="menu-item-3" href="./admin-agregar-producto.html">Agregar Producto</a></li>
+                <li><a href="./admin-actualizar-producto.html" class="selecc">Actualizar Producto</a></li>
+            </ul>
+
+        </nav>
+
+
+        <div class="caja"></div>
+
+
+        <aside class="aside">
+            <div class="aside-in"></div>
+        </aside>
+
+
+        <div class="contenido">
+
+            <form class="contenido-in2">
+
+                <h2>Actualizar producto:</h2>
+
+                <!-- BUSCAR PRODUCTO -->
+
+                <div class="buscar-producto">
+
+                    <label for="bottbuscar">ID del producto:</label>
+
+                    <div class="buscar-fila">
+
+                        <input type="number" id="bottbuscar" name="idproducto" autofocus>
+
+                        <button type="button" id="btn-buscar" onclick="buscarProducto()">
+                            Buscar
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Nombre -->
+
+                <label for="nombre">Nombre del producto:</label>
+                <input type="text" id="nombre" name="nombre">
+
+
+                <!-- Descripción -->
+
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4"></textarea>
+
+
+                <!-- Porciones -->
+
+                <label for="porciones">Cantidad de porciones:</label>
+                <input type="number" id="porciones" name="porciones">
+
+
+                <!-- Precio -->
+
+                <label for="precio">Precio del producto:</label>
+                <input type="number" id="precio" name="precio">
+
+
+                <!-- Imagen -->
+
+                <div class="grupo-imagen">
+
+                    <label for="urlImagen">Ingrese la URL de imágen:</label>
+
+                    <input type="text" id="urlImagen" name="urlImagen">
+
+                    <button type="button" id="btn-preview" onclick="mostrarPrevisualizacion()">
+                        Mostrar imagen
+                    </button>
+
+                    <div id="previsualizacion"></div>
+
+                </div>
+
+
+                <!-- BOTON ACTUALIZAR -->
+
+                <button type="button" id="btn-agregar-producto" onclick="actualizarProducto()">
+                    Actualizar producto
+                </button>
+
+
+            </form>
 
         </div>
 
-    </header>
 
-    <nav class="menu">
-        <ul type="none">
-            <li><a href="./admin-inicio.html">Inicio</a></li>
-            <li><a id="menu-item-1" href="./admin-productos.html">Productos</a></li>
-            <li><a id="menu-item-2" href="./admin-agregar-producto.html">Agregar Productos</a></li>
-            <li><a id="menu-item-3" href="./admin-actualizar-producto.html" class="selecc">Actualizar Producto</a></li>
-            <!-- <li><a id="menu-item-4" class="boton-carrito-contador" href="./carro.html">Carro (0)</a></li> -->
-        </ul>
-    </nav>
+        <footer class="foot">
 
-    <div id="cnt1">
-        <form id="f1" onsubmit="event.preventDefault();">
+            <hr>
 
             <div>
-                <label for="nombre">ID del producto:</label> <br>
-                <input type="text" id="bottbuscar" name="nombre" autofocus>
-                <button id="btb" onclick="buscarProducto()">Buscar</button>
+                Sitio creado por
+                <a href="./nosotros.html">Emanuel Romano</a> ·
+                <a href="./contacto.html">Contacto</a> · 2026
             </div>
 
-            <label for="nombre">Nombre del producto:</label>
-            <input type="text" id="nombre" name="nombre">
+        </footer>
 
-            <label for="mensaje">Descripcion:</label>
-            <textarea id="descripcion" name="mensaje" rows="4"></textarea>
 
-            <label for="Cantidad">Cantidad de porciones:</label>
-            <input type="number" id="porciones">
-
-            <label for="Precio">Precio del producto:</label>
-            <input type="number" id="precio">
-
-            <form id="miFormulario">
-                <label for="urlImagen">Ingrese la URL de imágen:</label>
-
-                <input type="text" id="urlImagen" name="urlImagen">
-
-                <button id="bts" type="button" onclick="mostrarPrevisualizacion()">Mostrar imagen</button>
-
-                <div id="previsualizacion"></div>
-            </form>
-
-            <button type="button" id="bts1" onclick="actualizarProducto()">Cargar producto</button>
-        </form>
     </div>
-</body>
 
+</body>
 
 </html>
