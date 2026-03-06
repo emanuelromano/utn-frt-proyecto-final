@@ -33,6 +33,7 @@ function mostrarProductos() {
                     </td>
 
                     <td class="cantidad-mas-menos-item">
+                        <button class="actualizar-item" onclick="abrirProducto(${data[i].id})"><i class="fa fa-pencil-square-o" style="color: #ffffff;"></i> Actualizar</button>
                         <button class="eliminar-item" onclick="mostrarBotones(${data[i].id})"><i class="fa-solid fa-trash" style="color: #ffffff;"></i> Eliminar</button>
 
                         <button class="sumar-item" id="eliminar-si-${data[i].id}" onclick="eliminarProducto(${data[i].id})"><i class="fa-solid fa-check" style="color: #ffffff;"></i></i></button>
@@ -49,8 +50,8 @@ function mostrarProductos() {
 
 // Abre la vista de un producto seleccionado
 function abrirProducto(id) {
-    localStorage.setItem("productoSeleccionado", id - 1)
-    window.open('producto.html', '_self')
+    localStorage.setItem("actualizarProductoSeleccionado", id)
+    window.open('admin-actualizar-producto.html', '_self')
 }
 
 

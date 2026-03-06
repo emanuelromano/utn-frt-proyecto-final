@@ -768,6 +768,22 @@ h2 {
     cursor: pointer;
 }
 
+.actualizar-item {
+    color: rgb(255, 255, 255);
+    background-color: #70abf7;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.actualizar-item:hover {
+    color: white;
+    background-color: #003cff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.300);
+    cursor: pointer;
+}
+
 .eliminar-item {
     color: rgb(255, 255, 255);
     background-color: #ff7979;

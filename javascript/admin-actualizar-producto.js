@@ -90,6 +90,23 @@ function buscarProducto() {
 
 window.addEventListener('load', function () {
 
+    let idGuardado = localStorage.getItem("actualizarProductoSeleccionado")
+
+    if (idGuardado !== null) {
+
+        // convertir a número y volver a sumar 1 porque antes guardaste id-1
+        let idProducto = parseInt(idGuardado)
+
+        // poner la ID en el input
+        document.getElementById('bottbuscar').value = idProducto
+
+        // ejecutar la búsqueda automáticamente
+        buscarProducto()
+
+        // eliminar la variable del localStorage
+        localStorage.removeItem("actualizarProductoSeleccionado")
+    }
+
 })
 
 
