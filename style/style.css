@@ -2381,6 +2381,7 @@ background:#e48700;
     gap:15px;
     font-weight:500;
     align-items:center;
+    cursor: pointer;
 }
 
 .admin-filtro-productos label{
@@ -2388,6 +2389,7 @@ background:#e48700;
     align-items:center;
     gap:8px;
     width:auto;
+    cursor: pointer;
 }
 
 .admin-filtro-productos input{
@@ -2406,6 +2408,7 @@ background:#e48700;
         flex-direction:column;
         gap:8px;
         align-items:flex-start;
+        cursor: pointer;
     }
 }
 
