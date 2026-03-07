@@ -19,6 +19,10 @@ body {
     background-color: #ffdba4;
 }
 
+body.admin-body{
+    background-color:#f3f3f3;
+}
+
 * {
     box-sizing: border-box;
     transition: 0.2s;
@@ -652,7 +656,6 @@ h2 {
 
 .titulo-precio-item {
     margin-left: 15px;
-    width: 150px;
     cursor: pointer;
 }
 
@@ -2067,7 +2070,7 @@ input {
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
-    font-size:16px;
+    font-size:18px;
 }
 
 #btn-agregar-producto:hover {
@@ -2076,7 +2079,7 @@ input {
 
 #bdylog {
     font-family: Arial, sans-serif;
-    background-color: #ffdba4;
+    background-color: #f3f3f3;
     margin: 0;
     display: flex;
     align-items: center;
@@ -2161,6 +2164,8 @@ label {
     max-width: 100%;
     max-height: 200px;
     margin-top: 10px;
+    border-radius:8px;
+    border:2px solid #fa9600;
 }
 
 #bottbuscar {
@@ -2180,7 +2185,7 @@ label {
 }
 
 
-/* ADMIN */
+/* ADMIN --------------------------------------------------------------------------------------- */
 .contenido-in2{
     display:flex;
     flex-direction:column;
@@ -2247,4 +2252,167 @@ cursor:pointer;
 
 #btn-buscar:hover{
 background:#e48700;
+}
+
+.admin-productos-botones {
+    width: 110px;
+
+    margin-left: auto;
+    margin-right: 0;
+
+    padding-right: 5px;
+
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.admin-actualizar-item {
+    color: rgb(255, 255, 255);
+    background-color: #70abf7;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.admin-actualizar-item:hover {
+    color: white;
+    background-color: #003cff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.300);
+    cursor: pointer;
+}
+
+.admin-eliminar-item {
+    color: rgb(255, 255, 255);
+    background-color: #ff7979;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.admin-eliminar-item:hover {
+    color: white;
+    background-color: #ff0000;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.300);
+    cursor: pointer;
+}
+
+.admin-publicar-item {
+    color: rgb(255, 255, 255);
+    background-color: #57c793;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.admin-publicar-item:hover {
+    color: white;
+    background-color: #069e57;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.300);
+    cursor: pointer;
+}
+
+.admin-actualizar-item,
+.admin-eliminar-item,
+.admin-publicar-item{
+    width:100%;
+}
+
+.admin-sumar-item {
+    color: black;
+    background-color: #70abf7;
+    border: none;
+    font-weight: bolder;
+    height: 25px;
+    width: 25px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.admin-sumar-item:hover {
+    color: white;
+    background-color: #003cff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.300);
+    cursor: pointer;
+}
+
+.admin-restar-item {
+    color: black;
+    background-color: #70abf7;
+    border: none;
+    font-weight: bolder;
+    height: 25px;
+    width: 25px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.admin-restar-item:hover {
+    color: white;
+    background-color: #003cff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.300);
+    cursor: pointer;
+}
+
+.admin-sumar-item,
+.admin-restar-item{
+    width:48%;
+}
+
+.admin-confirmacion{
+    display:flex;
+    gap:6px;
+}
+
+.admin-confirmacion button{
+    flex:1;
+}
+
+.admin-productos-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.admin-filtro-productos{
+    display:flex;
+    gap:15px;
+    font-weight:500;
+    align-items:center;
+}
+
+.admin-filtro-productos label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    width:auto;
+}
+
+.admin-filtro-productos input{
+    margin-right:5px;
+    cursor:pointer;
+}
+
+@media (max-width:600px){
+
+    .admin-productos-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .admin-filtro-productos{
+        flex-direction:column;
+        gap:8px;
+        align-items:flex-start;
+    }
+}
+
+.contenido-in2 input,
+.contenido-in2 textarea{
+    font-size:18px;
+    padding:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
 }

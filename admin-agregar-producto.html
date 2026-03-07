@@ -11,11 +11,11 @@
 
     <!-- Scripts -->
     <script src="./javascript/admin-agregar-producto.js"></script>
-    <script src="./javascript/previsu.js"></script>
+    <script src="./javascript/previsualizar.js"></script>
     <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="admin-body">
 
 <div class="contenedor">
 
@@ -94,7 +94,9 @@
                     Mostrar imagen
                 </button>
 
-                <div id="previsualizacion"></div>
+                <div id="previsualizacion">
+                    <img src="img/placeholder.jpg" alt="Previsualización" draggable="false">
+                </div>
 
             </div>
 
@@ -102,7 +104,7 @@
             <!-- Botón -->
 
             <button type="button" id="btn-agregar-producto" onclick="agregarProducto()">
-                Cargar producto
+                Agregar producto
             </button>
 
 

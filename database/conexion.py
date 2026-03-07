@@ -56,13 +56,19 @@ class Conexion:
         
         return False
 
-    # Ver todos los productos ---------------------------------------------------------------------
+    # Ver todos los productos activos -------------------------------------------------------------
     def ver_productos(self):
-        self.cursor.execute("SELECT * FROM productos")
+        self.cursor.execute("SELECT * FROM productos WHERE activo = 1")
+        productos = self.cursor.fetchall()
+        return productos
+    
+    # Ver todos los productos inactivos -----------------------------------------------------------
+    def ver_productos_inactivos(self):
+        self.cursor.execute("SELECT * FROM productos WHERE activo = 0")
         productos = self.cursor.fetchall()
         return productos
 
-    # Ver todos los cupones ---------------------------------------------------------------------
+    # Ver todos los cupones -----------------------------------------------------------------------
     def ver_cupones(self):
         self.cursor.execute("SELECT * FROM cupones")
         productos = self.cursor.fetchall()
@@ -79,25 +85,32 @@ class Conexion:
         return False
 
     # Agregar productos ---------------------------------------------------------------------------
-    def agregar_producto(self, nombre, url, imagen, descripcion, porciones, precio, enCarro, cantidadCompra):
+    def agregar_producto(self, nombre, url, imagen, descripcion, porciones, precio, activo):
         # self.cursor.execute(f"SELECT * FROM productos WHERE id = {id}")
         # producto = self.cursor.fetchone()
 
         # if producto:
         #     return False
         
-        sql = f"INSERT INTO productos (nombre, url, imagen, descripcion, porciones, precio, enCarro, cantidadCompra)\
-                VALUES ('{nombre}', '{url}', '{imagen}', '{descripcion}', {porciones}, {precio}, {enCarro}, {cantidadCompra});"        
+        sql = f"INSERT INTO productos (nombre, url, imagen, descripcion, porciones, precio, activo)\
+                VALUES ('{nombre}', '{url}', '{imagen}', '{descripcion}', {porciones}, {precio}, {activo});"        
         self.cursor.execute(sql)
         self.conn.commit()
         return True
 
     # Modificar un producto -----------------------------------------------------------------------
-    def modificar_producto(self, id, nombre, url, imagen, descripcion, porciones, precio, enCarro, cantidadCompra):
-        sql = f"UPDATE productos SET nombre = '{nombre}', url = '{url}', imagen = '{imagen}', descripcion = '{descripcion}', porciones = {porciones}, precio = {precio}, enCarro = {enCarro}, cantidadCompra = {cantidadCompra} WHERE id = {id};"        
+    def modificar_producto(self, id, nombre, url, imagen, descripcion, porciones, precio, activo):
+        sql = f"UPDATE productos SET nombre = '{nombre}', url = '{url}', imagen = '{imagen}', descripcion = '{descripcion}', porciones = {porciones}, precio = {precio}, activo = {activo} WHERE id = {id};"        
         self.cursor.execute(sql)
         self.conn.commit()
         return True
+    
+    # Activar o desactivar un producto ------------------------------------------------------------
+    def estado_producto(self, id, activo):
+        sql = f"UPDATE productos SET activo = {activo} WHERE id = {id};"        
+        self.cursor.execute(sql)
+        self.conn.commit()
+        return self.cursor.rowcount > 0 #Si se modificó una línea, rowcount() será mayor que 0 y devolverá True. Si no se modificó nada por algun error, rowcount() no será mayor a 0 y devolverá False
     
     # Eliminar un producto ------------------------------------------------------------------------
     def eliminar_producto(self, id):
@@ -105,6 +118,8 @@ class Conexion:
         self.cursor.execute(sql)
         self.conn.commit()
         return self.cursor.rowcount > 0 #Si se borró una línea, rowcount() será mayor que 0 y devolverá True. Si no se borró nada por algun error, rowcount() no será mayor a 0 y devolverá False
+    
+    # NOTA: En el futuro eliminar f-strings para evitar SQL injection!!!
     
 # -------------------------------------------------------------------------------------------------
 # Cuerpo del programa -----------------------------------------------------------------------------
@@ -138,7 +153,10 @@ def inicio():
 # Ruta chequear usuario -------------------------------------------------------------------------
 @app.route("/usuario/<string:email>/<string:passw>")
 def consultar_email_passw(email, passw):
+    
+    # Consultar usuario
     usuario = db.consultar_email_passw(email, passw)
+
     if usuario:
         return jsonify({"acceso": 1})
     else:
@@ -147,19 +165,37 @@ def consultar_email_passw(email, passw):
 # Ruta mostrar cupones --------------------------------------------------------------------------
 @app.route("/cupones", methods=["GET"])
 def ver_cupones():
+
+    # Mostrar cupones
     cupones = db.ver_cupones()
+
     return jsonify(cupones)
 
 # Ruta mostrar productos --------------------------------------------------------------------------
 @app.route("/productos", methods=["GET"])
 def ver_productos():
+
+    # Mostrar productos
     productos = db.ver_productos()
+
+    return jsonify(productos)
+
+# Ruta mostrar productos inactivos ----------------------------------------------------------------
+@app.route("/productos/inactivos", methods=["GET"])
+def ver_productos_inactivos():
+
+    # Mostrar productos
+    productos = db.ver_productos_inactivos()
+
     return jsonify(productos)
 
 # Ruta mostrar un producto por ID -----------------------------------------------------------------
 @app.route("/productos/<int:id>")
 def consultar_producto(id):
+
+    # Mostrar producto
     producto = db.consultar_producto(id)
+
     if producto:
         return jsonify(producto)
     else:
@@ -179,8 +215,7 @@ def agregar_producto():
     descripcion = request.form['descripcion']
     porciones = request.form['porciones']
     precio = request.form['precio']
-    enCarro = request.form['enCarro']
-    cantidadCompra = request.form['cantidadCompra']
+    activo = request.form['activo']
 
     # imagen = request.files['imagen']
     # nombre_imagen = secure_filename(imagen.filename)
@@ -191,11 +226,13 @@ def agregar_producto():
     # nombre_imagen = f"{nombre_base}_{int(time.time())}{extension}"
     # imagen.save(os.path.join(ruta_destino, nombre_imagen))
 
-    # Agregando producto
-    if db.agregar_producto(nombre, url, imagen, descripcion, porciones, precio, enCarro, cantidadCompra):
-        return jsonify({"mensaje": "Producto agregado"})
+    # Agregar producto
+    agregar = db.agregar_producto(nombre, url, imagen, descripcion, porciones, precio, activo)
+
+    if agregar:
+        return jsonify({"mensaje": "Producto agregado correctamente"})
     else:
-        return jsonify({"mensaje": "Error agregando producto"})
+        return jsonify({"mensaje": "Error al intentar agregar el producto"})
 
 # Ruta actualizar producto ------------------------------------------------------------------------
 @app.route("/productos/<int:id>", methods=["PUT"])
@@ -203,31 +240,50 @@ def modificar_producto(id):
 
     # Datos del producto
     data = request.form
-    id = data.get("id")
+    #id = data.get("id")
     nuevo_nombre = data.get("nombre")
     nueva_url = data.get("url")
     nueva_imagen = data.get("imagen")
     nueva_descripcion = data.get("descripcion")
     nuevo_porciones = data.get("porciones")
     nuevo_precio = data.get("precio")
-    enCarro = data.get("enCarro")
-    cantidadCompra = data.get("cantidadCompra")
+    activo = data.get("activo")
 
     # Actualización del producto
-    if db.modificar_producto(id, nuevo_nombre, nueva_url, nueva_imagen, nueva_descripcion, nuevo_porciones, nuevo_precio, enCarro, cantidadCompra):
-        return jsonify({"mensaje": "Producto modificado"})
+    actualizar = db.modificar_producto(id, nuevo_nombre, nueva_url, nueva_imagen, nueva_descripcion, nuevo_porciones, nuevo_precio, activo)
+
+    if actualizar:
+        return jsonify({"mensaje": "Producto modificado correctamente"})
     else:
-        return jsonify({"mensaje": "Producto no encontrado"})
+        return jsonify({"mensaje": "Error al intentar actualizar el producto"})
+    
+# Ruta activar o desactivar producto --------------------------------------------------------------
+@app.route("/productos/<int:id>/activo", methods=["PUT"])
+def estado_producto(id):
+
+    # Datos del producto
+    data = request.form
+    activo = data.get("activo")
+
+    # Activar o desactivar producto
+    activar = db.estado_producto(id, activo)
+
+    if activar:
+        return jsonify({"mensaje": "Disponibilidad del producto modificada correctamente"})
+    else:
+        return jsonify({"mensaje": "Error al intentar modificar disponibilidad del producto"})
 
 # Ruta eliminar producto --------------------------------------------------------------------------
 @app.route("/productos/<int:id>", methods=["DELETE"])
 def eliminar_producto(id):
-    # Primero, obtén la información del producto para encontrar la imagen
+
+    #Eliminar producto
     eliminar = db.eliminar_producto(id)
+
     if eliminar:
-        return jsonify({"mensaje": "Producto eliminado"})
+        return jsonify({"mensaje": "Producto eliminado correctamente"})
     else:
-        return jsonify({"mensaje": "Error al eliminar el producto"})
+        return jsonify({"mensaje": "Error al intentar eliminar el producto"})
     
 # -------------------------------------------------------------------------------------------------
 # Iniciar servidor --------------------------------------------------------------------------------

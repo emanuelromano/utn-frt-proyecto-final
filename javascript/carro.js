@@ -37,7 +37,11 @@ function cargarItemsCarro() {
             itemLista[0].innerHTML +=
                 `<tr class="item-carro">
                     <td onclick="volverAProducto(${itemsCarro[i].id})">
-                        <img class="imagen-item" src=${itemsCarro[i].imagen} draggable="false">
+                        <img class="imagen-item"
+                        src="img/placeholder.jpg"
+                        data-src="${itemsCarro[i].imagen}"
+                        draggable="false"
+                        onerror="this.src='img/placeholder.jpg'">
                     </td>
                     
                     <td class="titulo-precio-item" onclick="volverAProducto(${itemsCarro[i].id})">
@@ -58,6 +62,14 @@ function cargarItemsCarro() {
             let subtotal = document.getElementById(`sub${itemsCarro[i].id}`)
             subtotal.innerText = `Subtotal: $${resultado.toLocaleString()}`
         }
+
+        let imgs = document.querySelectorAll(".imagen-item")
+
+        imgs.forEach(img => {
+            setTimeout(() => {
+                img.src = img.dataset.src
+            }, 50)
+        })
     } else {
         let carroDeCompras = []
         localStorage.setItem("carroDeCompras", JSON.stringify(carroDeCompras))

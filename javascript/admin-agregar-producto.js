@@ -21,8 +21,7 @@ function agregarProducto() {
     formData.append('descripcion', document.getElementById('descripcion').value.trim())
     formData.append('porciones', document.getElementById('porciones').value.trim())
     formData.append('precio', document.getElementById('precio').value.trim())
-    formData.append('enCarro', false)
-    formData.append('cantidadCompra', 0)
+    formData.append('activo', true)
 
     fetch(api, {
         method: 'POST',

@@ -23,7 +23,12 @@ function mostrarProducto() {
 
             producto[0].innerHTML =
                 `<div class="producto">
-                    <img class="imagen-producto" src=${data[id].imagen} draggable="false">
+                   <img class="imagen-producto"
+                    src="img/placeholder.jpg"
+                    data-src="${data[id].imagen}"
+                    draggable="false"
+                    onload="this.dataset.loaded='true'"
+                    onerror="this.src='img/placeholder.jpg'">
 
                     <div class="info-producto">
                         <h3 class="titulo-producto">${data[id].nombre}</h3>
@@ -35,7 +40,14 @@ function mostrarProducto() {
                         <p class="atencion-producto"><i class="fa-solid fa-circle-info" style="color: #000000;"></i> <b>Importante:</b> Una vez efectuado el pedido, el mismo estará disponible a partir de los próximos <b>cuatro días hábiles</b> como mínimo. Se le notificará por teléfono / mail el estado de su pedido.</p>
                     </div>
                 </div>`
-        });
+
+            let img = document.querySelector(".imagen-producto")
+
+            setTimeout(() => {
+                img.src = img.dataset.src
+            }, 50)
+        }
+    );
 }
 
 

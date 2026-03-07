@@ -9,9 +9,9 @@ if (apiOnline == true) {
 }
 
 
-// Carga dos productos aleatorios en la página de inicio
 let carroDeCompras = []
 
+// Carga dos productos aleatorios en la página de inicio
 function cargarItemsInicio() {
     fetch(api)
         .then((res) => {
@@ -22,11 +22,11 @@ function cargarItemsInicio() {
                 return Math.floor(Math.random() * max);
             }
 
-            let num1 = obtenerAleatorio(9) // Salida: 0 a 8
-            let num2 = obtenerAleatorio(9)
+            let num1 = obtenerAleatorio(data.length)
+            let num2 = obtenerAleatorio(data.length)
 
             while (num2 == num1) {
-                num2 = obtenerAleatorio(8)
+                num2 = obtenerAleatorio(data.length-1)
             }
 
             let tarjeta1 = document.getElementsByClassName("tarjeta1")
@@ -34,18 +34,37 @@ function cargarItemsInicio() {
 
             tarjeta1[0].innerHTML =
                 `<div onclick="abrirProducto(${data[num1].id})">
-                    <img class="imagen-tarjeta" src=${data[num1].imagen} draggable="false">
+                    <img class="imagen-tarjeta"
+                    src="img/placeholder.jpg"
+                    data-src="${data[num1].imagen}"
+                    draggable="false"
+                    onerror="this.src='img/placeholder.jpg'">
+
                     <h3 class="titulo-tarjeta">${data[num1].nombre}</h3>
                     <h4 class="precio-tarjeta"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[num1].precio},00</h4>
                 </div>`
 
             tarjeta2[0].innerHTML =
                 `<div onclick="abrirProducto(${data[num2].id})">
-                    <img class="imagen-tarjeta" src=${data[num2].imagen} draggable="false">
+                    <img class="imagen-tarjeta"
+                    src="img/placeholder.jpg"
+                    data-src="${data[num2].imagen}"
+                    draggable="false"
+                    onerror="this.src='img/placeholder.jpg'">
+
                     <h3 class="titulo-tarjeta">${data[num2].nombre}</h3>
                     <h4 class="precio-tarjeta"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[num2].precio},00</h4>
                 </div>`
-        });
+            
+            let imgs = document.querySelectorAll(".imagen-tarjeta")
+
+            imgs.forEach(img => {
+                setTimeout(() => {
+                    img.src = img.dataset.src
+                }, 50)
+            })
+        }
+    );
 }
 
 

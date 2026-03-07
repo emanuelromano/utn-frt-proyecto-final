@@ -9,7 +9,7 @@ if (apiOnline == true) {
 }
 
 
-// Carga la lista completa de productos desde el JSON
+// Carga la lista completa de productos desde la DB
 function mostrarProductos() {
     fetch(api)
         .then((res) => {
@@ -23,12 +23,26 @@ function mostrarProductos() {
             for (let i = 0; i < longitud; i++) {
                 tarjetas[0].innerHTML +=
                     `<div class="tarjeta-producto" onclick="abrirProducto(${i+1})">
-                        <img class="imagen-tarjeta" src=${data[i].imagen} draggable="false">
+                        <img class="imagen-tarjeta"
+                            src="img/placeholder.jpg"
+                            data-src="${data[i].imagen}"
+                            draggable="false"
+                            onerror="this.src='img/placeholder.jpg'">
+
                         <h3 class="titulo-tarjeta"> ${data[i].nombre}</h3>
                         <h4 class="precio-tarjeta"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[i].precio},00</h4>
                     </div>`
             }
-        });
+
+            let imgs = document.querySelectorAll(".imagen-tarjeta")
+
+            imgs.forEach(img => {
+                setTimeout(() => {
+                    img.src = img.dataset.src
+                }, 50)
+            })
+        }
+    );
 }
 
 
