@@ -12,6 +12,39 @@ if (apiOnline == true) {
 }
 
 
+// Chequea si hay una sesion de admin activa
+function verificarSesionAdmin(){
+
+    let login = localStorage.getItem("adminLogueado")
+
+    if(login !== "true"){
+        window.open("iniciar-sesion.html", "_self")
+    }
+}
+
+
+// Mostrar nombre y apellido de usuario
+function mostrarUsuarioAdmin(){
+    let nombre = localStorage.getItem("adminNombre")
+    let apellido = localStorage.getItem("adminApellido")
+
+    if(nombre){
+        document.getElementById("admin-nombre").innerText =
+            nombre + " " + apellido
+    }
+}
+
+
+// Cerrar sesion eliminando la variable del localStorage
+function cerrarSesion(){
+    localStorage.removeItem("adminLogueado")
+    localStorage.removeItem("adminNombre")
+    localStorage.removeItem("adminApellido")
+
+    window.open("iniciar-sesion.html","_self")
+}
+
+
 // Carga la lista completa de productos desde DB
 function mostrarProductos() {
     fetch(api)
@@ -169,8 +202,11 @@ function menuHamburguesa() {
 
 // Funciones a ejecutarse al cargar completamente la página
 window.addEventListener('load', function () {
+    verificarSesionAdmin()
+    mostrarUsuarioAdmin()
     mostrarProductos()
 })
+
 
 // Mostrar u ocultar botones
 let botones = false
@@ -260,7 +296,7 @@ function cambiarVistaProductos(){
 
 
 // Ocultar elementos del Nav Bar en modo para moviles con Event Listener
-function tamañoPantalla() {
+/*function tamañoPantalla() {
     let tamaño = document.documentElement.clientWidth
 
     if (tamaño > 800) {
@@ -276,4 +312,4 @@ function tamañoPantalla() {
     }
 }
 
-window.addEventListener('resize', tamañoPantalla)
+window.addEventListener('resize', tamañoPantalla)*/

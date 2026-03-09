@@ -17,25 +17,41 @@ function iniciarSesion() {
     if (usuario == "" || pass == "") {
         let alerta = document.getElementsByClassName("alerta-inicio-sesion")
         alerta[0].innerHTML = `<div class="alerta-compra-info">
-        <i class="fa-solid fa-circle-info" style="color: #000000;"></i> Debe ingresar un usuario y contraseña válidos.
-        </div> <br>`
+            <i class="fa-solid fa-circle-info" style="color: #000000;"></i> Debe ingresar un usuario y contraseña válidos.
+            </div> <br>`
     } else {
-        fetch(api + `/${usuario}/${pass}`)
+        let formData = new FormData()
+
+        formData.append("email", usuario)
+        formData.append("passw", pass)
+
+        fetch(api + "/login", {
+            method: "POST",
+            body: formData
+        })
             .then((res) => {
                 return res.json();
             })
             .then((data) => {
-                console.log(data.acceso)
+
+                console.log(data)
 
                 if (data.acceso == 1) {
+                    // Se guarda variable en localStorage para indicar que una sesión de admin correcta se ha iniciado, junto con nombre y apellido
+                    localStorage.setItem("adminLogueado", "true")
+                    localStorage.setItem("adminNombre", data.nombre)
+                    localStorage.setItem("adminApellido", data.apellido)
+
                     window.open('admin-productos.html', '_self')
-                } else {
+                }
+                else {
                     let alerta = document.getElementsByClassName("alerta-inicio-sesion")
                     alerta[0].innerHTML = `<div class="alerta-compra-info">
-                    <i class="fa-solid fa-circle-info" style="color: #000000;"></i> Usuario o contraseña incorrectos.
-                    </div> <br>`
+                        <i class="fa-solid fa-circle-info"></i> Usuario o contraseña incorrectos.
+                        </div> <br>`
                 }
-            });
+
+            })
     }
 }
 

@@ -58,6 +58,7 @@ h1 {
     height: 70px;
     z-index: 99998;
     box-sizing: content-box;
+    align-items:center;
 
     display: flex;
     border-radius: 0px;
@@ -1994,8 +1995,10 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 20px;
+
     font-family: mooli;
+    margin-left:auto;
+    margin-right:15px;
 }
 
 #btn1 {
@@ -2418,4 +2421,67 @@ background:#e48700;
     padding:10px;
     border-radius:6px;
     border:1px solid #ccc;
+}
+
+.admin-usuario{
+    margin-left:auto;
+    margin-right:15px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+
+    font-size:14px;
+}
+
+.admin-linea{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+}
+
+.admin-icon{
+    color:#fa9600;
+    font-size:13px;
+}
+
+.admin-logout{
+    color:#fa9600;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.admin-logout:hover{
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+@media (max-width:700px){
+
+    .admin-usuario{
+        flex-direction:column;
+        align-items:flex-end;
+        gap:2px;
+        font-size:13px;
+    }
+
+    .admin-logout{
+        font-size:12px;
+    }
+
+}
+
+.admin-linea span{
+    white-space:nowrap;
+}
+
+@media (max-width:600px){
+
+    #admin-nombre{
+        flex-basis:100%;
+        text-align:right;
+    }
+
 }

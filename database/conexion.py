@@ -46,15 +46,26 @@ class Conexion:
         
         return jsonify({"existe": 0})
     
-    # Consultar Contraseña ------------------------------------------------------------------------
+    # Consultar Usuario y Contraseña --------------------------------------------------------------
+    # def consultar_email_passw(self, email, passw):
+    #     self.cursor.execute(f"SELECT * FROM usuarios WHERE email = '{email}' AND passw = '{passw}'")
+    #     usuario = self.cursor.fetchone()
+
+    #     if usuario:
+    #         return True
+        
+    #     return False
+
+    # Consultar email y contraseña ---------------------------------------------------------------
     def consultar_email_passw(self, email, passw):
-        self.cursor.execute(f"SELECT * FROM usuarios WHERE email = '{email}' AND passw = '{passw}'")
+        self.cursor.execute(f"SELECT nombre, apellido FROM usuarios WHERE email = '{email}' AND passw = '{passw}'")
+
         usuario = self.cursor.fetchone()
 
         if usuario:
-            return True
-        
-        return False
+            return usuario
+        else:
+            return None
 
     # Ver todos los productos activos -------------------------------------------------------------
     def ver_productos(self):
@@ -151,16 +162,38 @@ def inicio():
             </p>"
 
 # Ruta chequear usuario -------------------------------------------------------------------------
-@app.route("/usuario/<string:email>/<string:passw>")
-def consultar_email_passw(email, passw):
+# @app.route("/usuario/<string:email>/<string:passw>")
+# def consultar_email_passw(email, passw):
     
-    # Consultar usuario
+#     # Consultar usuario
+#     usuario = db.consultar_email_passw(email, passw)
+
+#     if usuario:
+#         return jsonify({"acceso": 1})
+#     else:
+#         return jsonify({"acceso": 0})
+
+@app.route("/usuario/login", methods=["POST"])
+def login():
+
+    email = request.form['email']
+    passw = request.form['passw']
+
     usuario = db.consultar_email_passw(email, passw)
 
+    # if usuario:
+    #     return jsonify({"acceso":1})
+    # else:
+    #     return jsonify({"acceso":0})
+    
     if usuario:
-        return jsonify({"acceso": 1})
+        return jsonify({
+            "acceso":1,
+            "nombre": usuario["nombre"],
+            "apellido": usuario["apellido"]
+        })
     else:
-        return jsonify({"acceso": 0})
+        return jsonify({"acceso":0})
 
 # Ruta mostrar cupones --------------------------------------------------------------------------
 @app.route("/cupones", methods=["GET"])
@@ -292,4 +325,4 @@ def eliminar_producto(id):
 print("\033[H\033[j") # Borrado de consola
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) # debug=True muestra en consola las peticiones HTTP que llegan

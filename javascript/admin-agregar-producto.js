@@ -9,6 +9,38 @@ if (apiOnline == true) {
 }
 
 
+// Chequea si hay una sesion de admin activa
+function verificarSesionAdmin(){
+    let login = localStorage.getItem("adminLogueado")
+
+    if(login !== "true"){
+        window.open("iniciar-sesion.html", "_self")
+    }
+}
+
+
+// Mostrar nombre y apellido de usuario
+function mostrarUsuarioAdmin(){
+    let nombre = localStorage.getItem("adminNombre")
+    let apellido = localStorage.getItem("adminApellido")
+
+    if(nombre){
+        document.getElementById("admin-nombre").innerText =
+            nombre + " " + apellido
+    }
+}
+
+
+// Cerrar sesion eliminando la variable del localStorage
+function cerrarSesion(){
+    localStorage.removeItem("adminLogueado")
+    localStorage.removeItem("adminNombre")
+    localStorage.removeItem("adminApellido")
+
+    window.open("iniciar-sesion.html","_self")
+}
+
+
 // Agregar producto a la base de datos
 function agregarProducto() {
     var formData = new FormData();
@@ -45,8 +77,11 @@ function agregarProducto() {
         });
 }
 
-window.addEventListener('load', function () {
 
+// Funciones a ejecutarse al cargar completamente la página
+window.addEventListener('load', function () {
+    verificarSesionAdmin()
+    mostrarUsuarioAdmin()
 })
 
 

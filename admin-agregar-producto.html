@@ -17,115 +17,128 @@
 
 <body class="admin-body">
 
-<div class="contenedor">
+    <div class="contenedor">
 
-    <header class="cabecera">
+        <header class="cabecera">
 
-        <div class="cabecera-izq">
-            <img src="./img/cake2.svg" alt="Pastel" draggable="false">
-            <h1>La Pastelería</h1>
-        </div>
-
-        <div class="cabecera-der" onclick="menuHamburguesa()">
-            <img src="./img/menu2.svg" alt="Menu" draggable="false">
-        </div>
-
-    </header>
-
-
-    <nav class="menu">
-
-        <ul type="none">
-            <li><a id="menu-item-1" href="./admin-inicio.html">Inicio</a></li>
-            <li><a id="menu-item-2" href="./admin-productos.html">Productos</a></li>
-            <li><a href="./admin-agregar-producto.html" class="selecc">Agregar Producto</a></li>
-            <li> <a id="menu-item-3" href="./admin-actualizar-producto.html">Actualizar Producto</a></li>
-        </ul>
-
-    </nav>
-
-
-    <div class="caja"></div>
-
-
-    <aside class="aside">
-        <div class="aside-in"></div>
-    </aside>
-
-
-    <div class="contenido">
-
-        <form class="contenido-in2">
-            <h2>Agregar producto:</h2>
-
-            <!-- Nombre -->
-
-            <label for="nombre">Nombre del producto:</label>
-            <input type="text" id="nombre" name="nombre">
-
-
-            <!-- Descripción -->
-
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
-
-
-            <!-- Porciones -->
-
-            <label for="porciones">Cantidad de porciones:</label>
-            <input type="number" id="porciones" name="porciones">
-
-
-            <!-- Precio -->
-
-            <label for="precio">Precio del producto:</label>
-            <input type="number" id="precio" name="precio">
-
-
-            <!-- Imagen -->
-
-            <div class="grupo-imagen">
-
-                <label for="urlImagen">Ingrese la URL de imágen:</label>
-
-                <input type="text" id="urlImagen" name="urlImagen">
-
-                <button type="button" id="btn-preview" onclick="mostrarPrevisualizacion()">
-                    Mostrar imagen
-                </button>
-
-                <div id="previsualizacion">
-                    <img src="img/placeholder.jpg" alt="Previsualización" draggable="false">
-                </div>
-
+            <div class="cabecera-izq">
+                <img src="./img/cake2.svg" alt="Pastel" draggable="false">
+                <h1>La Pastelería</h1>
             </div>
 
+            <div class="admin-usuario">
+                <div class="admin-linea">
+                    <i class="fa-solid fa-user admin-icon"></i>
+                    <span class="admin-label">Administrador:</span>
+                    <span id="admin-nombre"></span>
+                </div>
 
-            <!-- Botón -->
+                <a href="#" class="admin-logout" onclick="cerrarSesion()">
+                    Cerrar sesión
+                </a>
+            </div>
 
-            <button type="button" id="btn-agregar-producto" onclick="agregarProducto()">
-                Agregar producto
-            </button>
+            <div class="cabecera-der" onclick="menuHamburguesa()">
+                <img src="./img/menu2.svg" alt="Menu" draggable="false">
+            </div>
+
+        </header>
 
 
-        </form>
+        <nav class="menu">
+
+            <ul type="none">
+                <li><a id="menu-item-1" href="./admin-inicio.html">Inicio</a></li>
+                <li><a id="menu-item-2" href="./admin-productos.html">Productos</a></li>
+                <li><a href="./admin-agregar-producto.html" class="selecc">Agregar Producto</a></li>
+                <li> <a id="menu-item-3" href="./admin-actualizar-producto.html">Actualizar Producto</a></li>
+            </ul>
+
+        </nav>
+
+
+        <div class="caja"></div>
+
+
+        <aside class="aside">
+            <div class="aside-in"></div>
+        </aside>
+
+
+        <div class="contenido">
+
+            <form class="contenido-in2">
+                <h2>Agregar producto:</h2>
+
+                <!-- Nombre -->
+
+                <label for="nombre">Nombre del producto:</label>
+                <input type="text" id="nombre" name="nombre">
+
+
+                <!-- Descripción -->
+
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+
+
+                <!-- Porciones -->
+
+                <label for="porciones">Cantidad de porciones:</label>
+                <input type="number" id="porciones" name="porciones">
+
+
+                <!-- Precio -->
+
+                <label for="precio">Precio del producto:</label>
+                <input type="number" id="precio" name="precio">
+
+
+                <!-- Imagen -->
+
+                <div class="grupo-imagen">
+
+                    <label for="urlImagen">Ingrese la URL de imágen:</label>
+
+                    <input type="text" id="urlImagen" name="urlImagen">
+
+                    <button type="button" id="btn-preview" onclick="mostrarPrevisualizacion()">
+                        Mostrar imagen
+                    </button>
+
+                    <div id="previsualizacion">
+                        <img src="img/placeholder.jpg" alt="Previsualización" draggable="false">
+                    </div>
+
+                </div>
+
+
+                <!-- Botón -->
+
+                <button type="button" id="btn-agregar-producto" onclick="agregarProducto()">
+                    Agregar producto
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+        <footer class="foot">
+
+            <hr>
+
+            <div>
+                Sitio creado por
+                <a href="./nosotros.html">Emanuel Romano</a> ·
+                <a href="./contacto.html">Contacto</a> · 2026
+            </div>
+
+        </footer>
 
     </div>
 
-
-    <footer class="foot">
-
-        <hr>
-
-        <div>
-            Sitio creado por
-            <a href="./nosotros.html">Emanuel Romano</a> ·
-            <a href="./contacto.html">Contacto</a> · 2026
-        </div>
-
-    </footer>
-
-</div>
-
 </body>
+
 </html>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./style/style.css">
     <link rel="icon" type="image/x-icon" href="/img/favicon.png">
     <!-- Scripts y JSON -->
-    <script src="./javascript/index.js"></script>
+    <script src="./javascript/admin-index.js"></script>
     <script src="./json/productos.json"></script>
     <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
 </head>
@@ -20,6 +20,18 @@
                 <img src="./img/cake2.svg" alt="Pastel" draggable="false">
                 <h1>La Pastelería</h1>
 
+            </div>
+
+            <div class="admin-usuario">
+                <div class="admin-linea">
+                    <i class="fa-solid fa-user admin-icon"></i>
+                    <span class="admin-label">Administrador:</span>
+                    <span id="admin-nombre"></span>
+                </div>
+
+                <a href="#" class="admin-logout" onclick="cerrarSesion()">
+                    Cerrar sesión
+                </a>
             </div>
 
             <div class="cabecera-der" onclick="menuHamburguesa()">

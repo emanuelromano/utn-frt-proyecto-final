@@ -9,6 +9,38 @@ if (apiOnline == true) {
 }
 
 
+// Chequea si hay una sesion de admin activa
+function verificarSesionAdmin(){
+    let login = localStorage.getItem("adminLogueado")
+
+    if(login !== "true"){
+        window.open("iniciar-sesion.html", "_self")
+    }
+}
+
+
+// Mostrar nombre y apellido de usuario
+function mostrarUsuarioAdmin(){
+    let nombre = localStorage.getItem("adminNombre")
+    let apellido = localStorage.getItem("adminApellido")
+
+    if(nombre){
+        document.getElementById("admin-nombre").innerText =
+            nombre + " " + apellido
+    }
+}
+
+
+// Cerrar sesion eliminando la variable del localStorage
+function cerrarSesion(){
+    localStorage.removeItem("adminLogueado")
+    localStorage.removeItem("adminNombre")
+    localStorage.removeItem("adminApellido")
+
+    window.open("iniciar-sesion.html","_self")
+}
+
+
 // Actualizar productos en la base de datos
 function actualizarProducto() {
     var formData = new FormData();
@@ -112,7 +144,11 @@ function buscarProducto() {
     }
 }
 
+
+// Funciones a ejecutarse al cargar completamente la página
 window.addEventListener('load', function () {
+    verificarSesionAdmin()
+    mostrarUsuarioAdmin()
 
     let idGuardado = localStorage.getItem("actualizarProductoSeleccionado")
 
@@ -130,7 +166,6 @@ window.addEventListener('load', function () {
         // eliminar la variable del localStorage
         localStorage.removeItem("actualizarProductoSeleccionado")
     }
-
 })
 
 
@@ -142,11 +177,11 @@ function menuHamburguesa() {
         document.getElementById("menu-item-1").style.display = "none"
         document.getElementById("menu-item-2").style.display = "none"
         document.getElementById("menu-item-3").style.display = "none"
-        document.getElementById("menu-item-4").style.display = "none"
+        //document.getElementById("menu-item-4").style.display = "none"
     } else if (menuItemDisplay === "none") {
         document.getElementById("menu-item-1").style.display = "flex"
         document.getElementById("menu-item-2").style.display = "flex"
         document.getElementById("menu-item-3").style.display = "flex"
-        document.getElementById("menu-item-4").style.display = "flex"
+        //document.getElementById("menu-item-4").style.display = "flex"
     }
 }

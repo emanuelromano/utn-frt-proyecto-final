@@ -383,7 +383,7 @@ window.addEventListener('load', function () {
 
 
 // Ocultar elementos del Nav Bar en modo para moviles con Event Listener
-function tamañoPantalla() {
+/*function tamañoPantalla() {
     let tamaño = document.documentElement.clientWidth
 
     if (tamaño > 800) {
@@ -399,4 +399,4 @@ function tamañoPantalla() {
     }
 }
 
-window.addEventListener('resize', tamañoPantalla)
+window.addEventListener('resize', tamañoPantalla)*/
