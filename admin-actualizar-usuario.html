@@ -69,7 +69,11 @@
         <div class="contenido">
             <form class="contenido-in2">
 
-                <h2>Actualizar usuario:</h2>
+                <div class="producto-atras-div">
+                    <h2>Actualizar usuario:</h2>
+                    <a class="atras-div" href="./admin-usuarios.html"><i class="fa-solid fa-arrow-left"
+                            style="color: #9d4a07;"></i> Volver</a>
+                </div>
 
                 <label>ID usuario:</label>
 
@@ -77,7 +81,7 @@
 
                     <input type="number" id="bottbuscar">
 
-                    <button type="button" onclick="buscarUsuario()">Buscar</button>
+                    <button type="button" id="btn-buscar" onclick="buscarUsuario()">Buscar</button>
 
                 </div>
 
@@ -93,12 +97,12 @@
                 <label>Contraseña:</label>
                 <input type="password" id="passw">
 
-                <label>
-                    <input type="checkbox" id="admin">
-                    Administrador
-                </label>
+                <div class="admin-checkbox">
+                    <input type="checkbox" id="administrador">
+                    <label for="administrador">Usuario administrador</label>
+                </div>
 
-                <button type="button" onclick="actualizarUsuario()">
+                <button type="button" id="btn-agregar-producto" onclick="actualizarUsuario()">
                     Actualizar usuario
                 </button>
 

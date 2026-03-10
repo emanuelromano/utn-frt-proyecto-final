@@ -199,6 +199,22 @@ function mostrarBotones(id) {
 }
 
 
+// Mostrar cupones activos (publicados) o inactivos (ocultos) en la tienda
+function cambiarVistaCupones() {
+    let opcion = document.querySelector('input[name="estadoCupones"]:checked').value
+
+    let tabla = document.getElementsByClassName('items-cupones-admin')
+    tabla[0].innerHTML = ""
+
+    if (opcion === "activos") {
+        mostrarCupones()
+    }
+    else {
+        mostrarCuponesInactivos()
+    }
+}
+
+
 // Activar o desactivar producto
 function cambiarEstadoCupon(id, estado) {
 
@@ -226,21 +242,5 @@ function cambiarEstadoCupon(id, estado) {
         .catch(error => {
             alert(error.message);
         });
-
 }
 
-
-// Mostrar cupones activos (publicados) o inactivos (ocultos) en la tienda
-function cambiarVistaCupones() {
-    let opcion = document.querySelector('input[name="estadoCupones"]:checked').value
-
-    let tabla = document.getElementsByClassName('items-cupones-admin')
-    tabla[0].innerHTML = ""
-
-    if (opcion === "activos") {
-        mostrarCupones()
-    }
-    else {
-        mostrarCuponesInactivos()
-    }
-}

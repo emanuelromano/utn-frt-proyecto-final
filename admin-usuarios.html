@@ -59,16 +59,34 @@
 
         <div class="contenido">
             <div class="contenido-in2">
-
                 <div class="admin-productos-header">
-
                     <h2>Usuarios:</h2>
 
-                    <button class="admin-btn-nuevo" onclick="window.location.href='admin-agregar-usuario.html'">
+                    <div class="admin-productos-controles">
 
-                        <i class="fa-solid fa-circle-plus"></i> Nuevo
+                        <button class="admin-btn-nuevo" onclick="window.location.href='admin-agregar-usuario.html'">
 
-                    </button>
+                            <i class="fa-solid fa-circle-plus"></i> Nuevo
+
+                        </button>
+
+                        <div class="admin-filtro-productos">
+
+                            <label>
+                                <input type="radio" name="estadoUsuarios" value="activos" checked
+                                    onchange="cambiarVistaUsuarios()">
+                                Activos
+                            </label>
+
+                            <label>
+                                <input type="radio" name="estadoUsuarios" value="inactivos"
+                                    onchange="cambiarVistaUsuarios()">
+                                Inactivos
+                            </label>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
