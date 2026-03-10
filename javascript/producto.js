@@ -1,17 +1,6 @@
-// API a utilizar:  TRUE = online / FALSE = local
-let apiOnline = false
-let api = ''
-
-if (apiOnline == true) {
-    api = 'https://emanuel.pythonanywhere.com/productos'
-} else {
-    api = "http://127.0.0.1:5000/productos"
-}
-
-
 // Muestra los detalles del producto seleccionado
 function mostrarProducto() {
-    fetch(api)
+    fetch(api + '/productos')
         .then((res) => {
             return res.json();
         })
@@ -163,7 +152,10 @@ function volver() {
 
 
 // Funciones a ejecutarse al cargar completamente la página
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
+    //await cargarConfiguracionAPI()
+    await apiReady
+
     mostrarProducto()
     cargarCarro()
 })

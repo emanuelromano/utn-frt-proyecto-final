@@ -9,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="/img/favicon.png">
     <!-- Scripts -->
     <script src="./javascript/config.js"></script>
-    <script src="./javascript/admin-actualizar-producto.js"></script>
+    <script src="./javascript/admin-actualizar-cupon.js"></script>
     <script src="./javascript/previsualizar.js"></script>
     <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
 
@@ -49,8 +49,8 @@
 
             <ul type="none">
                 <li><a id="menu-item-1" href="./admin-inicio.html">Inicio</a></li>
-                <li><a href="./admin-productos.html" class="selecc">Productos</a></li>
-                <li><a id="menu-item-2" href="./admin-cupones.html">Cupones</a></li>
+                <li><a id="menu-item-2" href="./admin-productos.html">Productos</a></li>
+                <li><a class="selecc" href="./admin-cupones.html">Cupones</a></li>
                 <li><a id="menu-item-3" href="./admin-usuarios.html">Usuarios</a></li>
                 <!-- <li><a id="menu-item-4" class="boton-carrito-contador" href="./carro.html">Carro (0)</a></li> -->
             </ul>
@@ -71,20 +71,20 @@
             <form class="contenido-in2">
                 <div class="producto-atras-div">
                     <h2>Actualizar producto:</h2>
-                    <a class="atras-div" href="./admin-productos.html"><i class="fa-solid fa-arrow-left" style="color: #9d4a07;"></i> Volver</a>
+                    <a class="atras-div" href="./admin-cupones.html"><i class="fa-solid fa-arrow-left" style="color: #9d4a07;"></i> Volver</a>
                 </div>
 
                 <!-- BUSCAR PRODUCTO -->
 
                 <div class="buscar-producto">
 
-                    <label for="bottbuscar">ID de producto:</label>
+                    <label for="bottbuscar">ID de cupón:</label>
 
                     <div class="buscar-fila">
 
                         <input type="number" id="bottbuscar" name="idproducto" autofocus>
 
-                        <button type="button" id="btn-buscar" onclick="buscarProducto()">
+                        <button type="button" id="btn-buscar" onclick="buscarCupon()">
                             Buscar
                         </button>
 
@@ -95,61 +95,32 @@
 
                 <!-- Nombre -->
 
-                <label for="nombre">Nombre del producto:</label>
-                <input type="text" id="nombre" name="nombre" maxlength="100">
+                <label for="nombre">Nombre del cupón (sin espacios, max. 15 caracteres):</label>
+                <input type="text" id="nombre-cupon" name="nombre" maxlength="15" oninput="formatearCupon(this)" required>
 
 
-                <!-- Descripción -->
+                <!-- Texto -->
 
-                <label for="descripcion">Descripción:</label>
+                <label for="descripcion">Texto descriptivo al aplicar:</label>
                 <textarea id="descripcion" name="descripcion" rows="4" maxlength="255"></textarea>
 
 
-                <!-- Porciones -->
+                <!-- Descuento -->
 
-                <label for="porciones">Cantidad de porciones:</label>
-                <input type="number" id="porciones" name="porciones">
-
-
-                <!-- Precio -->
-
-                <label for="precio">Precio del producto:</label>
-                <input type="number" id="precio" name="precio">
-
-
-                <!-- Imagen -->
-
-                <div class="grupo-imagen">
-
-                    <label for="urlImagen">Ingrese la URL de imágen:</label>
-
-                    <input type="text" id="urlImagen" name="urlImagen" maxlength="255">
-
-                    <button type="button" id="btn-preview" onclick="mostrarPrevisualizacion()">
-                        Mostrar imagen
-                    </button>
-
-                    <div id="previsualizacion">
-                        <img src="img/placeholder.jpg" alt="Previsualización" draggable="false">
-                    </div>
-
-                </div>
-
+                <label for="descuento">Porcentaje de descuento:</label>
+                <input type="number" id="descuento" name="descuento" min="0" max="100" step="1" oninput="soloEnteros(this)">
 
                 <!-- BOTON ACTUALIZAR -->
 
-                <button type="button" id="btn-agregar-producto" onclick="actualizarProducto()">
-                    Actualizar producto
+                <button type="button" id="btn-agregar-producto" onclick="actualizarCupon()">
+                    Actualizar cupón
                 </button>
-
-
             </form>
 
         </div>
 
 
         <footer class="foot">
-
             <hr>
 
             <div>
@@ -159,8 +130,6 @@
             </div>
 
         </footer>
-
-
     </div>
 
 </body>

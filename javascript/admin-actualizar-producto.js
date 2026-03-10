@@ -1,16 +1,5 @@
-// API a utilizar:  TRUE = online / FALSE = local
-let apiOnline = false
-let api = ''
-
-if (apiOnline == true) {
-    api = 'https://emanuel.pythonanywhere.com/productos'
-} else {
-    api = "http://127.0.0.1:5000/productos"
-}
-
-
 // Chequea si hay una sesion de admin activa
-function verificarSesionAdmin(){
+function verificarSesionAdmin() {
     let login = localStorage.getItem("adminLogueado")
 
     if(login !== "true"){
@@ -20,7 +9,7 @@ function verificarSesionAdmin(){
 
 
 // Mostrar nombre y apellido de usuario
-function mostrarUsuarioAdmin(){
+function mostrarUsuarioAdmin() {
     let nombre = localStorage.getItem("adminNombre")
     let apellido = localStorage.getItem("adminApellido")
 
@@ -32,7 +21,7 @@ function mostrarUsuarioAdmin(){
 
 
 // Cerrar sesion eliminando la variable del localStorage
-function cerrarSesion(){
+function cerrarSesion() {
     localStorage.removeItem("adminLogueado")
     localStorage.removeItem("adminNombre")
     localStorage.removeItem("adminApellido")
@@ -54,11 +43,11 @@ function actualizarProducto() {
     formData.append('descripcion', document.getElementById('descripcion').value.trim())
     formData.append('porciones', document.getElementById('porciones').value.trim())
     formData.append('precio', document.getElementById('precio').value.trim())
-    formData.append('activo', true)
+    formData.append('activo', 1)
 
     let id = document.getElementById('bottbuscar').value.trim()
 
-    fetch(api + `/${id}`, {
+    fetch(api + `/productos/${id}`, {
         method: 'PUT',
         body: formData // Aquí enviamos formData en lugar de JSON
     })
@@ -92,7 +81,7 @@ function buscarProducto() {
     } else {
         let id = document.getElementById('bottbuscar').value.trim()
 
-        fetch(api + `/${id}`)
+        fetch(api + `/productos/${id}`)
             .then((res) => {
                 return res.json();
             })
@@ -146,7 +135,10 @@ function buscarProducto() {
 
 
 // Funciones a ejecutarse al cargar completamente la página
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
+    //await cargarConfiguracionAPI()
+    await apiReady
+
     verificarSesionAdmin()
     mostrarUsuarioAdmin()
 

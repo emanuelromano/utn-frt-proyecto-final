@@ -1,19 +1,8 @@
-// API a utilizar:  TRUE = online / FALSE = local
-let apiOnline = false
-let api = ''
-
-if (apiOnline == true) {
-    api = 'https://emanuel.pythonanywhere.com/productos'
-} else {
-    api = "http://127.0.0.1:5000/productos"
-}
-
-
 let carroDeCompras = []
 
 // Carga dos productos aleatorios en la página de inicio
 function cargarItemsInicio() {
-    fetch(api)
+    fetch(api + '/productos')
         .then((res) => {
             return res.json();
         })
@@ -110,7 +99,10 @@ function menuHamburguesa() {
 
 
 // Funciones a ejecutarse al cargar completamente la página
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
+    //await cargarConfiguracionAPI()
+    await apiReady
+
     cargarItemsInicio()
     cargarContadorCarrito()
 })

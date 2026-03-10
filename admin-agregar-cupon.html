@@ -9,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="/img/favicon.png">
     <!-- Scripts -->
     <script src="./javascript/config.js"></script>
-    <script src="./javascript/admin-agregar-producto.js"></script>
+    <script src="./javascript/admin-agregar-cupon.js"></script>
     <script src="./javascript/previsualizar.js"></script>
     <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
 </head>
@@ -72,60 +72,32 @@
 
             <form class="contenido-in2">
                 <div class="producto-atras-div">
-                    <h2>Nuevo producto:</h2>
-                    <a class="atras-div" href="./admin-productos.html"><i class="fa-solid fa-arrow-left" style="color: #9d4a07;"></i> Volver</a>
+                    <h2>Nuevo cupón:</h2>
+                    <a class="atras-div" href="./admin-cupones.html"><i class="fa-solid fa-arrow-left" style="color: #9d4a07;"></i> Volver</a>
                 </div>
 
                 <!-- Nombre -->
 
-                <label for="nombre">Nombre del producto:</label>
-                <input type="text" id="nombre" name="nombre" maxlength="100" required>
+                <label for="nombre">Nombre del cupón (sin espacios, max. 15 caracteres):</label>
+                <input type="text" id="nombre-cupon" name="nombre" maxlength="15" oninput="formatearCupon(this)" required>
 
 
-                <!-- Descripción -->
+                <!-- Texto -->
 
-                <label for="descripcion">Descripción:</label>
+                <label for="descripcion">Texto descriptivo al aplicar:</label>
                 <textarea id="descripcion" name="descripcion" rows="4" maxlength="255"></textarea>
 
 
-                <!-- Porciones -->
+                <!-- Descuento -->
 
-                <label for="porciones">Cantidad de porciones:</label>
-                <input type="number" id="porciones" name="porciones">
-
-
-                <!-- Precio -->
-
-                <label for="precio">Precio del producto:</label>
-                <input type="number" id="precio" name="precio">
-
-
-                <!-- Imagen -->
-
-                <div class="grupo-imagen">
-
-                    <label for="urlImagen">Ingrese la URL de imágen:</label>
-
-                    <input type="text" id="urlImagen" name="urlImagen" maxlength="255">
-
-                    <button type="button" id="btn-preview" onclick="mostrarPrevisualizacion()">
-                        Mostrar imagen
-                    </button>
-
-                    <div id="previsualizacion">
-                        <img src="img/placeholder.jpg" alt="Previsualización" draggable="false">
-                    </div>
-
-                </div>
-
+                <label for="descuento">Porcentaje de descuento:</label>
+                <input type="number" id="descuento" name="descuento" min="0" max="100" step="1" oninput="soloEnteros(this)">
 
                 <!-- Botón -->
 
-                <button type="button" id="btn-agregar-producto" onclick="agregarProducto()">
-                    Guardar producto
+                <button type="button" id="btn-agregar-producto" onclick="agregarCupon()">
+                    Guardar cupón
                 </button>
-
-
             </form>
 
         </div>

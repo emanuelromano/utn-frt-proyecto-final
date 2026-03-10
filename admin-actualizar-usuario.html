@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>Pastelería · Actualizar Producto</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <!-- Scripts -->
+    <script src="./javascript/config.js"></script>
+    <script src="./javascript/admin-actualizar-usuario.js"></script>
+    <script src="./javascript/previsualizar.js"></script>
+    <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body class="admin-body">
+
+    <div class="contenedor">
+
+        <header class="cabecera">
+
+            <div class="cabecera-izq">
+                <img src="./img/cake2.svg" alt="Pastel" draggable="false">
+                <h1>La Pastelería</h1>
+            </div>
+
+            <div class="admin-usuario">
+                <div class="admin-linea">
+                    <i class="fa-solid fa-user admin-icon"></i>
+                    <span class="admin-label">Administrador:</span>
+                    <span id="admin-nombre"></span>
+                </div>
+
+                <a href="#" class="admin-logout" onclick="cerrarSesion()">
+                    Cerrar sesión
+                </a>
+            </div>
+
+            <div class="cabecera-der" onclick="menuHamburguesa()">
+                <img src="./img/menu2.svg" alt="Menu" draggable="false">
+            </div>
+
+        </header>
+
+
+        <nav class="menu">
+
+            <ul type="none">
+                <li><a id="menu-item-1" href="./admin-inicio.html">Inicio</a></li>
+                <li><a id="menu-item-2" href="./admin-productos.html">Productos</a></li>
+                <li><a id="menu-item-3" href="./admin-cupones.html">Cupones</a></li>
+                <li><a class="selecc" href="./admin-usuarios.html">Usuarios</a></li>
+                <!-- <li><a id="menu-item-4" class="boton-carrito-contador" href="./carro.html">Carro (0)</a></li> -->
+            </ul>
+
+        </nav>
+
+
+        <div class="caja"></div>
+
+
+        <aside class="aside">
+            <div class="aside-in"></div>
+        </aside>
+
+
+        <div class="contenido">
+            <form class="contenido-in2">
+
+                <h2>Actualizar usuario:</h2>
+
+                <label>ID usuario:</label>
+
+                <div class="buscar-fila">
+
+                    <input type="number" id="bottbuscar">
+
+                    <button type="button" onclick="buscarUsuario()">Buscar</button>
+
+                </div>
+
+                <label>Nombre:</label>
+                <input type="text" id="nombre">
+
+                <label>Apellido:</label>
+                <input type="text" id="apellido">
+
+                <label>Email:</label>
+                <input type="email" id="email">
+
+                <label>Contraseña:</label>
+                <input type="password" id="passw">
+
+                <label>
+                    <input type="checkbox" id="admin">
+                    Administrador
+                </label>
+
+                <button type="button" onclick="actualizarUsuario()">
+                    Actualizar usuario
+                </button>
+
+            </form>
+        </div>
+
+
+        <footer class="foot">
+
+            <hr>
+
+            <div>
+                Sitio creado por
+                <a href="./nosotros.html">Emanuel Romano</a> ·
+                <a href="./contacto.html">Contacto</a> · 2026
+            </div>
+
+        </footer>
+
+
+    </div>
+
+</body>
+
+</html>

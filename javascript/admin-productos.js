@@ -1,19 +1,5 @@
-// API a utilizar:  TRUE = online / FALSE = local
-let apiOnline = false
-let api = ''
-let apiInactivos = ""
-
-if (apiOnline == true) {
-    api = 'https://emanuel.pythonanywhere.com/productos'
-    apiInactivos = ''
-} else {
-    api = 'http://127.0.0.1:5000/productos'
-    apiInactivos = 'http://127.0.0.1:5000/productos/inactivos'
-}
-
-
 // Chequea si hay una sesion de admin activa
-function verificarSesionAdmin(){
+function verificarSesionAdmin() {
 
     let login = localStorage.getItem("adminLogueado")
 
@@ -24,7 +10,7 @@ function verificarSesionAdmin(){
 
 
 // Mostrar nombre y apellido de usuario
-function mostrarUsuarioAdmin(){
+function mostrarUsuarioAdmin() {
     let nombre = localStorage.getItem("adminNombre")
     let apellido = localStorage.getItem("adminApellido")
 
@@ -36,7 +22,7 @@ function mostrarUsuarioAdmin(){
 
 
 // Cerrar sesion eliminando la variable del localStorage
-function cerrarSesion(){
+function cerrarSesion() {
     localStorage.removeItem("adminLogueado")
     localStorage.removeItem("adminNombre")
     localStorage.removeItem("adminApellido")
@@ -47,7 +33,7 @@ function cerrarSesion(){
 
 // Carga la lista completa de productos desde DB
 function mostrarProductos() {
-    fetch(api)
+    fetch(api + '/productos')
         .then((res) => {
             return res.json();
         })
@@ -70,29 +56,29 @@ function mostrarProductos() {
             for (let i = 0; i < longitud; i++) {
                 items[0].innerHTML +=
                     `<tr class="item-carro">
-                    <td>
-                        <img class="imagen-item"
-                            src="img/placeholder.jpg"
-                            data-src="${data[i].imagen}"
-                            draggable="false"
-                            onerror="this.src='img/placeholder.jpg'">
-                    </td>
-                    
-                    <td class="titulo-precio-item">
-                        <div class="titulo-item">${data[i].nombre}</div>
-                        <div class="precio-item"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[i].precio.toLocaleString()},00  -  ID de producto: ${data[i].id}</div>
-                    </td>
+                        <td>
+                            <img class="imagen-item"
+                                src="img/placeholder.jpg"
+                                data-src="${data[i].imagen}"
+                                draggable="false"
+                                onerror="this.src='img/placeholder.jpg'">
+                        </td>
+                        
+                        <td class="titulo-precio-item">
+                            <div class="titulo-item">${data[i].nombre}</div>
+                            <div class="precio-item"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[i].precio.toLocaleString()},00  -  ID de producto: ${data[i].id}</div>
+                        </td>
 
-                    <td class="admin-productos-botones">
-                        <button class="admin-actualizar-item" onclick="abrirProducto(${data[i].id})"><i class="fa fa-pencil-square-o" style="color: #ffffff;"></i> Actualizar</button>
-                        <button class="admin-eliminar-item" onclick="mostrarBotones(${data[i].id})"><i class="fa fa-eye-slash" aria-hidden="true" style="color: #ffffff;"></i> Ocultar</button>
+                        <td class="admin-productos-botones">
+                            <button class="admin-actualizar-item" onclick="abrirProducto(${data[i].id})"><i class="fa fa-pencil-square-o" style="color: #ffffff;"></i> Actualizar</button>
+                            <button class="admin-eliminar-item" onclick="mostrarBotones(${data[i].id})"><i class="fa fa-eye-slash" aria-hidden="true" style="color: #ffffff;"></i> Ocultar</button>
 
-                        <div class="admin-confirmacion">
-                            <button class="admin-sumar-item" id="eliminar-si-${data[i].id}" onclick="cambiarEstadoProducto(${data[i].id}, 0)"><i class="fa-solid fa-check" style="color: #ffffff;"></i></i></button>
-                            <button class="admin-restar-item" id="eliminar-no-${data[i].id}" onclick="mostrarBotones(${data[i].id})"><i class="fa-solid fa-x" style="color: #ffffff;"></i></i></button>
-                        </div>
-                    </td>
-                </tr>`
+                            <div class="admin-confirmacion">
+                                <button class="admin-sumar-item" id="eliminar-si-${data[i].id}" onclick="cambiarEstadoProducto(${data[i].id}, 0)"><i class="fa-solid fa-check" style="color: #ffffff;"></i></i></button>
+                                <button class="admin-restar-item" id="eliminar-no-${data[i].id}" onclick="mostrarBotones(${data[i].id})"><i class="fa-solid fa-x" style="color: #ffffff;"></i></i></button>
+                            </div>
+                        </td>
+                    </tr>`
 
                 document.getElementById(`eliminar-si-${data[i].id}`).style.display = "none"
                 document.getElementById(`eliminar-no-${data[i].id}`).style.display = "none"
@@ -112,7 +98,7 @@ function mostrarProductos() {
 
 // Mostrar productos inactivos con la posibilidad de activar
 function mostrarProductosInactivos() {
-    fetch(apiInactivos)
+    fetch(api + '/productos/inactivos')
         .then((res) => {
             return res.json();
         })
@@ -135,29 +121,29 @@ function mostrarProductosInactivos() {
             for (let i = 0; i < longitud; i++) {
                 items[0].innerHTML +=
                     `<tr class="item-carro">
-                    <td>
-                        <img class="imagen-item"
-                            src="img/placeholder.jpg"
-                            data-src="${data[i].imagen}"
-                            draggable="false"
-                            onerror="this.src='img/placeholder.jpg'">
-                    </td>
-                    
-                    <td class="titulo-precio-item">
-                        <div class="titulo-item">${data[i].nombre}</div>
-                        <div class="precio-item"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[i].precio.toLocaleString()},00  -  ID de producto: ${data[i].id}</div>
-                    </td>
+                        <td>
+                            <img class="imagen-item"
+                                src="img/placeholder.jpg"
+                                data-src="${data[i].imagen}"
+                                draggable="false"
+                                onerror="this.src='img/placeholder.jpg'">
+                        </td>
+                        
+                        <td class="titulo-precio-item">
+                            <div class="titulo-item">${data[i].nombre}</div>
+                            <div class="precio-item"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[i].precio.toLocaleString()},00  -  ID de producto: ${data[i].id}</div>
+                        </td>
 
-                    <td class="admin-productos-botones">
-                        <button class="admin-actualizar-item" onclick="abrirProducto(${data[i].id})"><i class="fa fa-pencil-square-o" style="color: #ffffff;"></i> Actualizar</button>
-                        <button class="admin-publicar-item" onclick="mostrarBotones(${data[i].id})"><i class="fa fa-eye" aria-hidden="true" style="color: #ffffff;"></i> Publicar</button>
+                        <td class="admin-productos-botones">
+                            <button class="admin-actualizar-item" onclick="abrirProducto(${data[i].id})"><i class="fa fa-pencil-square-o" style="color: #ffffff;"></i> Actualizar</button>
+                            <button class="admin-publicar-item" onclick="mostrarBotones(${data[i].id})"><i class="fa fa-eye" aria-hidden="true" style="color: #ffffff;"></i> Publicar</button>
 
-                        <div class="admin-confirmacion">
-                            <button class="admin-sumar-item" id="eliminar-si-${data[i].id}" onclick="cambiarEstadoProducto(${data[i].id}, 1)"><i class="fa-solid fa-check" style="color: #ffffff;"></i></i></button>
-                            <button class="admin-restar-item" id="eliminar-no-${data[i].id}" onclick="mostrarBotones(${data[i].id})"><i class="fa-solid fa-x" style="color: #ffffff;"></i></i></button>
-                        </div>
-                    </td>
-                </tr>`
+                            <div class="admin-confirmacion">
+                                <button class="admin-sumar-item" id="eliminar-si-${data[i].id}" onclick="cambiarEstadoProducto(${data[i].id}, 1)"><i class="fa-solid fa-check" style="color: #ffffff;"></i></i></button>
+                                <button class="admin-restar-item" id="eliminar-no-${data[i].id}" onclick="mostrarBotones(${data[i].id})"><i class="fa-solid fa-x" style="color: #ffffff;"></i></i></button>
+                            </div>
+                        </td>
+                    </tr>`
 
                 document.getElementById(`eliminar-si-${data[i].id}`).style.display = "none"
                 document.getElementById(`eliminar-no-${data[i].id}`).style.display = "none"
@@ -201,7 +187,10 @@ function menuHamburguesa() {
 
 
 // Funciones a ejecutarse al cargar completamente la página
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
+    //await cargarConfiguracionAPI()
+    await apiReady
+
     verificarSesionAdmin()
     mostrarUsuarioAdmin()
     mostrarProductos()
@@ -253,7 +242,7 @@ function cambiarEstadoProducto(id, estado) {
     let formData = new FormData()
     formData.append("activo", estado)
 
-    fetch(api + `/${id}/activo`, {
+    fetch(api + `/productos/${id}/activo`, {
         method: 'PUT',
         body: formData
     })
@@ -278,8 +267,8 @@ function cambiarEstadoProducto(id, estado) {
 }
 
 
-function cambiarVistaProductos(){
-
+// Mostrar productos activos (publicados) o inactivos (ocultos) en la tienda
+function cambiarVistaProductos() {
     let opcion = document.querySelector('input[name="estadoProductos"]:checked').value
 
     let tabla = document.getElementsByClassName('items-productos-admin')
@@ -291,7 +280,6 @@ function cambiarVistaProductos(){
     else{
         mostrarProductosInactivos()
     }
-
 }
 
 

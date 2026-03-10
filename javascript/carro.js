@@ -204,17 +204,6 @@ function eliminarItem(id, precio) {
 }
 
 
-// API a utilizar:  TRUE = online / FALSE = local
-let apiOnline = false
-let api = ''
-
-if (apiOnline == true) {
-    api = 'https://emanuel.pythonanywhere.com/cupones'
-} else {
-    api = "http://127.0.0.1:5000/cupones"
-}
-
-
 // Verificar validez de cupón
 let banderaCupon = false
 let porcDesc
@@ -225,7 +214,7 @@ function verificarCupon() {
         let cuponTrim = cupon[0].value.trim()
         cupon[0].value = cuponTrim
 
-        fetch(api)
+        fetch(api + '/cupones')
             .then((res) => {
                 return res.json();
             })
@@ -375,7 +364,10 @@ function verProductos() {
 
 
 // Funciones a ejecutarse al cargar completamente la página
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
+    //await cargarConfiguracionAPI()
+    await apiReady
+
     cargarContadorCarro()
     cargarItemsCarro()
     localStorage.setItem("volverA", false)

@@ -9,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="/img/favicon.png">
     <!-- Scripts y JSON -->
     <script src="./javascript/config.js"></script>
-    <script src="./javascript/admin-productos.js"></script>
+    <script src="./javascript/admin-usuarios.js"></script>
     <script src="./json/productos.json"></script>
     <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
 </head>
@@ -42,9 +42,9 @@
         <nav class="menu">
             <ul type="none">
                 <li><a id="menu-item-1" href="./admin-inicio.html">Inicio</a></li>
-                <li><a href="./admin-productos.html" class="selecc">Productos</a></li>
-                <li><a id="menu-item-2" href="./admin-cupones.html">Cupones</a></li>
-                <li><a id="menu-item-3" href="./admin-usuarios.html">Usuarios</a></li>
+                <li><a id="menu-item-2" href="./admin-productos.html">Productos</a></li>
+                <li><a id="menu-item-3" href="./admin-cupones.html">Cupones</a></li>
+                <li><a class="selecc" href="./admin-usuarios.html">Usuarios</a></li>
                 <!-- <li><a id="menu-item-4" class="boton-carrito-contador" href="./carro.html">Carro (0)</a></li> -->
             </ul>
         </nav>
@@ -59,37 +59,21 @@
 
         <div class="contenido">
             <div class="contenido-in2">
+
                 <div class="admin-productos-header">
-                    <h2>Productos:</h2>
 
-                    <div class="admin-productos-controles">
+                    <h2>Usuarios:</h2>
 
-                        <button class="admin-btn-nuevo" onclick="window.location.href='admin-agregar-producto.html'">
-                            <i class="fa-solid fa-circle-plus"></i> Nuevo
-                        </button>
+                    <button class="admin-btn-nuevo" onclick="window.location.href='admin-agregar-usuario.html'">
 
-                        <div class="admin-filtro-productos">
+                        <i class="fa-solid fa-circle-plus"></i> Nuevo
 
-                            <label>
-                                <input type="radio" name="estadoProductos" value="activos" checked
-                                    onchange="cambiarVistaProductos()">
-                                Publicados
-                            </label>
+                    </button>
 
-                            <label>
-                                <input type="radio" name="estadoProductos" value="inactivos"
-                                    onchange="cambiarVistaProductos()">
-                                Ocultos
-                            </label>
-
-                        </div>
-
-                    </div>
                 </div>
 
-                <!-- Aquí va el contenido -->
+                <table class="items-usuarios-admin"></table>
 
-                <table class="items-productos-admin"></table>
             </div>
         </div>
 

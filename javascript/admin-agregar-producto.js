@@ -1,30 +1,19 @@
-// API a utilizar:  TRUE = online / FALSE = local
-let apiOnline = false
-let api = ''
-
-if (apiOnline == true) {
-    api = 'https://emanuel.pythonanywhere.com/productos'
-} else {
-    api = "http://127.0.0.1:5000/productos"
-}
-
-
 // Chequea si hay una sesion de admin activa
-function verificarSesionAdmin(){
+function verificarSesionAdmin() {
     let login = localStorage.getItem("adminLogueado")
 
-    if(login !== "true"){
+    if (login !== "true") {
         window.open("iniciar-sesion.html", "_self")
     }
 }
 
 
 // Mostrar nombre y apellido de usuario
-function mostrarUsuarioAdmin(){
+function mostrarUsuarioAdmin() {
     let nombre = localStorage.getItem("adminNombre")
     let apellido = localStorage.getItem("adminApellido")
 
-    if(nombre){
+    if (nombre) {
         document.getElementById("admin-nombre").innerText =
             nombre + " " + apellido
     }
@@ -32,54 +21,102 @@ function mostrarUsuarioAdmin(){
 
 
 // Cerrar sesion eliminando la variable del localStorage
-function cerrarSesion(){
+function cerrarSesion() {
     localStorage.removeItem("adminLogueado")
     localStorage.removeItem("adminNombre")
     localStorage.removeItem("adminApellido")
 
-    window.open("iniciar-sesion.html","_self")
+    window.open("iniciar-sesion.html", "_self")
 }
 
 
 // Agregar producto a la base de datos
 function agregarProducto() {
-    var formData = new FormData();
+    const boton = document.getElementById("btn-agregar-producto")
 
-    url = document.getElementById('nombre').value.trim().toLowerCase().replace(/ /g, "-")
+    // Evitar doble click
+    if (boton.disabled) return
+    boton.disabled = true
 
-    formData.append('nombre', document.getElementById('nombre').value.trim())
+    let formData = new FormData()
+
+    let nombre = document.getElementById('nombre').value.trim()
+    let imagen = document.getElementById('urlImagen').value.trim()
+    let descripcion = document.getElementById('descripcion').value.trim()
+
+    let porciones = document.getElementById('porciones').value.trim()
+    let precio = document.getElementById('precio').value.trim()
+
+    // Validación básica
+    if (nombre === "") {
+        alert("Debe ingresar un nombre de producto.")
+        boton.disabled = false
+        return
+    }
+
+    // Generar URL limpia
+    let url = nombre
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9 ]/g, "")
+        .replace(/\s+/g, "-")
+
+    // Valores por defecto
+    if (porciones === "") porciones = 0
+    if (precio === "") precio = 0
+
+    // Convertir a número
+    porciones = parseInt(porciones)
+    precio = parseFloat(precio)
+
+    // Evitar negativos
+    porciones = Math.max(0, porciones)
+    precio = Math.max(0, precio)
+
+    formData.append('nombre', nombre)
     formData.append('url', url)
-    formData.append('imagen', document.getElementById('urlImagen').value.trim())
-    formData.append('descripcion', document.getElementById('descripcion').value.trim())
-    formData.append('porciones', document.getElementById('porciones').value.trim())
-    formData.append('precio', document.getElementById('precio').value.trim())
-    formData.append('activo', true)
+    formData.append('imagen', imagen)
+    formData.append('descripcion', descripcion)
+    formData.append('porciones', porciones)
+    formData.append('precio', precio)
+    formData.append('activo', 1)
 
-    fetch(api, {
+    fetch(api + '/productos', {
         method: 'POST',
-        body: formData // Aquí enviamos formData en lugar de JSON
+        body: formData
     })
-        .then(function (response) {
-            if (response.ok) { return response.json(); }
+        .then(response => {
+            if (response.ok) return response.json()
+            throw new Error()
         })
-        .then(function (data) {
-            alert('Producto agregado correctamente.');
-            // Limpiar el formulario para el proximo producto
-            document.getElementById('nombre').value = "";
-            document.getElementById('urlImagen').value = "";
-            document.getElementById('descripcion').value = "";
-            document.getElementById('porciones').value = "";
-            document.getElementById('precio').value = "";
+        .then(data => {
+
+            alert('Producto agregado correctamente.')
+
+            // Limpiar formulario
+            document.getElementById('nombre').value = ""
+            document.getElementById('urlImagen').value = ""
+            document.getElementById('descripcion').value = ""
+            document.getElementById('porciones').value = ""
+            document.getElementById('precio').value = ""
+
         })
-        .catch(function (error) {
-            // Mostramos el error, y no limpiamos el form.
-            alert('Error al agregar el producto.');
-        });
+        .catch(error => {
+            alert('Error al agregar el producto.')
+        })
+        .finally(() => {
+            // Reactivar botón
+            boton.disabled = false
+        })
 }
 
 
 // Funciones a ejecutarse al cargar completamente la página
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
+    //await cargarConfiguracionAPI()
+    await apiReady
+
     verificarSesionAdmin()
     mostrarUsuarioAdmin()
 })

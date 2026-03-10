@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./style/style.css">
     <link rel="icon" type="image/x-icon" href="/img/favicon.png">
     <!-- Scripts y JSON -->
+    <script src="./javascript/config.js"></script>
     <script src="./javascript/admin-index.js"></script>
     <script src="./json/productos.json"></script>
     <script src="https://kit.fontawesome.com/4d2d62b243.js" crossorigin="anonymous"></script>
@@ -43,8 +44,8 @@
             <ul type="none">
                 <li><a href="./admin-inicio.html" class="selecc">Inicio</a></li>
                 <li><a id="menu-item-1" href="./admin-productos.html">Productos</a></li>
-                <li><a id="menu-item-2" href="./admin-agregar-producto.html">Agregar Producto</a></li>
-                <li><a id="menu-item-3" href="./admin-actualizar-producto.html">Actualizar Producto</a></li>
+                <li><a id="menu-item-2" href="./admin-cupones.html">Cupones</a></li>
+                <li><a id="menu-item-3" href="./admin-usuarios.html">Usuarios</a></li>
                 <!-- <li><a id="menu-item-4" class="boton-carrito-contador" href="./carro.html">Carro (0)</a></li> -->
             </ul>
         </nav>
@@ -53,32 +54,77 @@
 
         <aside class="aside">
             <div class="aside-in">
-                <!-- <div class="promo-1">
-                    <img src="./img/flor.png" alt="Flor" class="imagen-oferta-1" draggable="false">
-                    <div class="titulo-oferta-1">¡Oferta de Primavera!</div>
-                    <div class="texto-oferta-1"><b>20% DE DESCUENTO</b> ingresando el código <b>PRIMAVERA</b> en
-                        cualquiera de
-                        tus compras</div>
-                </div>
 
-                <div class="promo-2">
-                    <img src="./img/delivery.png" alt="Delivery" class="imagen-oferta-2" draggable="false">
-                    <div class="titulo-oferta-2">¡Promo delivery!</div>
-                    <div class="texto-oferta-2"><b>ENVÍO GRATIS</b> en compras que superen los <b>$15000</b></div>
-                </div> -->
             </div>
         </aside>
 
         <div class="contenido">
-            <div class="contenido-in">
+            <div class="contenido-in2">
+                <div class="admin-productos-header">
+                    <h2>Inicio:</h2>
+                </div>
+
+                <!-- Aquí va el contenido -->
+
+                <div class="admin-dashboard">
+                    <div class="admin-card">
+                        <div class="admin-card-titulo">
+                            <i class="fa-solid fa-cake-candles"></i>
+                            Total de productos
+                        </div>
+                        <div class="admin-card-numero" id="dash-productos">
+                            0
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="admin-card-titulo">
+                            <i class="fa-solid fa-eye"></i>
+                            Productos activos
+                        </div>
+                        <div class="admin-card-numero" id="dash-activos">
+                            0
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="admin-card-titulo">
+                            <i class="fa-solid fa-eye-slash"></i>
+                            Productos ocultos
+                        </div>
+                        <div class="admin-card-numero" id="dash-inactivos">
+                            0
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="admin-card-titulo">
+                            <i class="fa-solid fa-ticket"></i>
+                            Cupones disponibles
+                        </div>
+                        <div class="admin-card-numero" id="dash-cupones">
+                            0
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="admin-card-titulo">
+                            <i class="fa-solid fa-user"></i>
+                            Usuarios totales
+                        </div>
+                        <div class="admin-card-numero" id="dash-usuarios">
+                            0
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
 
         <footer class="foot">
             <hr />
-            <div>Sitio creado por <a href="./nosotros.html">Emanuel Romano</a> · <a
-                    href="./contacto.html">Contacto</a> · 2026</div>
+            <div>Sitio creado por <a href="./nosotros.html">Emanuel Romano</a> · <a href="./contacto.html">Contacto</a>
+                · 2026</div>
         </footer>
 
     </div>

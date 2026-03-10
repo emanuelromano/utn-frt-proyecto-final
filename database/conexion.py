@@ -66,6 +66,23 @@ class Conexion:
             return usuario
         else:
             return None
+    
+    # Obtener datos del dashboard -----------------------------------------------------------------
+    def obtener_dashboard(self):
+
+        query = """
+        SELECT
+        (SELECT COUNT(*) FROM productos) AS productos_totales,
+        (SELECT COUNT(*) FROM productos WHERE activo = 1) AS productos_activos,
+        (SELECT COUNT(*) FROM productos WHERE activo = 0) AS productos_inactivos,
+        (SELECT COUNT(*) FROM cupones) AS cupones_totales,
+        (SELECT COUNT(*) FROM usuarios) AS usuarios_totales
+        """
+
+        self.cursor.execute(query)
+        datos = self.cursor.fetchone()
+
+        return datos
 
     # Ver todos los productos activos -------------------------------------------------------------
     def ver_productos(self):
@@ -79,11 +96,17 @@ class Conexion:
         productos = self.cursor.fetchall()
         return productos
 
-    # Ver todos los cupones -----------------------------------------------------------------------
+    # Ver todos los cupones activos ---------------------------------------------------------------
     def ver_cupones(self):
-        self.cursor.execute("SELECT * FROM cupones")
-        productos = self.cursor.fetchall()
-        return productos
+        self.cursor.execute("SELECT * FROM cupones WHERE activo = 1")
+        cupones = self.cursor.fetchall()
+        return cupones
+    
+    # Ver todos los cupones inactivos -------------------------------------------------------------
+    def ver_cupones_inactivos(self):
+        self.cursor.execute("SELECT * FROM cupones WHERE activo = 0")
+        cupones = self.cursor.fetchall()
+        return cupones
 
     # Consultar productos por ID ------------------------------------------------------------------
     def consultar_producto(self, id):
@@ -94,6 +117,32 @@ class Conexion:
             return producto
         
         return False
+    
+    # Consultar cupones por ID --------------------------------------------------------------------
+    def consultar_cupon(self, id):
+        self.cursor.execute(f"SELECT * FROM cupones WHERE id = {id}")
+        cupon = self.cursor.fetchone()
+
+        if cupon:
+            return cupon
+        
+        return False
+    
+    # Generar URL única
+    def generar_url_unica(self, url_base):
+        url = url_base
+        contador = 2
+
+        while True:
+
+            self.cursor.execute("SELECT id FROM productos WHERE url = %s", (url,))
+            existe = self.cursor.fetchone()
+
+            if not existe:
+                return url
+
+            url = f"{url_base}-{contador}"
+            contador += 1
 
     # Agregar productos ---------------------------------------------------------------------------
     def agregar_producto(self, nombre, url, imagen, descripcion, porciones, precio, activo):
@@ -108,12 +157,37 @@ class Conexion:
         self.cursor.execute(sql)
         self.conn.commit()
         return True
+    
+    # Agregar cupón -------------------------------------------------------------------------------
+    def agregar_cupon(self, cupon, descuento, texto, activo):
+
+        sql = f"""INSERT INTO cupones (cupon, descuento, texto, activo)
+                VALUES ('{cupon}', {descuento}, '{texto}', {activo});"""
+
+        self.cursor.execute(sql)
+        self.conn.commit()
+
+        return True
 
     # Modificar un producto -----------------------------------------------------------------------
     def modificar_producto(self, id, nombre, url, imagen, descripcion, porciones, precio, activo):
         sql = f"UPDATE productos SET nombre = '{nombre}', url = '{url}', imagen = '{imagen}', descripcion = '{descripcion}', porciones = {porciones}, precio = {precio}, activo = {activo} WHERE id = {id};"        
         self.cursor.execute(sql)
         self.conn.commit()
+        return True
+    
+    # Modificar un cupón -----------------------------------------------------------------------
+    def modificar_cupon(self, id, cupon, texto, descuento, activo):
+        sql = f"""UPDATE cupones 
+                SET cupon = '{cupon}',
+                    texto = '{texto}',
+                    descuento = {descuento},
+                    activo = {activo}
+                WHERE id = {id};"""
+
+        self.cursor.execute(sql)
+        self.conn.commit()
+
         return True
     
     # Activar o desactivar un producto ------------------------------------------------------------
@@ -123,12 +197,82 @@ class Conexion:
         self.conn.commit()
         return self.cursor.rowcount > 0 #Si se modificó una línea, rowcount() será mayor que 0 y devolverá True. Si no se modificó nada por algun error, rowcount() no será mayor a 0 y devolverá False
     
+    # Activar o desactivar un cupón ---------------------------------------------------------------
+    def estado_cupon(self, id, activo):
+        sql = f"UPDATE cupones SET activo = {activo} WHERE id = {id};"        
+        self.cursor.execute(sql)
+        self.conn.commit()
+        return self.cursor.rowcount > 0 #Si se modificó una línea, rowcount() será mayor que 0 y devolverá True. Si no se modificó nada por algun error, rowcount() no será mayor a 0 y devolverá False
+
+    
     # Eliminar un producto ------------------------------------------------------------------------
     def eliminar_producto(self, id):
         sql = f"DELETE FROM productos WHERE id = {id}"
         self.cursor.execute(sql)
         self.conn.commit()
         return self.cursor.rowcount > 0 #Si se borró una línea, rowcount() será mayor que 0 y devolverá True. Si no se borró nada por algun error, rowcount() no será mayor a 0 y devolverá False
+    
+    # Ver todos los usuarios activos
+    def ver_usuarios(self):
+        self.cursor.execute("SELECT * FROM usuarios WHERE activo = 1")
+        usuarios = self.cursor.fetchall()
+        return usuarios
+
+    # Ver usuarios inactivos
+    def ver_usuarios_inactivos(self):
+        self.cursor.execute("SELECT * FROM usuarios WHERE activo = 0")
+        usuarios = self.cursor.fetchall()
+        return usuarios
+
+    # Buscar usuario por ID
+    def consultar_usuario_id(self, id):
+        self.cursor.execute(f"SELECT * FROM usuarios WHERE id = {id}")
+        usuario = self.cursor.fetchone()
+
+        if usuario:
+            return usuario
+        return False
+
+    # Agregar usuario
+    def agregar_usuario(self, nombre, apellido, email, passw, administrador, activo):
+
+        sql = f"""
+        INSERT INTO usuarios (nombre, apellido, email, passw, administrador, activo)
+        VALUES ('{nombre}', '{apellido}', '{email}', '{passw}', {administrador}, {activo})
+        """
+
+        self.cursor.execute(sql)
+        self.conn.commit()
+
+        return True
+
+    # Modificar usuario
+    def modificar_usuario(self, id, nombre, apellido, email, passw, administrador):
+
+        sql = f"""
+        UPDATE usuarios
+        SET nombre = '{nombre}',
+            apellido = '{apellido}',
+            email = '{email}',
+            passw = '{passw}',
+            administrador = {administrador}
+        WHERE id = {id}
+        """
+
+        self.cursor.execute(sql)
+        self.conn.commit()
+
+        return True
+
+    # Activar o desactivar usuario
+    def estado_usuario(self, id, activo):
+
+        sql = f"UPDATE usuarios SET activo = {activo} WHERE id = {id}"
+
+        self.cursor.execute(sql)
+        self.conn.commit()
+
+        return self.cursor.rowcount > 0
     
     # NOTA: En el futuro eliminar f-strings para evitar SQL injection!!!
     
@@ -162,17 +306,6 @@ def inicio():
             </p>"
 
 # Ruta chequear usuario -------------------------------------------------------------------------
-# @app.route("/usuario/<string:email>/<string:passw>")
-# def consultar_email_passw(email, passw):
-    
-#     # Consultar usuario
-#     usuario = db.consultar_email_passw(email, passw)
-
-#     if usuario:
-#         return jsonify({"acceso": 1})
-#     else:
-#         return jsonify({"acceso": 0})
-
 @app.route("/usuario/login", methods=["POST"])
 def login():
 
@@ -180,11 +313,6 @@ def login():
     passw = request.form['passw']
 
     usuario = db.consultar_email_passw(email, passw)
-
-    # if usuario:
-    #     return jsonify({"acceso":1})
-    # else:
-    #     return jsonify({"acceso":0})
     
     if usuario:
         return jsonify({
@@ -195,12 +323,29 @@ def login():
     else:
         return jsonify({"acceso":0})
 
-# Ruta mostrar cupones --------------------------------------------------------------------------
+# Ruta dashboard admin ----------------------------------------------------------------------------
+@app.route("/admin/dashboard", methods=["GET"])
+def dashboard():
+
+    datos = db.obtener_dashboard()
+
+    return jsonify(datos)
+
+# Ruta mostrar cupones activos --------------------------------------------------------------------
 @app.route("/cupones", methods=["GET"])
 def ver_cupones():
 
     # Mostrar cupones
     cupones = db.ver_cupones()
+
+    return jsonify(cupones)
+
+# Ruta mostrar cupones inactivos ------------------------------------------------------------------
+@app.route("/cupones/inactivos", methods=["GET"])
+def ver_cupones_inactivos():
+
+    # Mostrar cupones
+    cupones = db.ver_cupones_inactivos()
 
     return jsonify(cupones)
 
@@ -233,6 +378,18 @@ def consultar_producto(id):
         return jsonify(producto)
     else:
         return jsonify({"mensaje": 404})
+    
+# Ruta mostrar un cupón por ID --------------------------------------------------------------------
+@app.route("/cupones/<int:id>")
+def consultar_cupon(id):
+
+    # Mostrar producto
+    cupon = db.consultar_cupon(id)
+
+    if cupon:
+        return jsonify(cupon)
+    else:
+        return jsonify({"mensaje": 404})
 
 # Carpeta para guardar las imágenes ---------------------------------------------------------------
 ruta_destino = './static/imagenes/'
@@ -243,21 +400,12 @@ def agregar_producto():
 
     # Datos del producto
     nombre = request.form['nombre']
-    url = request.form['url']
+    url = db.generar_url_unica(request.form['url'])
     imagen = request.form['imagen']
     descripcion = request.form['descripcion']
     porciones = request.form['porciones']
     precio = request.form['precio']
     activo = request.form['activo']
-
-    # imagen = request.files['imagen']
-    # nombre_imagen = secure_filename(imagen.filename)
-    # print("*"*20)
-    # print(nombre_imagen)
-    # print("*"*20)
-    # nombre_base, extension = os.path.splitext(nombre_imagen)
-    # nombre_imagen = f"{nombre_base}_{int(time.time())}{extension}"
-    # imagen.save(os.path.join(ruta_destino, nombre_imagen))
 
     # Agregar producto
     agregar = db.agregar_producto(nombre, url, imagen, descripcion, porciones, precio, activo)
@@ -266,6 +414,22 @@ def agregar_producto():
         return jsonify({"mensaje": "Producto agregado correctamente"})
     else:
         return jsonify({"mensaje": "Error al intentar agregar el producto"})
+
+# Ruta agregar cupón ------------------------------------------------------------------------------
+@app.route("/cupones", methods=["POST"])
+def agregar_cupon():
+
+    cupon = request.form['cupon']
+    descuento = request.form['descuento']
+    texto = request.form['texto']
+    activo = request.form['activo']
+
+    agregar = db.agregar_cupon(cupon, descuento, texto, activo)
+
+    if agregar:
+        return jsonify({"mensaje": "Cupón agregado correctamente"})
+    else:
+        return jsonify({"mensaje": "Error al intentar agregar el cupón"})
 
 # Ruta actualizar producto ------------------------------------------------------------------------
 @app.route("/productos/<int:id>", methods=["PUT"])
@@ -290,6 +454,24 @@ def modificar_producto(id):
     else:
         return jsonify({"mensaje": "Error al intentar actualizar el producto"})
     
+# Ruta actualizar cupón --------------------------------------------------------------------
+@app.route("/cupones/<int:id>", methods=["PUT"])
+def modificar_cupon(id):
+
+    data = request.form
+
+    cupon = data.get("cupon")
+    texto = data.get("texto")
+    descuento = data.get("descuento")
+    activo = data.get("activo")
+
+    actualizar = db.modificar_cupon(id, cupon, texto, descuento, activo)
+
+    if actualizar:
+        return jsonify({"mensaje": "Cupón modificado correctamente"})
+    else:
+        return jsonify({"mensaje": "Error al intentar modificar el cupón"})
+
 # Ruta activar o desactivar producto --------------------------------------------------------------
 @app.route("/productos/<int:id>/activo", methods=["PUT"])
 def estado_producto(id):
@@ -305,6 +487,22 @@ def estado_producto(id):
         return jsonify({"mensaje": "Disponibilidad del producto modificada correctamente"})
     else:
         return jsonify({"mensaje": "Error al intentar modificar disponibilidad del producto"})
+    
+# Ruta activar o desactivar cupon -----------------------------------------------------------------
+@app.route("/cupones/<int:id>/activo", methods=["PUT"])
+def estado_cupon(id):
+
+    # Datos del producto
+    data = request.form
+    activo = data.get("activo")
+
+    # Activar o desactivar producto
+    activar = db.estado_cupon(id, activo)
+
+    if activar:
+        return jsonify({"mensaje": "Disponibilidad del cupón modificada correctamente"})
+    else:
+        return jsonify({"mensaje": "Error al intentar modificar disponibilidad del cupón"})
 
 # Ruta eliminar producto --------------------------------------------------------------------------
 @app.route("/productos/<int:id>", methods=["DELETE"])
@@ -317,7 +515,85 @@ def eliminar_producto(id):
         return jsonify({"mensaje": "Producto eliminado correctamente"})
     else:
         return jsonify({"mensaje": "Error al intentar eliminar el producto"})
-    
+
+# Ruta ver usuarios activos -----------------------------------------------------------------------
+@app.route("/usuarios", methods=["GET"])
+def ver_usuarios():
+
+    usuarios = db.ver_usuarios()
+
+    return jsonify(usuarios)
+
+# Ruta ver usuarios inactivos ---------------------------------------------------------------------
+@app.route("/usuarios/inactivos", methods=["GET"])
+def ver_usuarios_inactivos():
+
+    usuarios = db.ver_usuarios_inactivos()
+
+    return jsonify(usuarios)
+
+# Ruta buscar usuario por ID ----------------------------------------------------------------------
+@app.route("/usuarios/<int:id>")
+def consultar_usuario_id(id):
+
+    usuario = db.consultar_usuario_id(id)
+
+    if usuario:
+        return jsonify(usuario)
+    else:
+        return jsonify({"mensaje":404})
+
+# Ruta agregar usuario ----------------------------------------------------------------------------
+@app.route("/usuarios", methods=["POST"])
+def agregar_usuario():
+
+    nombre = request.form['nombre']
+    apellido = request.form['apellido']
+    email = request.form['email']
+    passw = request.form['passw']
+    administrador = request.form['administrador']
+    activo = request.form['activo']
+
+    agregar = db.agregar_usuario(nombre, apellido, email, passw, administrador, activo)
+
+    if agregar:
+        return jsonify({"mensaje":"Usuario agregado correctamente"})
+    else:
+        return jsonify({"mensaje":"Error al agregar usuario"})
+
+# Ruta modificar usuario ----------------------------------------------------------------------------
+@app.route("/usuarios/<int:id>", methods=["PUT"])
+def modificar_usuario(id):
+
+    data = request.form
+
+    nombre = data.get("nombre")
+    apellido = data.get("apellido")
+    email = data.get("email")
+    passw = data.get("passw")
+    administrador = data.get("administrador")
+
+    actualizar = db.modificar_usuario(id, nombre, apellido, email, passw, administrador)
+
+    if actualizar:
+        return jsonify({"mensaje":"Usuario actualizado correctamente"})
+    else:
+        return jsonify({"mensaje":"Error al actualizar usuario"})   
+
+# Ruta activar o desactivar usuario ---------------------------------------------------------------
+@app.route("/usuarios/<int:id>/activo", methods=["PUT"])
+def estado_usuario(id):
+
+    data = request.form
+    activo = data.get("activo")
+
+    activar = db.estado_usuario(id, activo)
+
+    if activar:
+        return jsonify({"mensaje":"Estado de usuario modificado correctamente"})
+    else:
+        return jsonify({"mensaje":"Error al modificar estado"})
+
 # -------------------------------------------------------------------------------------------------
 # Iniciar servidor --------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------

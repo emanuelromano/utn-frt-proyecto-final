@@ -1,30 +1,19 @@
-// API a utilizar:  TRUE = online / FALSE = local
-let apiOnline = false
-let api = ''
-
-if (apiOnline == true) {
-    api = 'https://emanuel.pythonanywhere.com/productos'
-} else {
-    api = "http://127.0.0.1:5000/productos"
-}
-
-
 // Chequea si hay una sesion de admin activa
-function verificarSesionAdmin(){
+function verificarSesionAdmin() {
     let login = localStorage.getItem("adminLogueado")
 
-    if(login !== "true"){
+    if (login !== "true") {
         window.open("iniciar-sesion.html", "_self")
     }
 }
 
 
 // Mostrar nombre y apellido de usuario
-function mostrarUsuarioAdmin(){
+function mostrarUsuarioAdmin() {
     let nombre = localStorage.getItem("adminNombre")
     let apellido = localStorage.getItem("adminApellido")
 
-    if(nombre){
+    if (nombre) {
         document.getElementById("admin-nombre").innerText =
             nombre + " " + apellido
     }
@@ -32,12 +21,28 @@ function mostrarUsuarioAdmin(){
 
 
 // Cerrar sesion eliminando la variable del localStorage
-function cerrarSesion(){
+function cerrarSesion() {
     localStorage.removeItem("adminLogueado")
     localStorage.removeItem("adminNombre")
     localStorage.removeItem("adminApellido")
 
-    window.open("iniciar-sesion.html","_self")
+    window.open("iniciar-sesion.html", "_self")
+}
+
+
+function cargarDashboard() {
+    fetch(api + "/admin/dashboard")
+        .then(res => res.json())
+        .then(data => {
+
+            console.log(data)
+
+            document.getElementById("dash-productos").innerText = data.productos_totales
+            document.getElementById("dash-activos").innerText = data.productos_activos
+            document.getElementById("dash-inactivos").innerText = data.productos_inactivos
+            document.getElementById("dash-cupones").innerText = data.cupones_totales
+            document.getElementById("dash-usuarios").innerText = data.usuarios_totales
+        })
 }
 
 
@@ -60,14 +65,18 @@ function menuHamburguesa() {
 
 
 // Funciones a ejecutarse al cargar completamente la página
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
+    //await cargarConfiguracionAPI()
+    await apiReady
+
     verificarSesionAdmin()
     mostrarUsuarioAdmin()
+    cargarDashboard()
 })
 
 
 // Ocultar elementos del Nav Bar en modo para moviles con Event Listener
-function tamañoPantalla() {
+/*function tamañoPantalla() {
     let tamaño = document.documentElement.clientWidth
 
     if (tamaño > 800) {
@@ -83,7 +92,7 @@ function tamañoPantalla() {
     }
 }
 
-window.addEventListener('resize', tamañoPantalla)
+window.addEventListener('resize', tamañoPantalla)*/
 
 
 // DEBUG - Reinicia contador de carro, carro de compras, compra final e info de compras
