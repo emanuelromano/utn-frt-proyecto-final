@@ -1,11 +1,6 @@
 ## UTN - FRT
 
-## Integrantes:
-
-Nombre: Romano, Marcos Emanuel<br>
-DNI: 36534279 <br>
-Legajo: 55066 <br>
-E-mail: eromanox@gmail.com <br>
+TUP - Trabajo Final
 
 ## Información sobre el proyecto:
 
