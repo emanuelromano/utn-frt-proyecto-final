@@ -1,6 +1,6 @@
 // Chequea si hay una sesion de admin activa
 function verificarSesionAdmin() {
-    let login = localStorage.getItem("adminLogueado")
+    let login = localStorage.getItem("usuarioLogueado")
 
     if (login !== "true") {
         window.open("iniciar-sesion.html", "_self")
@@ -10,23 +10,31 @@ function verificarSesionAdmin() {
 
 // Mostrar nombre y apellido de usuario
 function mostrarUsuarioAdmin() {
-    let nombre = localStorage.getItem("adminNombre")
-    let apellido = localStorage.getItem("adminApellido")
+    let nombre = localStorage.getItem("usuarioNombre")
+    let apellido = localStorage.getItem("usuarioApellido")
+    let admin = localStorage.getItem("usuarioAdministrador")
 
     if (nombre) {
-        document.getElementById("admin-nombre").innerText =
-            nombre + " " + apellido
+        if (admin == 1) {
+            document.getElementById("admin-label").innerText = "Administrador: "
+        } else {
+            document.getElementById("admin-label").innerText = "Usuario: "
+        }
+
+        document.getElementById("admin-nombre").innerText = nombre + " " + apellido
     }
 }
 
 
-// Cerrar sesion eliminando la variable del localStorage
+// Cerrar sesion eliminando las variables del localStorage
 function cerrarSesion() {
-    localStorage.removeItem("adminLogueado")
-    localStorage.removeItem("adminNombre")
-    localStorage.removeItem("adminApellido")
+    localStorage.removeItem("usuarioLogueado")
+    localStorage.removeItem("usuarioID")
+    localStorage.removeItem("usuarioNombre")
+    localStorage.removeItem("usuarioApellido")
+    localStorage.removeItem("usuarioAdministrador")
 
-    window.open("iniciar-sesion.html", "_self")
+    window.open("iniciar-sesion.html","_self")
 }
 
 

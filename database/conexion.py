@@ -10,9 +10,16 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
+# Bae de datos
 import mysql.connector
 import os
 import time
+
+# Envío de mail
+import smtplib
+import random
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 CORS(app)
@@ -58,7 +65,7 @@ class Conexion:
 
     # Consultar email y contraseña ---------------------------------------------------------------
     def consultar_email_passw(self, email, passw):
-        self.cursor.execute(f"SELECT nombre, apellido FROM usuarios WHERE email = '{email}' AND passw = '{passw}'")
+        self.cursor.execute(f"SELECT id, nombre, apellido, administrador FROM usuarios WHERE email = '{email}' AND passw = '{passw}'")
 
         usuario = self.cursor.fetchone()
 
@@ -274,6 +281,50 @@ class Conexion:
 
         return self.cursor.rowcount > 0
     
+    # Generar código de recuperación --------------------------------------------------------------
+    def generar_codigo_recuperacion(self, email, codigo, expira):
+        sql = """
+        UPDATE usuarios
+        SET reset_code = %s,
+            reset_expira = %s
+        WHERE email = %s
+        """
+
+        self.cursor.execute(sql, (codigo, expira, email))
+        self.conn.commit()
+
+        return self.cursor.rowcount > 0
+    
+    # Verificar código de recuperación ------------------------------------------------------------
+    def verificar_codigo_recuperacion(self, email, codigo):
+        sql = """
+        SELECT *
+        FROM usuarios
+        WHERE email = %s
+        AND reset_code = %s
+        AND reset_expira > NOW()
+        """
+
+        self.cursor.execute(sql, (email, codigo))
+        usuario = self.cursor.fetchone()
+
+        return usuario
+    
+    # Cambiar contraseña usando código ------------------------------------------------------------
+    def cambiar_password_recuperacion(self, email, nueva_pass):
+        sql = """
+        UPDATE usuarios
+        SET passw = %s,
+            reset_code = NULL,
+            reset_expira = NULL
+        WHERE email = %s
+        """
+
+        self.cursor.execute(sql, (nueva_pass, email))
+        self.conn.commit()
+
+        return self.cursor.rowcount > 0
+    
     # NOTA: En el futuro eliminar f-strings para evitar SQL injection!!!
     
 # -------------------------------------------------------------------------------------------------
@@ -317,8 +368,10 @@ def login():
     if usuario:
         return jsonify({
             "acceso":1,
+            "id": usuario["id"],
             "nombre": usuario["nombre"],
-            "apellido": usuario["apellido"]
+            "apellido": usuario["apellido"],
+            "administrador": usuario["administrador"]
         })
     else:
         return jsonify({"acceso":0})
@@ -593,6 +646,49 @@ def estado_usuario(id):
         return jsonify({"mensaje":"Estado de usuario modificado correctamente"})
     else:
         return jsonify({"mensaje":"Error al modificar estado"})
+    
+
+
+import random
+from datetime import datetime, timedelta
+
+# Ruta solicitar recuperación contraseña por email ------------------------------------------------
+@app.route("/usuarios/recuperar", methods=["POST"])
+def recuperar_password():
+    email = request.form['email']
+    codigo = random.randint(100000, 999999)
+    expira = datetime.now() + timedelta(minutes=10)
+
+    ok = db.generar_codigo_recuperacion(email, codigo, expira)
+
+    if ok:
+        # luego aquí enviaremos email
+        print("Codigo de recuperacion:", codigo)
+
+        return jsonify({"mensaje": "Codigo enviado"})
+    else:
+        return jsonify({"mensaje": "Email no encontrado"})
+
+# Ruta cambiar contraseña -------------------------------------------------------------------------
+@app.route("/usuarios/reset", methods=["POST"])
+def reset_password():
+    email = request.form['email']
+    codigo = request.form['codigo']
+    nueva_pass = request.form['password']
+
+    usuario = db.verificar_codigo_recuperacion(email, codigo)
+
+    if not usuario:
+        return jsonify({"mensaje": "Codigo invalido o expirado"})
+
+    ok = db.cambiar_password_recuperacion(email, nueva_pass)
+
+    if ok:
+        return jsonify({"mensaje": "Password actualizada"})
+    else:
+        return jsonify({"mensaje": "Error al actualizar"})
+
+
 
 # -------------------------------------------------------------------------------------------------
 # Iniciar servidor --------------------------------------------------------------------------------

@@ -19,8 +19,8 @@ body {
     background-color: #ffdba4;
 }
 
-body.admin-body{
-    background-color:#f3f3f3;
+body.admin-body {
+    background-color: #f3f3f3;
 }
 
 * {
@@ -58,7 +58,7 @@ h1 {
     height: 70px;
     z-index: 99998;
     box-sizing: content-box;
-    align-items:center;
+    align-items: center;
 
     display: flex;
     border-radius: 0px;
@@ -664,7 +664,7 @@ h2 {
     font-size: 20px;
     color: #fa9600;
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
 .precio-item {
@@ -1684,7 +1684,7 @@ a {
         height: 55px;
         z-index: 99998;
         box-sizing: content-box;
-    
+
         display: flex;
         justify-content: space-between;
         border-radius: 0px;
@@ -1719,7 +1719,7 @@ a {
         box-sizing: content-box;
         border-top: 1px solid #00000021;
     }
-    
+
 
     .cabecera-izq>img {
         margin: 8px;
@@ -1772,7 +1772,8 @@ a {
     #menu-item-4 {
         display: none;
     }
-/* 
+
+    /* 
     h2 {
         color: #fa9600;
         font-family: robotoslab;
@@ -1983,7 +1984,7 @@ a {
         text-align: center;
         margin-top: 20px;
         padding: 30px;
-    
+
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1997,8 +1998,8 @@ a {
     justify-content: center;
 
     font-family: mooli;
-    margin-left:auto;
-    margin-right:15px;
+    margin-left: auto;
+    margin-right: 15px;
 }
 
 #btn1 {
@@ -2006,7 +2007,7 @@ a {
     align-items: center;
     justify-content: center;
     margin-right: 0px;
-    
+
 }
 
 #bts {
@@ -2052,14 +2053,15 @@ label {
 }
 
 input {
-    width:100%;
+    width: 100%;
     padding: 10px;
     box-sizing: border-box;
     resize: none;
     margin: 1px;
 }
+
 #txta1 {
-    width:100%;
+    width: 100%;
     padding: 10px;
     box-sizing: border-box;
     resize: none;
@@ -2073,11 +2075,11 @@ input {
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
-    font-size:18px;
+    font-size: 18px;
 }
 
 #btn-agregar-producto:hover {
-    background-color:#ffb23f;
+    background-color: #ffb23f;
 }
 
 #bdylog {
@@ -2139,9 +2141,8 @@ label {
 }
 
 #bti:hover {
-    background-color:#ffb23f;
+    background-color: #ffb23f;
 }
-
 
 #bti1 {
     background-color: #fa9600;
@@ -2150,6 +2151,22 @@ label {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+#bti2 {
+    background-color: #fa9600;
+    font-family: mooli;
+    color: #fff;
+    padding: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+    width: 100%;
+}
+
+#bti2:hover {
+    background-color: #ffb23f;
 }
 
 #bts:hover {
@@ -2167,8 +2184,8 @@ label {
     max-width: 100%;
     max-height: 200px;
     margin-top: 10px;
-    border-radius:8px;
-    border:2px solid #fa9600;
+    border-radius: 8px;
+    border: 2px solid #fa9600;
 }
 
 #bottbuscar {
@@ -2189,77 +2206,77 @@ label {
 
 
 /* ADMIN --------------------------------------------------------------------------------------- */
-.contenido-in2{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
+.contenido-in2 {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 
-    width:80%;
-    max-width:1100px;
+    width: 80%;
+    max-width: 1100px;
 
-    margin:40px auto;
-    padding:25px;
+    margin: 40px auto;
+    padding: 25px;
 
-    background:#fff;
-    border-radius:10px;
-    box-shadow:0 3px 12px rgba(0,0,0,0.12);
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
 }
 
-textarea{
-    width:100%;
-    min-height:100px;
+textarea {
+    width: 100%;
+    min-height: 100px;
     resize: none;
 }
 
-#porciones{
-    width:100px;
+#porciones {
+    width: 100px;
 }
 
-#descuento{
-    width:100px;
+#descuento {
+    width: 100px;
 }
 
-.grupo-imagen{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+.grupo-imagen {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-#btn-preview{
-    background:#fa9600;
-    color:white;
-    border:none;
+#btn-preview {
+    background: #fa9600;
+    color: white;
+    border: none;
 
-    padding:8px 14px;
-    border-radius:6px;
+    padding: 8px 14px;
+    border-radius: 6px;
 
-    width:auto;
-    align-self:flex-start;
+    width: auto;
+    align-self: flex-start;
 
-    cursor:pointer;
+    cursor: pointer;
 }
 
-#btn-preview:hover{
-    background:#e48700;
+#btn-preview:hover {
+    background: #e48700;
 }
 
-.buscar-fila{
-display:flex;
-gap:10px;
-align-items:center;
+.buscar-fila {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-#btn-buscar{
-background:#fa9600;
-color:white;
-border:none;
-padding:8px 14px;
-border-radius:6px;
-cursor:pointer;
+#btn-buscar {
+    background: #fa9600;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-#btn-buscar:hover{
-background:#e48700;
+#btn-buscar:hover {
+    background: #e48700;
 }
 
 .admin-productos-botones {
@@ -2270,9 +2287,9 @@ background:#e48700;
 
     padding-right: 5px;
 
-    display:flex;
-    flex-direction:column;
-    gap:6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .admin-actualizar-item {
@@ -2323,8 +2340,8 @@ background:#e48700;
 
 .admin-actualizar-item,
 .admin-eliminar-item,
-.admin-publicar-item{
-    width:100%;
+.admin-publicar-item {
+    width: 100%;
 }
 
 .admin-sumar-item {
@@ -2364,228 +2381,228 @@ background:#e48700;
 }
 
 .admin-sumar-item,
-.admin-restar-item{
-    width:48%;
+.admin-restar-item {
+    width: 48%;
 }
 
-.admin-confirmacion{
-    display:flex;
-    gap:6px;
+.admin-confirmacion {
+    display: flex;
+    gap: 6px;
 }
 
-.admin-confirmacion button{
-    flex:1;
+.admin-confirmacion button {
+    flex: 1;
 }
 
-.admin-productos-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
+.admin-productos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
 }
 
-.admin-filtro-productos{
-    display:flex;
-    gap:15px;
-    font-weight:500;
-    align-items:center;
+.admin-filtro-productos {
+    display: flex;
+    gap: 15px;
+    font-weight: 500;
+    align-items: center;
     cursor: pointer;
 }
 
-.admin-filtro-productos label{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    width:auto;
+.admin-filtro-productos label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: auto;
     cursor: pointer;
 }
 
-.admin-filtro-productos input{
-    margin-right:5px;
-    cursor:pointer;
+.admin-filtro-productos input {
+    margin-right: 5px;
+    cursor: pointer;
 }
 
-@media (max-width:600px){
+@media (max-width:600px) {
 
-    .admin-productos-header{
-        flex-direction:column;
-        align-items:flex-start;
+    .admin-productos-header {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .admin-filtro-productos{
-        flex-direction:column;
-        gap:8px;
-        align-items:flex-start;
+    .admin-filtro-productos {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
         cursor: pointer;
     }
 }
 
 .contenido-in2 input,
-.contenido-in2 textarea{
-    font-size:18px;
-    padding:10px;
-    border-radius:6px;
-    border:1px solid #ccc;
+.contenido-in2 textarea {
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
 }
 
-.admin-usuario{
-    margin-left:auto;
-    margin-right:15px;
+.admin-usuario {
+    margin-left: auto;
+    margin-right: 15px;
 
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 
-    font-size:14px;
+    font-size: 14px;
 }
 
-.admin-linea{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    flex-wrap:wrap;
-    justify-content:flex-end;
+.admin-linea {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
-.admin-icon{
-    color:#fa9600;
-    font-size:13px;
+.admin-icon {
+    color: #fa9600;
+    font-size: 13px;
 }
 
-.admin-logout{
-    color:#fa9600;
-    text-decoration:none;
-    font-size:13px;
+.admin-logout {
+    color: #fa9600;
+    text-decoration: none;
+    font-size: 13px;
 }
 
-.admin-logout:hover{
-    text-decoration:underline;
-    cursor:pointer;
+.admin-logout:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
-@media (max-width:700px){
+@media (max-width:700px) {
 
-    .admin-usuario{
-        flex-direction:column;
-        align-items:flex-end;
-        gap:2px;
-        font-size:13px;
+    .admin-usuario {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2px;
+        font-size: 13px;
     }
 
-    .admin-logout{
-        font-size:12px;
+    .admin-logout {
+        font-size: 12px;
     }
 
 }
 
-.admin-linea span{
-    white-space:nowrap;
+.admin-linea span {
+    white-space: nowrap;
 }
 
-@media (max-width:600px){
+@media (max-width:600px) {
 
-    #admin-nombre{
-        flex-basis:100%;
-        text-align:right;
+    #admin-nombre {
+        flex-basis: 100%;
+        text-align: right;
     }
 
 }
 
 /* DASHBOARD ADMIN ------------------------------------------------------------- */
 
-.admin-dashboard{
-    display:flex;
-    flex-wrap:wrap;
-    gap:20px;
-    margin-top:15px;
+.admin-dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 15px;
 }
 
-.admin-card{
-    flex:1;
-    min-width:200px;
+.admin-card {
+    flex: 1;
+    min-width: 200px;
 
-    background:#fff;
-    border:1px solid #00000021;
-    border-radius:10px;
+    background: #fff;
+    border: 1px solid #00000021;
+    border-radius: 10px;
 
-    padding:20px;
+    padding: 20px;
 
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.admin-card:hover{
-    box-shadow:0px 0px 10px rgba(0,0,0,0.300);
+.admin-card:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.300);
 }
 
-.admin-card-titulo{
-    font-size:16px;
-    font-weight:bold;
-    color:#9e4b07;
+.admin-card-titulo {
+    font-size: 16px;
+    font-weight: bold;
+    color: #9e4b07;
 
-    display:flex;
-    align-items:center;
-    gap:8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.admin-card-titulo i{
-    color:#fa9600;
+.admin-card-titulo i {
+    color: #fa9600;
 }
 
-.admin-card-numero{
-    font-size:40px;
-    font-weight:bold;
-    color:#fa9600;
+.admin-card-numero {
+    font-size: 40px;
+    font-weight: bold;
+    color: #fa9600;
 
-    margin-top:10px;
+    margin-top: 10px;
 }
 
-.admin-productos-controles{
-    display:flex;
-    align-items:center;
-    gap:20px;
+.admin-productos-controles {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-.admin-btn-nuevo{
-    background:#fa9600;
-    color:white;
-    border:none;
+.admin-btn-nuevo {
+    background: #fa9600;
+    color: white;
+    border: none;
 
-    padding:8px 14px;
-    border-radius:6px;
+    padding: 8px 14px;
+    border-radius: 6px;
 
-    font-family:mooli;
-    font-size:14px;
+    font-family: mooli;
+    font-size: 14px;
 
-    display:flex;
-    align-items:center;
-    gap:6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.admin-btn-nuevo:hover{
-    background:#e48700;
-    box-shadow:0px 0px 10px rgba(0,0,0,0.3);
+.admin-btn-nuevo:hover {
+    background: #e48700;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width:600px){
+@media (max-width:600px) {
 
-    .admin-productos-controles{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:10px;
+    .admin-productos-controles {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
     }
 
 }
 
-#nombre-cupon{
+#nombre-cupon {
     text-transform: uppercase;
 }
 
 /* Checkbox administrador */
-.admin-checkbox{
+.admin-checkbox {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -2594,7 +2611,7 @@ background:#e48700;
 
 
 /* Tamaño checkbox */
-.admin-checkbox input[type="checkbox"]{
+.admin-checkbox input[type="checkbox"] {
     width: 18px;
     height: 18px;
     cursor: pointer;
@@ -2602,13 +2619,102 @@ background:#e48700;
 
 
 /* Texto */
-.admin-checkbox label{
+.admin-checkbox label {
     font-size: 16px;
     cursor: pointer;
 }
 
 
 /* Color del checkbox (navegadores modernos) */
-.admin-checkbox input[type="checkbox"]{
+.admin-checkbox input[type="checkbox"] {
     accent-color: #bc863b;
+}
+
+/* contenedor principal */
+.recuperar-box {
+    width: 380px;
+    margin: 60px auto;
+    padding: 30px;
+
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+
+/* titulo */
+.recuperar-titulo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+
+/* secciones */
+.recuperar-email {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.recuperar-reset {
+    display: none;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+/* separador */
+.recuperar-separador {
+    display: none;
+    margin: 25px 0;
+}
+
+/* inputs */
+.recuperar-box input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+
+/* boton */
+.recuperar-btn {
+    margin-top: 8px;
+    padding: 10px;
+    background: #fa9600;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+/* hover */
+.recuperar-btn:hover {
+    background: #e48700;
+}
+
+
+.recuperar-contra {
+    margin-top: 10px;
+    color: #9d4a07;
+}
+
+.recuperar-contra-box{
+    width:100%;
+    text-align:center;
+    margin-top:15px;
+}
+
+#recuperar-contra{
+    color:#fa9600;
+    text-decoration:none;
+    font-size:16px;
+}
+
+#recuperar-contra:hover{
+    text-decoration:underline;
 }

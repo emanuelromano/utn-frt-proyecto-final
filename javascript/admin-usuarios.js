@@ -1,6 +1,6 @@
 // Chequea si hay una sesion de admin activa
 function verificarSesionAdmin() {
-    let login = localStorage.getItem("adminLogueado")
+    let login = localStorage.getItem("usuarioLogueado")
 
     if (login !== "true") {
         window.open("iniciar-sesion.html", "_self")
@@ -10,23 +10,66 @@ function verificarSesionAdmin() {
 
 // Mostrar nombre y apellido de usuario
 function mostrarUsuarioAdmin() {
-    let nombre = localStorage.getItem("adminNombre")
-    let apellido = localStorage.getItem("adminApellido")
+    let nombre = localStorage.getItem("usuarioNombre")
+    let apellido = localStorage.getItem("usuarioApellido")
+    let admin = localStorage.getItem("usuarioAdministrador")
 
     if (nombre) {
-        document.getElementById("admin-nombre").innerText =
-            nombre + " " + apellido
+        if (admin == 1) {
+            document.getElementById("admin-label").innerText = "Administrador: "
+        } else {
+            document.getElementById("admin-label").innerText = "Usuario: "
+        }
+
+        document.getElementById("admin-nombre").innerText = nombre + " " + apellido
     }
 }
 
 
-// Cerrar sesion eliminando la variable del localStorage
+// Cerrar sesion eliminando las variables del localStorage
 function cerrarSesion() {
-    localStorage.removeItem("adminLogueado")
-    localStorage.removeItem("adminNombre")
-    localStorage.removeItem("adminApellido")
+    localStorage.removeItem("usuarioLogueado")
+    localStorage.removeItem("usuarioID")
+    localStorage.removeItem("usuarioNombre")
+    localStorage.removeItem("usuarioApellido")
+    localStorage.removeItem("usuarioAdministrador")
 
-    window.open("iniciar-sesion.html", "_self")
+    window.open("iniciar-sesion.html","_self")
+}
+
+
+// Habilitar botones si el usuario es administrador
+function habilitarUsuarioAdmin() {
+    let admin = localStorage.getItem("usuarioAdministrador")
+    let botonNuevo = document.getElementById("admin-btn-nuevo")
+    let botonesActualizar = document.querySelectorAll(".admin-actualizar-item")
+    let botonesDesactivar = document.querySelectorAll(".admin-eliminar-item")
+
+    if (admin == 1) {
+        botonNuevo.disabled = false
+
+        botonesActualizar.forEach(btn => {
+            btn.disabled = false
+        })
+
+        botonesDesactivar.forEach(btn => {
+            btn.disabled = false
+        })
+
+    } else {
+        botonNuevo.disabled = true
+        botonNuevo.style.display = "none"
+        
+        botonesActualizar.forEach(btn => {
+            btn.disabled = true
+            btn.style.display = "none"
+        })
+
+        botonesDesactivar.forEach(btn => {
+            btn.disabled = true
+            btn.style.display = "none"
+        })
+    }
 }
 
 
@@ -66,7 +109,7 @@ function mostrarUsuarios() {
                         <td class="titulo-precio-item">
                             <div class="titulo-item">${data[i].nombre} ${data[i].apellido} ${data[i].administrador === 1 ? "(Admin.)" : ""}</div>
 
-                            <div class="precio-item">${data[i].email}</div>
+                            <div class="precio-item" style="color: #bc863b; font-size:15px; margin-bottom: 6px;">${data[i].email}</div>
 
                             <div class="precio-item">
                                 <i class="fa fa-user" style="color:#9d4a07;"></i>
@@ -75,7 +118,7 @@ function mostrarUsuarios() {
                         </td>
 
                         <td class="admin-productos-botones">
-                            <button class="admin-actualizar-item"
+                            <button id="admin-actualizar-item" class="admin-actualizar-item"
                                 onclick="abrirUsuario(${data[i].id})">
                                 <i class="fa fa-pencil-square-o"></i> Actualizar
                             </button>
@@ -109,6 +152,8 @@ function mostrarUsuarios() {
                 document.getElementById(`eliminar-si-${data[i].id}`).style.display = "none"
                 document.getElementById(`eliminar-no-${data[i].id}`).style.display = "none"
             }
+
+            habilitarUsuarioAdmin()
         })
 }
 
@@ -148,7 +193,7 @@ function mostrarUsuariosInactivos() {
                         <td class="titulo-precio-item">
                             <div class="titulo-item">${data[i].nombre} ${data[i].apellido} ${data[i].administrador === 1 ? "(Admin.)" : ""}</div>
 
-                            <div class="precio-item">${data[i].email}</div>
+                            <div class="precio-item" style="color: #bc863b; font-size:15px; margin-bottom: 6px;">${data[i].email}</div>
 
                             <div class="precio-item">
                                 <i class="fa fa-user" style="color:#9d4a07;"></i>
@@ -157,7 +202,7 @@ function mostrarUsuariosInactivos() {
                         </td>
 
                         <td class="admin-productos-botones">
-                            <button class="admin-actualizar-item"
+                            <button id="admin-actualizar-item" class="admin-actualizar-item"
                                 onclick="abrirUsuario(${data[i].id})">
                                 <i class="fa fa-pencil-square-o"></i> Actualizar
                             </button>
@@ -191,8 +236,9 @@ function mostrarUsuariosInactivos() {
                 document.getElementById(`eliminar-si-${data[i].id}`).style.display = "none"
                 document.getElementById(`eliminar-no-${data[i].id}`).style.display = "none"
             }
-        }
-        );
+
+            habilitarUsuarioAdmin()
+        });
 }
 
 
@@ -273,4 +319,5 @@ window.addEventListener('load', async function () {
     verificarSesionAdmin()
     mostrarUsuarioAdmin()
     mostrarUsuarios()
+    habilitarUsuarioAdmin()
 })

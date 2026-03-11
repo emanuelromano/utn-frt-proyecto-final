@@ -1,30 +1,40 @@
-// Chequea si hay sesión admin
+// Chequea si hay una sesion de admin activa
 function verificarSesionAdmin() {
-    let login = localStorage.getItem("adminLogueado")
+    let login = localStorage.getItem("usuarioLogueado")
+
     if (login !== "true") {
         window.open("iniciar-sesion.html", "_self")
     }
 }
 
 
-// Mostrar nombre admin
+// Mostrar nombre y apellido de usuario
 function mostrarUsuarioAdmin() {
-    let nombre = localStorage.getItem("adminNombre")
-    let apellido = localStorage.getItem("adminApellido")
+    let nombre = localStorage.getItem("usuarioNombre")
+    let apellido = localStorage.getItem("usuarioApellido")
+    let admin = localStorage.getItem("usuarioAdministrador")
 
     if (nombre) {
-        document.getElementById("admin-nombre").innerText =
-            nombre + " " + apellido
+        if (admin == 1) {
+            document.getElementById("admin-label").innerText = "Administrador: "
+        } else {
+            document.getElementById("admin-label").innerText = "Usuario: "
+        }
+
+        document.getElementById("admin-nombre").innerText = nombre + " " + apellido
     }
 }
 
 
-// Cerrar sesión
+// Cerrar sesion eliminando las variables del localStorage
 function cerrarSesion() {
-    localStorage.removeItem("adminLogueado")
-    localStorage.removeItem("adminNombre")
-    localStorage.removeItem("adminApellido")
-    window.open("iniciar-sesion.html", "_self")
+    localStorage.removeItem("usuarioLogueado")
+    localStorage.removeItem("usuarioID")
+    localStorage.removeItem("usuarioNombre")
+    localStorage.removeItem("usuarioApellido")
+    localStorage.removeItem("usuarioAdministrador")
+
+    window.open("iniciar-sesion.html","_self")
 }
 
 
@@ -71,14 +81,26 @@ function actualizarUsuario() {
     if (boton.disabled) return
     boton.disabled = true
 
+    let id = document.getElementById("bottbuscar").value.trim()
+
+    if (id === "") {
+        alert("ID de usuario no válida.")
+        return
+    }
+
     let formData = new FormData()
 
-    let id = document.getElementById("bottbuscar").value.trim()
     let nombre = document.getElementById("nombre").value.trim()
     let apellido = document.getElementById("apellido").value.trim()
     let email = document.getElementById("email").value.trim()
     let passw = document.getElementById("passw").value.trim()
     let administrador = document.getElementById("administrador").checked ? 1 : 0
+
+    if (nombre === "" || apellido === "" || email === "" || passw === "") {
+        alert("Debe completar todos los campos.")
+        boton.disabled = false
+        return
+    }
 
     formData.append("nombre", nombre)
     formData.append("apellido", apellido)

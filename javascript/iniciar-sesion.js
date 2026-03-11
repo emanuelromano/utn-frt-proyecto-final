@@ -26,10 +26,12 @@ function iniciarSesion() {
                 console.log(data)
 
                 if (data.acceso == 1) {
-                    // Se guarda variable en localStorage para indicar que una sesión de admin correcta se ha iniciado, junto con nombre y apellido
-                    localStorage.setItem("adminLogueado", "true")
-                    localStorage.setItem("adminNombre", data.nombre)
-                    localStorage.setItem("adminApellido", data.apellido)
+                    // Se guarda variable en localStorage para indicar que una sesión de usuario correcta se ha iniciado, junto con nombre, apellido y flag de administrador
+                    localStorage.setItem("usuarioLogueado", "true")
+                    localStorage.setItem("usuarioID", data.id)
+                    localStorage.setItem("usuarioNombre", data.nombre)
+                    localStorage.setItem("usuarioApellido", data.apellido)
+                    localStorage.setItem("usuarioAdministrador", data.administrador)
 
                     window.open('admin-inicio.html', '_self')
                 }
@@ -39,10 +41,10 @@ function iniciarSesion() {
                         <i class="fa-solid fa-circle-info"></i> Usuario o contraseña incorrectos.
                         </div> <br>`
                 }
-
             })
     }
 }
+
 
 // Funciones a ejecutarse al cargar completamente la página
 window.addEventListener('load', async function () {

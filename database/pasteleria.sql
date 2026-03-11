@@ -2,20 +2,24 @@ create database pasteleria;
 
 use pasteleria;
 
-create table usuarios (
+CREATE TABLE usuarios (
 id INT NOT NULL AUTO_INCREMENT,
-nombre varchar(100) NOT NULL,
-apellido varchar(100) NOT NULL,
-email varchar(100) NOT NULL,
-passw varchar(25) NOT NULL,
-administrador tinyint NOT NULL,
-activo tinyint NOT NULL,
+nombre VARCHAR(100) NOT NULL,
+apellido VARCHAR(100) NOT NULL,
+email VARCHAR(100) NOT NULL,
+passw VARCHAR(25) NOT NULL,
+administrador TINYINT NOT NULL,
+activo TINYINT NOT NULL,
 
-PRIMARY KEY (`id`)
+reset_code VARCHAR(10),
+reset_expira DATETIME,
+
+PRIMARY KEY (id)
 );
 
 insert into usuarios
-values (1, "Emanuel", "Romano", "eromanox@gmail.com", "123*", 1, 1);
+values (1, "Emanuel", "Romano", "eromanox@gmail.com", "123*", 1, 1, NULL, NULL),
+(2, "Juan", "Pérez", "perez@gmail.com", "123*", 0, 1, NULL, NULL);
 
 
 CREATE TABLE productos (
