@@ -288,9 +288,10 @@ window.addEventListener('load', async function () {
     verificarSesionAdmin()
     mostrarUsuarioAdmin()
 
+    if (!localStorage.getItem("estado")) localStorage.setItem("estado", "activos")
+
     let activos = localStorage.getItem("estado")
     let paginaGuardada = localStorage.getItem("pagina_productos")
-    console.log(activos)
 
     if (activos == "activos") {
         document.querySelector('input[value="activos"]').checked = true
@@ -299,7 +300,6 @@ window.addEventListener('load', async function () {
         if (paginaGuardada) {
             mostrarProductos(parseInt(paginaGuardada))
         } else {
-            console.log("1")
             mostrarProductos(1)
         }
     } else {
@@ -307,10 +307,8 @@ window.addEventListener('load', async function () {
         document.querySelector('input[value="inactivos"]').checked = true
 
         if (paginaGuardada) {
-            console.log("a")
             mostrarProductosInactivos(parseInt(paginaGuardada))
         } else {
-            console.log("b")
             mostrarProductosInactivos(1)
         }
     }

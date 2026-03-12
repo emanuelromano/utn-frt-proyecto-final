@@ -721,7 +721,7 @@ def recuperar_password():
     ok = db.generar_codigo_recuperacion(email, codigo, expira)
 
     if ok:
-        # luego aquí enviaremos email
+        # AQUÍ iría el metodo de envío de mail por SMTP usando smtplib
         print("Codigo de recuperacion:", codigo)
 
         return jsonify({"mensaje": "Codigo enviado"})
@@ -746,8 +746,6 @@ def reset_password():
         return jsonify({"mensaje": "Password actualizada"})
     else:
         return jsonify({"mensaje": "Error al actualizar"})
-
-
 
 # -------------------------------------------------------------------------------------------------
 # Iniciar servidor --------------------------------------------------------------------------------
