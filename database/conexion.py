@@ -90,17 +90,58 @@ class Conexion:
         datos = self.cursor.fetchone()
 
         return datos
+    
+    # Cantidad total de productos -----------------------------------------------------------------
+    def total_productos(self):
+        query = "SELECT COUNT(*) AS total FROM productos WHERE activo = 1"
+        self.cursor.execute(query)
 
-    # Ver todos los productos activos -------------------------------------------------------------
-    def ver_productos(self):
-        self.cursor.execute("SELECT * FROM productos WHERE activo = 1")
+        resultado = self.cursor.fetchone()
+        total = resultado["total"]
+
+        return total
+
+    # Ver productos activos con paginación --------------------------------------------------------
+    def ver_productos(self, pagina, limite):
+        offset = (pagina - 1) * limite
+
+        query = """
+            SELECT *
+            FROM productos
+            WHERE activo = 1
+            LIMIT %s OFFSET %s
+        """
+
+        self.cursor.execute(query, (limite, offset))
         productos = self.cursor.fetchall()
+
         return productos
     
-    # Ver todos los productos inactivos -----------------------------------------------------------
-    def ver_productos_inactivos(self):
-        self.cursor.execute("SELECT * FROM productos WHERE activo = 0")
+    # Cantidad total de productos inactivos -------------------------------------------------------
+    def total_productos_inactivos(self):
+
+        query = "SELECT COUNT(*) AS total FROM productos WHERE activo = 0"
+        self.cursor.execute(query)
+
+        resultado = self.cursor.fetchone()
+
+        return resultado["total"]
+    
+    # Ver productos inactivos con paginación ------------------------------------------------------
+    def ver_productos_inactivos(self, pagina, limite):
+
+        offset = (pagina - 1) * limite
+
+        query = """
+            SELECT *
+            FROM productos
+            WHERE activo = 0
+            LIMIT %s OFFSET %s
+        """
+
+        self.cursor.execute(query, (limite, offset))
         productos = self.cursor.fetchall()
+
         return productos
 
     # Ver todos los cupones activos ---------------------------------------------------------------
@@ -352,8 +393,10 @@ def inicio():
     return "<h1>Servidor</h1> \
             <p> \
             UTN-FRT <br> \
-            Trabajo Final <br> \
+            TUP - Trabajo Final <br> \
             'La Pastelería' <br> \
+            Programado por Emanuel Romano <br> \
+            Legajo 55066 <br> \
             </p>"
 
 # Ruta chequear usuario -------------------------------------------------------------------------
@@ -402,23 +445,39 @@ def ver_cupones_inactivos():
 
     return jsonify(cupones)
 
-# Ruta mostrar productos --------------------------------------------------------------------------
+# Ruta mostrar productos con paginación -----------------------------------------------------------
 @app.route("/productos", methods=["GET"])
 def ver_productos():
 
-    # Mostrar productos
-    productos = db.ver_productos()
+    pagina = request.args.get("pagina", default=1, type=int)
+    limite = request.args.get("limite", default=12, type=int)
 
-    return jsonify(productos)
+    productos = db.ver_productos(pagina, limite)
+    total = db.total_productos()
 
-# Ruta mostrar productos inactivos ----------------------------------------------------------------
+    return jsonify({
+        "productos": productos,
+        "pagina": pagina,
+        "limite": limite,
+        "total": total
+    })
+
+# Ruta mostrar productos inactivos con paginación -------------------------------------------------
 @app.route("/productos/inactivos", methods=["GET"])
 def ver_productos_inactivos():
 
-    # Mostrar productos
-    productos = db.ver_productos_inactivos()
+    pagina = request.args.get("pagina", default=1, type=int)
+    limite = request.args.get("limite", default=12, type=int)
 
-    return jsonify(productos)
+    productos = db.ver_productos_inactivos(pagina, limite)
+    total = db.total_productos_inactivos()
+
+    return jsonify({
+        "productos": productos,
+        "pagina": pagina,
+        "limite": limite,
+        "total": total
+    })
 
 # Ruta mostrar un producto por ID -----------------------------------------------------------------
 @app.route("/productos/<int:id>")

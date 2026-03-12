@@ -38,19 +38,73 @@ function cerrarSesion() {
 }
 
 
-// Carga la lista completa de productos desde DB
-function mostrarProductos() {
-    fetch(api + '/productos')
+let paginaActual = 1
+let productosPorPagina = 12
+
+// Funcion de creacion de paginación
+function crearPaginacion(totalProductos) {
+    let contenedor = document.getElementById("paginacion")
+
+    if (!contenedor) return
+
+    contenedor.innerHTML = ""
+
+    let totalPaginas = Math.ceil(totalProductos / productosPorPagina)
+
+    // Botón anterior
+    if (paginaActual > 1) {
+        contenedor.innerHTML += `
+        <button onclick="mostrarProductos(${paginaActual - 1})">
+        « Anterior
+        </button>`
+    }
+
+    // Cantidad máxima de botones visibles
+    let maxBotones = 5
+
+    let inicio = Math.max(1, paginaActual - 2)
+    let fin = Math.min(totalPaginas, inicio + maxBotones - 1)
+
+    for (let i = inicio; i <= fin; i++) {
+        contenedor.innerHTML += `
+        <button class="${i === paginaActual ? 'pagina-activa' : ''}"
+        onclick="mostrarProductos(${i})">
+        ${i}
+        </button>`
+    }
+
+    // Botón siguiente
+    if (paginaActual < totalPaginas) {
+        contenedor.innerHTML += `
+        <button onclick="mostrarProductos(${paginaActual + 1})">
+        Siguiente »
+        </button>`
+    }
+}
+
+
+// Carga la lista completa de productos desde la DB
+function mostrarProductos(pagina = 1) {
+    paginaActual = pagina
+
+    // Guardar página actual
+    localStorage.setItem("pagina_productos", paginaActual)
+
+    fetch(api + '/productos?pagina=' + paginaActual + '&limite=' + productosPorPagina)
         .then((res) => {
             return res.json();
         })
         .then((data) => {
-            let longitud = data.length
+            let productos = data.productos
+            let total = data.total
+            let longitud = productos.length
 
-            let items = document.getElementsByClassName("items-productos-admin")
+            let items = document.getElementsByClassName("items-productos-admin")[0]
+
+            items.innerHTML = ""
 
             if (longitud === 0) {
-                items[0].innerHTML +=
+                items.innerHTML +=
                     `<div class="carro-vacio">
                         <i id="carro-icono" class="fa fa-eye" aria-hidden="true" style="color: #9d4a07;"></i>
                         <br>
@@ -58,39 +112,42 @@ function mostrarProductos() {
                         <br>
                         <div class="texto-vacio">Añada nuevos productos. <br> Para activar productos existentes, seleccione la opción "Ocultos" <br> y use el botón "Publicar" de cada producto.</div>
                     </div>`
+            } else {
+                document.getElementById(`paginacion`).style.display = "flex"
             }
 
             for (let i = 0; i < longitud; i++) {
-                items[0].innerHTML +=
+                items.innerHTML +=
                     `<tr class="item-carro">
                         <td>
                             <img class="imagen-item"
                                 src="img/placeholder.jpg"
-                                data-src="${data[i].imagen}"
+                                data-src="${productos[i].imagen}"
                                 draggable="false"
                                 onerror="this.src='img/placeholder.jpg'">
                         </td>
                         
                         <td class="titulo-precio-item">
-                            <div class="titulo-item">${data[i].nombre}</div>
-                            <div class="precio-item"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[i].precio.toLocaleString()},00  -  ID de producto: ${data[i].id}</div>
+                            <div class="titulo-item">${productos[i].nombre}</div>
+                            <div class="precio-item"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${productos[i].precio.toLocaleString()},00  -  ID de producto: ${productos[i].id}</div>
                         </td>
 
                         <td class="admin-productos-botones">
-                            <button class="admin-actualizar-item" onclick="abrirProducto(${data[i].id})"><i class="fa fa-pencil-square-o" style="color: #ffffff;"></i> Actualizar</button>
-                            <button class="admin-eliminar-item" onclick="mostrarBotones(${data[i].id})"><i class="fa fa-eye-slash" aria-hidden="true" style="color: #ffffff;"></i> Ocultar</button>
+                            <button class="admin-actualizar-item" onclick="abrirProducto(${productos[i].id})"><i class="fa fa-pencil-square-o" style="color: #ffffff;"></i> Actualizar</button>
+                            <button class="admin-eliminar-item" onclick="mostrarBotones(${productos[i].id})"><i class="fa fa-eye-slash" aria-hidden="true" style="color: #ffffff;"></i> Ocultar</button>
 
                             <div class="admin-confirmacion">
-                                <button class="admin-sumar-item" id="eliminar-si-${data[i].id}" onclick="cambiarEstadoProducto(${data[i].id}, 0)"><i class="fa-solid fa-check" style="color: #ffffff;"></i></i></button>
-                                <button class="admin-restar-item" id="eliminar-no-${data[i].id}" onclick="mostrarBotones(${data[i].id})"><i class="fa-solid fa-x" style="color: #ffffff;"></i></i></button>
+                                <button class="admin-sumar-item" id="eliminar-si-${productos[i].id}" onclick="cambiarEstadoProducto(${productos[i].id}, 0)"><i class="fa-solid fa-check" style="color: #ffffff;"></i></i></button>
+                                <button class="admin-restar-item" id="eliminar-no-${productos[i].id}" onclick="mostrarBotones(${productos[i].id})"><i class="fa-solid fa-x" style="color: #ffffff;"></i></i></button>
                             </div>
                         </td>
                     </tr>`
 
-                document.getElementById(`eliminar-si-${data[i].id}`).style.display = "none"
-                document.getElementById(`eliminar-no-${data[i].id}`).style.display = "none"
+                document.getElementById(`eliminar-si-${productos[i].id}`).style.display = "none"
+                document.getElementById(`eliminar-no-${productos[i].id}`).style.display = "none"
             }
 
+            // Lazy load de imágenes
             let imgs = document.querySelectorAll(".imagen-item")
 
             imgs.forEach(img => {
@@ -98,23 +155,34 @@ function mostrarProductos() {
                     img.src = img.dataset.src
                 }, 50)
             })
+
+            crearPaginacion(total)
         }
     );
 }
 
 
 // Mostrar productos inactivos con la posibilidad de activar
-function mostrarProductosInactivos() {
-    fetch(api + '/productos/inactivos')
+function mostrarProductosInactivos(pagina = 1) {
+       paginaActual = pagina
+
+    // Guardar página actual
+    localStorage.setItem("pagina_productos", paginaActual)
+
+    fetch(api + '/productos/inactivos?pagina=' + paginaActual + '&limite=' + productosPorPagina)
         .then((res) => {
             return res.json();
         })
         .then((data) => {
-            let longitud = data.length
+            let productos = data.productos
+            let total = data.total
+            let longitud = productos.length
 
             let items = document.getElementsByClassName("items-productos-admin")
 
             if (longitud === 0) {
+                document.getElementById(`paginacion`).style.display = "none"
+
                 items[0].innerHTML +=
                     `<div class="carro-vacio">
                         <i id="carro-icono" class="fa fa-eye-slash" aria-hidden="true" style="color: #9d4a07;"></i>
@@ -131,31 +199,32 @@ function mostrarProductosInactivos() {
                         <td>
                             <img class="imagen-item"
                                 src="img/placeholder.jpg"
-                                data-src="${data[i].imagen}"
+                                data-src="${productos[i].imagen}"
                                 draggable="false"
                                 onerror="this.src='img/placeholder.jpg'">
                         </td>
                         
                         <td class="titulo-precio-item">
-                            <div class="titulo-item">${data[i].nombre}</div>
-                            <div class="precio-item"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[i].precio.toLocaleString()},00  -  ID de producto: ${data[i].id}</div>
+                            <div class="titulo-item">${productos[i].nombre}</div>
+                            <div class="precio-item"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${productos[i].precio.toLocaleString()},00  -  ID de producto: ${productos[i].id}</div>
                         </td>
 
                         <td class="admin-productos-botones">
-                            <button class="admin-actualizar-item" onclick="abrirProducto(${data[i].id})"><i class="fa fa-pencil-square-o" style="color: #ffffff;"></i> Actualizar</button>
-                            <button class="admin-publicar-item" onclick="mostrarBotones(${data[i].id})"><i class="fa fa-eye" aria-hidden="true" style="color: #ffffff;"></i> Publicar</button>
+                            <button class="admin-actualizar-item" onclick="abrirProducto(${productos[i].id})"><i class="fa fa-pencil-square-o" style="color: #ffffff;"></i> Actualizar</button>
+                            <button class="admin-publicar-item" onclick="mostrarBotones(${productos[i].id})"><i class="fa fa-eye" aria-hidden="true" style="color: #ffffff;"></i> Publicar</button>
 
                             <div class="admin-confirmacion">
-                                <button class="admin-sumar-item" id="eliminar-si-${data[i].id}" onclick="cambiarEstadoProducto(${data[i].id}, 1)"><i class="fa-solid fa-check" style="color: #ffffff;"></i></i></button>
-                                <button class="admin-restar-item" id="eliminar-no-${data[i].id}" onclick="mostrarBotones(${data[i].id})"><i class="fa-solid fa-x" style="color: #ffffff;"></i></i></button>
+                                <button class="admin-sumar-item" id="eliminar-si-${productos[i].id}" onclick="cambiarEstadoProducto(${productos[i].id}, 1)"><i class="fa-solid fa-check" style="color: #ffffff;"></i></i></button>
+                                <button class="admin-restar-item" id="eliminar-no-${productos[i].id}" onclick="mostrarBotones(${productos[i].id})"><i class="fa-solid fa-x" style="color: #ffffff;"></i></i></button>
                             </div>
                         </td>
                     </tr>`
 
-                document.getElementById(`eliminar-si-${data[i].id}`).style.display = "none"
-                document.getElementById(`eliminar-no-${data[i].id}`).style.display = "none"
+                document.getElementById(`eliminar-si-${productos[i].id}`).style.display = "none"
+                document.getElementById(`eliminar-no-${productos[i].id}`).style.display = "none"
             }
 
+            // Lazy load de imágenes
             let imgs = document.querySelectorAll(".imagen-item")
 
             imgs.forEach(img => {
@@ -163,6 +232,8 @@ function mostrarProductosInactivos() {
                     img.src = img.dataset.src
                 }, 50)
             })
+
+            crearPaginacion(total)
         }
     );
 }
@@ -200,7 +271,7 @@ window.addEventListener('load', async function () {
 
     verificarSesionAdmin()
     mostrarUsuarioAdmin()
-    mostrarProductos()
+    mostrarProductos(1)
 })
 
 

@@ -1,33 +1,66 @@
 // Muestra los detalles del producto seleccionado
 function mostrarProducto() {
-    fetch(api + '/productos')
+    let id = localStorage.getItem("productoSeleccionado")
+
+    if (!id) {
+        console.error("No hay producto seleccionado")
+        window.location.href = "productos.html"
+        return
+    }
+
+    console.log(id)
+
+    fetch(api + '/productos/' + id)
         .then((res) => {
             return res.json();
         })
         .then((data) => {
-            let id = localStorage.getItem("productoSeleccionado")
-
             let producto = document.getElementsByClassName("mostrar-producto")
-            arrayProducto = data[id]
+
+            arrayProducto = data
 
             producto[0].innerHTML =
                 `<div class="producto">
+
                    <img class="imagen-producto"
                     src="img/placeholder.jpg"
-                    data-src="${data[id].imagen}"
+                    data-src="${data.imagen}"
                     draggable="false"
                     onload="this.dataset.loaded='true'"
                     onerror="this.src='img/placeholder.jpg'">
 
                     <div class="info-producto">
-                        <h3 class="titulo-producto">${data[id].nombre}</h3>
-                        <h4 class="precio-producto"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[id].precio},00</h4>
-                        <p class="descripcion-producto"><b>Descripción:</b> ${data[id].descripcion}</p>
-                        <p class="porcion-producto"><b>Porciones:</b> ${data[id].porciones}</p>
-                        <button class="boton-ver-mas" onclick="addCarro()">Añadir al carro</button>
+
+                        <h3 class="titulo-producto">${data.nombre}</h3>
+
+                        <h4 class="precio-producto">
+                        <i class="fa-solid fa-money-bill-wave" style="color:#07b032;"></i>
+                        $${data.precio},00
+                        </h4>
+
+                        <p class="descripcion-producto">
+                        <b>Descripción:</b> ${data.descripcion}
+                        </p>
+
+                        <p class="porcion-producto">
+                        <b>Porciones:</b> ${data.porciones}
+                        </p>
+
+                        <button class="boton-ver-mas" onclick="addCarro()">
+                        Añadir al carro
+                        </button>
+
                         <div class="popup-div"></div>
-                        <p class="atencion-producto"><i class="fa-solid fa-circle-info" style="color: #000000;"></i> <b>Importante:</b> Una vez efectuado el pedido, el mismo estará disponible a partir de los próximos <b>cuatro días hábiles</b> como mínimo. Se le notificará por teléfono / mail el estado de su pedido.</p>
+
+                        <p class="atencion-producto">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <b>Importante:</b> Una vez efectuado el pedido,
+                        estará disponible a partir de los próximos
+                        <b>cuatro días hábiles</b>.
+                        </p>
+
                     </div>
+
                 </div>`
 
             let img = document.querySelector(".imagen-producto")
@@ -35,8 +68,7 @@ function mostrarProducto() {
             setTimeout(() => {
                 img.src = img.dataset.src
             }, 50)
-        }
-    );
+        })
 }
 
 
@@ -65,6 +97,8 @@ let contador = 0
 let bandera = false
 
 function addCarro() {
+    bandera = false
+
     // Incrementar contador en página de producto y carro de compras
     contador = contador + 1
     localStorage.setItem("contadorProducto", contador)

@@ -2718,3 +2718,60 @@ textarea {
 #recuperar-contra:hover{
     text-decoration:underline;
 }
+
+/* Paginación productos */
+.paginacion {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.paginacion button {
+    padding: 8px 14px;
+    border: 1px solid #fa9600;
+    background-color: white;
+    color: #9d4a07;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.paginacion button:hover {
+    background-color: #fa9600;
+    color: white;
+}
+
+.paginacion button:active {
+    transform: scale(0.95);
+}
+
+.paginacion .pagina-activa {
+    background-color: #fa9600;
+    color: white;
+    font-weight: bold;
+}
+
+.paginacion button {
+    padding: 8px 14px;
+    border: 1px solid #fa9600;
+    background-color: white;
+    color: #9d4a07;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.paginacion button:hover {
+    background-color: #fa9600;
+    color: white;
+}
+
+.paginacion .pagina-activa {
+    background-color: #fa9600;
+    color: white;
+    font-weight: bold;
+}

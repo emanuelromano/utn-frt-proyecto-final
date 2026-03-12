@@ -2,49 +2,62 @@ let carroDeCompras = []
 
 // Carga dos productos aleatorios en la página de inicio
 function cargarItemsInicio() {
-    fetch(api + '/productos')
-        .then((res) => {
-            return res.json();
-        })
+    fetch(api + '/productos?pagina=1&limite=50')
+        .then((res) => res.json())
         .then((data) => {
+
+            let productos = data.productos
+
             function obtenerAleatorio(max) {
-                return Math.floor(Math.random() * max);
+                return Math.floor(Math.random() * max)
             }
 
-            let num1 = obtenerAleatorio(data.length)
-            let num2 = obtenerAleatorio(data.length)
+            let num1 = obtenerAleatorio(productos.length)
+            let num2 = obtenerAleatorio(productos.length)
 
-            while (num2 == num1) {
-                num2 = obtenerAleatorio(data.length-1)
+            while (num2 === num1) {
+                num2 = obtenerAleatorio(productos.length)
             }
 
             let tarjeta1 = document.getElementsByClassName("tarjeta1")
             let tarjeta2 = document.getElementsByClassName("tarjeta2")
 
             tarjeta1[0].innerHTML =
-                `<div onclick="abrirProducto(${data[num1].id})">
+                `<div onclick="abrirProducto(${productos[num1].id_producto})">
+
                     <img class="imagen-tarjeta"
                     src="img/placeholder.jpg"
-                    data-src="${data[num1].imagen}"
+                    data-src="${productos[num1].imagen}"
                     draggable="false"
                     onerror="this.src='img/placeholder.jpg'">
 
-                    <h3 class="titulo-tarjeta">${data[num1].nombre}</h3>
-                    <h4 class="precio-tarjeta"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[num1].precio},00</h4>
+                    <h3 class="titulo-tarjeta">${productos[num1].nombre}</h3>
+
+                    <h4 class="precio-tarjeta">
+                    <i class="fa-solid fa-money-bill-wave" style="color:#07b032;"></i>
+                    $${productos[num1].precio},00
+                    </h4>
+
                 </div>`
 
             tarjeta2[0].innerHTML =
-                `<div onclick="abrirProducto(${data[num2].id})">
+                `<div onclick="abrirProducto(${productos[num2].id_producto})">
+
                     <img class="imagen-tarjeta"
                     src="img/placeholder.jpg"
-                    data-src="${data[num2].imagen}"
+                    data-src="${productos[num2].imagen}"
                     draggable="false"
                     onerror="this.src='img/placeholder.jpg'">
 
-                    <h3 class="titulo-tarjeta">${data[num2].nombre}</h3>
-                    <h4 class="precio-tarjeta"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[num2].precio},00</h4>
+                    <h3 class="titulo-tarjeta">${productos[num2].nombre}</h3>
+
+                    <h4 class="precio-tarjeta">
+                    <i class="fa-solid fa-money-bill-wave" style="color:#07b032;"></i>
+                    $${productos[num2].precio},00
+                    </h4>
+
                 </div>`
-            
+
             let imgs = document.querySelectorAll(".imagen-tarjeta")
 
             imgs.forEach(img => {
@@ -52,8 +65,7 @@ function cargarItemsInicio() {
                     img.src = img.dataset.src
                 }, 50)
             })
-        }
-    );
+        })
 }
 
 
@@ -75,7 +87,7 @@ function cargarContadorCarrito() {
 
 // Abre la vista de un producto seleccionado
 function abrirProducto(id) {
-    localStorage.setItem("productoSeleccionado", id - 1)
+    localStorage.setItem("productoSeleccionado", id)
     window.open('producto.html', '_self')
 }
 

@@ -1,28 +1,89 @@
+let paginaActual = 1
+let productosPorPagina = 12
+
+// Funcion de creacion de paginación
+function crearPaginacion(totalProductos) {
+    let contenedor = document.getElementById("paginacion")
+
+    if (!contenedor) return
+
+    contenedor.innerHTML = ""
+
+    let totalPaginas = Math.ceil(totalProductos / productosPorPagina)
+
+    // Botón anterior
+    if (paginaActual > 1) {
+        contenedor.innerHTML += `
+        <button onclick="mostrarProductos(${paginaActual - 1})">
+        « Anterior
+        </button>`
+    }
+
+    // Cantidad máxima de botones visibles
+    let maxBotones = 5
+
+    let inicio = Math.max(1, paginaActual - 2)
+    let fin = Math.min(totalPaginas, inicio + maxBotones - 1)
+
+    for (let i = inicio; i <= fin; i++) {
+        contenedor.innerHTML += `
+        <button class="${i === paginaActual ? 'pagina-activa' : ''}"
+        onclick="mostrarProductos(${i})">
+        ${i}
+        </button>`
+    }
+
+    // Botón siguiente
+    if (paginaActual < totalPaginas) {
+        contenedor.innerHTML += `
+        <button onclick="mostrarProductos(${paginaActual + 1})">
+        Siguiente »
+        </button>`
+    }
+}
+
+
 // Carga la lista completa de productos desde la DB
-function mostrarProductos() {
-    fetch(api + '/productos')
+function mostrarProductos(pagina = 1) {
+    paginaActual = pagina
+
+    // Guardar página actual
+    localStorage.setItem("pagina_productos", paginaActual)
+
+    fetch(api + '/productos?pagina=' + paginaActual + '&limite=' + productosPorPagina)
         .then((res) => {
             return res.json();
         })
         .then((data) => {
-            let longitud = data.length
+            let productos = data.productos
+            let total = data.total
 
-            let tarjetas = document.getElementsByClassName("tarjetas-productos")
+            let contenedor = document.getElementsByClassName("tarjetas-productos")[0]
 
-            for (let i = 0; i < longitud; i++) {
-                tarjetas[0].innerHTML +=
-                    `<div class="tarjeta-producto" onclick="abrirProducto(${i+1})">
+            contenedor.innerHTML = ""
+
+            for (let i = 0; i < productos.length; i++) {
+
+                contenedor.innerHTML +=
+                    `<div class="tarjeta-producto" onclick="abrirProducto(${productos[i].id})">
+
                         <img class="imagen-tarjeta"
                             src="img/placeholder.jpg"
-                            data-src="${data[i].imagen}"
+                            data-src="${productos[i].imagen}"
                             draggable="false"
                             onerror="this.src='img/placeholder.jpg'">
 
-                        <h3 class="titulo-tarjeta"> ${data[i].nombre}</h3>
-                        <h4 class="precio-tarjeta"><i class="fa-solid fa-money-bill-wave" style="color: #07b032;"></i> $${data[i].precio},00</h4>
+                        <h3 class="titulo-tarjeta">${productos[i].nombre}</h3>
+
+                        <h4 class="precio-tarjeta">
+                        <i class="fa-solid fa-money-bill-wave" style="color:#07b032;"></i>
+                        $${productos[i].precio},00
+                        </h4>
+
                     </div>`
             }
 
+            // Lazy load de imágenes
             let imgs = document.querySelectorAll(".imagen-tarjeta")
 
             imgs.forEach(img => {
@@ -30,8 +91,9 @@ function mostrarProductos() {
                     img.src = img.dataset.src
                 }, 50)
             })
-        }
-    );
+
+            crearPaginacion(total)
+        })
 }
 
 
@@ -49,7 +111,7 @@ function cargarContadorCarrito() {
 
 // Abre la vista de un producto seleccionado
 function abrirProducto(id) {
-    localStorage.setItem("productoSeleccionado", id-1)
+    localStorage.setItem("productoSeleccionado", id)
     window.open('producto.html', '_self')
 }
 
@@ -77,7 +139,14 @@ window.addEventListener('load', async function () {
     //await cargarConfiguracionAPI()
     await apiReady
 
-    mostrarProductos()
+    let paginaGuardada = localStorage.getItem("pagina_productos")
+
+    if (paginaGuardada) {
+        mostrarProductos(parseInt(paginaGuardada))
+    } else {
+        mostrarProductos(1)
+    }
+
     cargarContadorCarrito()
 })
 
