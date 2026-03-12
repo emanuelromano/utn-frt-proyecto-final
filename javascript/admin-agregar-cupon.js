@@ -165,7 +165,7 @@ function menuHamburguesa() {
 window.addEventListener("load", async function () {
     await apiReady
 
-    if (localStorage.getItem("estado")) localStorage.removeItem("pagina_productos")
+    if (localStorage.getItem("estado")) localStorage.removeItem("estado")
     if (localStorage.getItem("pagina_productos")) localStorage.removeItem("pagina_productos")
 
     verificarSesionAdmin()
