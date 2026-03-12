@@ -33,6 +33,8 @@ function cerrarSesion() {
     localStorage.removeItem("usuarioNombre")
     localStorage.removeItem("usuarioApellido")
     localStorage.removeItem("usuarioAdministrador")
+    localStorage.removeItem("estado")
+    localStorage.removeItem("pagina_productos")
 
     window.open("iniciar-sesion.html","_self")
 }

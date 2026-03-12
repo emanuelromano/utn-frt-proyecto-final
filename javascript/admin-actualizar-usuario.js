@@ -33,6 +33,8 @@ function cerrarSesion() {
     localStorage.removeItem("usuarioNombre")
     localStorage.removeItem("usuarioApellido")
     localStorage.removeItem("usuarioAdministrador")
+    localStorage.removeItem("estado")
+    localStorage.removeItem("pagina_productos")
 
     window.open("iniciar-sesion.html","_self")
 }
@@ -132,6 +134,9 @@ function actualizarUsuario() {
 // Inicialización
 window.addEventListener("load", async function () {
     await apiReady
+
+    if (localStorage.getItem("estado")) localStorage.removeItem("pagina_productos")
+    if (localStorage.getItem("pagina_productos")) localStorage.removeItem("pagina_productos")
 
     verificarSesionAdmin()
     mostrarUsuarioAdmin()

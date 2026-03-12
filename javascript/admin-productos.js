@@ -33,6 +33,8 @@ function cerrarSesion() {
     localStorage.removeItem("usuarioNombre")
     localStorage.removeItem("usuarioApellido")
     localStorage.removeItem("usuarioAdministrador")
+    localStorage.removeItem("estado")
+    localStorage.removeItem("pagina_productos")
 
     window.open("iniciar-sesion.html", "_self")
 }
@@ -188,12 +190,12 @@ function mostrarProductosInactivos(pagina = 1) {
             let total = data.total
             let longitud = productos.length
 
-            let items = document.getElementsByClassName("items-productos-admin")
+            let items = document.getElementsByClassName("items-productos-admin")[0]
 
             if (longitud === 0) {
                 document.getElementById(`paginacion`).style.display = "none"
 
-                items[0].innerHTML +=
+                items.innerHTML +=
                     `<div class="carro-vacio">
                         <i id="carro-icono" class="fa fa-eye-slash" aria-hidden="true" style="color: #9d4a07;"></i>
                         <br>
@@ -204,7 +206,7 @@ function mostrarProductosInactivos(pagina = 1) {
             }
 
             for (let i = 0; i < longitud; i++) {
-                items[0].innerHTML +=
+                items.innerHTML +=
                     `<tr class="item-carro">
                         <td>
                             <img class="imagen-item"

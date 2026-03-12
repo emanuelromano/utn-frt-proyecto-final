@@ -33,6 +33,8 @@ function cerrarSesion() {
     localStorage.removeItem("usuarioNombre")
     localStorage.removeItem("usuarioApellido")
     localStorage.removeItem("usuarioAdministrador")
+    localStorage.removeItem("estado")
+    localStorage.removeItem("pagina_productos")
 
     window.open("iniciar-sesion.html","_self")
 }
@@ -42,9 +44,6 @@ function cargarDashboard() {
     fetch(api + "/admin/dashboard")
         .then(res => res.json())
         .then(data => {
-
-            console.log(data)
-
             document.getElementById("dash-productos").innerText = data.productos_totales
             document.getElementById("dash-activos").innerText = data.productos_activos
             document.getElementById("dash-inactivos").innerText = data.productos_inactivos
@@ -76,6 +75,9 @@ function menuHamburguesa() {
 window.addEventListener('load', async function () {
     //await cargarConfiguracionAPI()
     await apiReady
+
+    if (localStorage.getItem("estado")) localStorage.removeItem("pagina_productos")
+    if (localStorage.getItem("pagina_productos")) localStorage.removeItem("pagina_productos")
 
     verificarSesionAdmin()
     mostrarUsuarioAdmin()
