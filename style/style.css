@@ -734,6 +734,9 @@ h2 {
     background-color: #ffcfcf;
     padding: 10px;
     margin-top: 10px;
+    overflow-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
 }
 
 .sumar-item {

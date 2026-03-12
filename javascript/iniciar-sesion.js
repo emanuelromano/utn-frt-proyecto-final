@@ -35,10 +35,18 @@ function iniciarSesion() {
 
                     window.open('admin-inicio.html', '_self')
                 }
-                else {
+
+                if (data.acceso == 0) {
                     let alerta = document.getElementsByClassName("alerta-inicio-sesion")
                     alerta[0].innerHTML = `<div class="alerta-compra-info">
                         <i class="fa-solid fa-circle-info"></i> Usuario o contraseña incorrectos.
+                        </div> <br>`
+                }
+
+                if (data.acceso == -1) {
+                    let alerta = document.getElementsByClassName("alerta-inicio-sesion")
+                    alerta[0].innerHTML = `<div class="alerta-compra-info">
+                        <i class="fa-solid fa-circle-info"></i> Usuario inactivo. Póngase en contacto con el administrador.
                         </div> <br>`
                 }
             })

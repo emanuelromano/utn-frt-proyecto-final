@@ -52,20 +52,10 @@ class Conexion:
             return jsonify({"existe": 1})
         
         return jsonify({"existe": 0})
-    
-    # Consultar Usuario y Contraseña --------------------------------------------------------------
-    # def consultar_email_passw(self, email, passw):
-    #     self.cursor.execute(f"SELECT * FROM usuarios WHERE email = '{email}' AND passw = '{passw}'")
-    #     usuario = self.cursor.fetchone()
-
-    #     if usuario:
-    #         return True
-        
-    #     return False
 
     # Consultar email y contraseña ---------------------------------------------------------------
     def consultar_email_passw(self, email, passw):
-        self.cursor.execute(f"SELECT id, nombre, apellido, administrador FROM usuarios WHERE email = '{email}' AND passw = '{passw}'")
+        self.cursor.execute(f"SELECT id, nombre, apellido, administrador, activo FROM usuarios WHERE email = '{email}' AND passw = '{passw}'")
 
         usuario = self.cursor.fetchone()
 
@@ -407,17 +397,29 @@ def login():
     passw = request.form['passw']
 
     usuario = db.consultar_email_passw(email, passw)
-    
+
     if usuario:
+
+        # Usuario existe pero está inactivo
+        if usuario["activo"] == 0:
+            return jsonify({
+                "acceso": -1
+            })
+
+        # Usuario activo
         return jsonify({
-            "acceso":1,
+            "acceso": 1,
             "id": usuario["id"],
             "nombre": usuario["nombre"],
             "apellido": usuario["apellido"],
             "administrador": usuario["administrador"]
         })
+
     else:
-        return jsonify({"acceso":0})
+        # Email o contraseña incorrectos
+        return jsonify({
+            "acceso": 0
+        })
 
 # Ruta dashboard admin ----------------------------------------------------------------------------
 @app.route("/admin/dashboard", methods=["GET"])
