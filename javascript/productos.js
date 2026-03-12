@@ -15,7 +15,7 @@ function crearPaginacion(totalProductos) {
     if (paginaActual > 1) {
         contenedor.innerHTML += `
         <button onclick="mostrarProductos(${paginaActual - 1})">
-        « Anterior
+            « Anterior
         </button>`
     }
 
@@ -37,7 +37,7 @@ function crearPaginacion(totalProductos) {
     if (paginaActual < totalPaginas) {
         contenedor.innerHTML += `
         <button onclick="mostrarProductos(${paginaActual + 1})">
-        Siguiente »
+            Siguiente »
         </button>`
     }
 }
@@ -88,7 +88,11 @@ function mostrarProductos(pagina = 1) {
 
             imgs.forEach(img => {
                 setTimeout(() => {
-                    img.src = img.dataset.src
+
+                    if (img.dataset.src && img.dataset.src !== "null") {
+                        img.src = img.dataset.src
+                    }
+
                 }, 50)
             })
 

@@ -115,6 +115,8 @@ window.addEventListener('load', async function () {
     //await cargarConfiguracionAPI()
     await apiReady
 
+    if (localStorage.getItem("pagina_productos")) localStorage.removeItem("pagina_productos")
+
     cargarItemsInicio()
     cargarContadorCarrito()
 })

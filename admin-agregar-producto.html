@@ -15,11 +15,8 @@
 </head>
 
 <body class="admin-body">
-
     <div class="contenedor">
-
         <header class="cabecera">
-
             <div class="cabecera-izq">
                 <img src="./img/cake2.svg" alt="Pastel" draggable="false">
                 <h1>La Pastelería</h1>
@@ -40,17 +37,10 @@
             <div class="cabecera-der" onclick="menuHamburguesa()">
                 <img src="./img/menu2.svg" alt="Menu" draggable="false">
             </div>
-
         </header>
-
 
         <nav class="menu">
             <ul type="none">
-                <!-- <li><a id="menu-item-1" href="./admin-inicio.html">Inicio</a></li>
-                <li><a id="menu-item-2" href="./admin-productos.html">Productos</a></li>
-                <li><a href="./admin-agregar-producto.html" class="selecc">Agregar Producto</a></li>
-                <li> <a id="menu-item-3" href="./admin-actualizar-producto.html">Actualizar Producto</a></li> -->
-
                 <li><a id="menu-item-1" href="./admin-inicio.html">Inicio</a></li>
                 <li><a href="./admin-productos.html" class="selecc">Productos</a></li>
                 <li><a id="menu-item-2" href="./admin-cupones.html">Cupones</a></li>
@@ -59,17 +49,13 @@
             </ul>
         </nav>
 
-
         <div class="caja"></div>
-
 
         <aside class="aside">
             <div class="aside-in"></div>
         </aside>
 
-
         <div class="contenido">
-
             <form class="contenido-in2">
                 <div class="producto-atras-div">
                     <h2>Nuevo producto:</h2>
@@ -77,33 +63,24 @@
                 </div>
 
                 <!-- Nombre -->
-
                 <label for="nombre">Nombre del producto:</label>
                 <input type="text" id="nombre" name="nombre" maxlength="100" required>
 
-
                 <!-- Descripción -->
-
                 <label for="descripcion">Descripción:</label>
                 <textarea id="descripcion" name="descripcion" rows="4" maxlength="255"></textarea>
 
-
                 <!-- Porciones -->
-
                 <label for="porciones">Cantidad de porciones:</label>
                 <input type="number" id="porciones" name="porciones">
 
-
                 <!-- Precio -->
-
                 <label for="precio">Precio del producto:</label>
                 <input type="number" id="precio" name="precio">
 
 
                 <!-- Imagen -->
-
                 <div class="grupo-imagen">
-
                     <label for="urlImagen">Ingrese la URL de imágen:</label>
 
                     <input type="text" id="urlImagen" name="urlImagen" maxlength="255">
@@ -115,36 +92,24 @@
                     <div id="previsualizacion">
                         <img src="img/placeholder.jpg" alt="Previsualización" draggable="false">
                     </div>
-
                 </div>
 
-
                 <!-- Botón -->
-
                 <button type="button" id="btn-agregar-producto" onclick="agregarProducto()">
                     Guardar producto
                 </button>
-
-
             </form>
-
         </div>
 
-
         <footer class="foot">
-
             <hr>
-
             <div>
                 Sitio creado por
                 <a href="./nosotros.html">Emanuel Romano</a> ·
                 <a href="./contacto.html">Contacto</a> · 2026
             </div>
-
         </footer>
-
     </div>
-
 </body>
 
 </html>

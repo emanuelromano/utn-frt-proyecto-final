@@ -34,7 +34,7 @@ function cerrarSesion() {
     localStorage.removeItem("usuarioApellido")
     localStorage.removeItem("usuarioAdministrador")
 
-    window.open("iniciar-sesion.html","_self")
+    window.open("iniciar-sesion.html", "_self")
 }
 
 
@@ -43,32 +43,38 @@ let productosPorPagina = 12
 
 // Funcion de creacion de paginación
 function crearPaginacion(totalProductos) {
-    let contenedor = document.getElementById("paginacion")
 
+    let contenedor = document.getElementById("paginacion")
     if (!contenedor) return
 
     contenedor.innerHTML = ""
 
     let totalPaginas = Math.ceil(totalProductos / productosPorPagina)
 
+    // Detectar qué radio está seleccionado
+    let estado = document.querySelector('input[name="estadoProductos"]:checked').value
+    localStorage.setItem("estado", estado)
+
+    let funcionMostrar = (estado === "inactivos") ? "mostrarProductosInactivos" : "mostrarProductos"
+
     // Botón anterior
     if (paginaActual > 1) {
         contenedor.innerHTML += `
-        <button onclick="mostrarProductos(${paginaActual - 1})">
-        « Anterior
+        <button onclick="${funcionMostrar}(${paginaActual - 1})">
+            « Anterior
         </button>`
     }
 
-    // Cantidad máxima de botones visibles
     let maxBotones = 5
 
     let inicio = Math.max(1, paginaActual - 2)
     let fin = Math.min(totalPaginas, inicio + maxBotones - 1)
 
     for (let i = inicio; i <= fin; i++) {
+
         contenedor.innerHTML += `
         <button class="${i === paginaActual ? 'pagina-activa' : ''}"
-        onclick="mostrarProductos(${i})">
+        onclick="${funcionMostrar}(${i})">
         ${i}
         </button>`
     }
@@ -76,8 +82,8 @@ function crearPaginacion(totalProductos) {
     // Botón siguiente
     if (paginaActual < totalPaginas) {
         contenedor.innerHTML += `
-        <button onclick="mostrarProductos(${paginaActual + 1})">
-        Siguiente »
+        <button onclick="${funcionMostrar}(${paginaActual + 1})">
+            Siguiente »
         </button>`
     }
 }
@@ -152,19 +158,23 @@ function mostrarProductos(pagina = 1) {
 
             imgs.forEach(img => {
                 setTimeout(() => {
-                    img.src = img.dataset.src
+
+                    if (img.dataset.src && img.dataset.src !== "null") {
+                        img.src = img.dataset.src
+                    }
+
                 }, 50)
             })
 
             crearPaginacion(total)
         }
-    );
+        );
 }
 
 
 // Mostrar productos inactivos con la posibilidad de activar
 function mostrarProductosInactivos(pagina = 1) {
-       paginaActual = pagina
+    paginaActual = pagina
 
     // Guardar página actual
     localStorage.setItem("pagina_productos", paginaActual)
@@ -229,13 +239,17 @@ function mostrarProductosInactivos(pagina = 1) {
 
             imgs.forEach(img => {
                 setTimeout(() => {
-                    img.src = img.dataset.src
+
+                    if (img.dataset.src && img.dataset.src !== "null") {
+                        img.src = img.dataset.src
+                    }
+
                 }, 50)
             })
 
             crearPaginacion(total)
         }
-    );
+        );
 }
 
 
@@ -271,7 +285,33 @@ window.addEventListener('load', async function () {
 
     verificarSesionAdmin()
     mostrarUsuarioAdmin()
-    mostrarProductos(1)
+
+    let activos = localStorage.getItem("estado")
+    let paginaGuardada = localStorage.getItem("pagina_productos")
+    console.log(activos)
+
+    if (activos == "activos") {
+        document.querySelector('input[value="activos"]').checked = true
+        document.querySelector('input[value="inactivos"]').checked = false
+
+        if (paginaGuardada) {
+            mostrarProductos(parseInt(paginaGuardada))
+        } else {
+            console.log("1")
+            mostrarProductos(1)
+        }
+    } else {
+        document.querySelector('input[value="activos"]').checked = false
+        document.querySelector('input[value="inactivos"]').checked = true
+
+        if (paginaGuardada) {
+            console.log("a")
+            mostrarProductosInactivos(parseInt(paginaGuardada))
+        } else {
+            console.log("b")
+            mostrarProductosInactivos(1)
+        }
+    }
 })
 
 
@@ -316,7 +356,6 @@ function mostrarBotones(id) {
 
 // Activar o desactivar producto
 function cambiarEstadoProducto(id, estado) {
-
     let formData = new FormData()
     formData.append("activo", estado)
 
@@ -324,24 +363,23 @@ function cambiarEstadoProducto(id, estado) {
         method: 'PUT',
         body: formData
     })
-    .then(response => {
-        if (response.ok) {
-            alert('Estado de producto modificado correctamente.')
-            mostrarBotones(id)
+        .then(response => {
+            if (response.ok) {
+                alert('Estado de producto modificado correctamente.')
+                mostrarBotones(id)
 
-            let tabla = document.getElementsByClassName('items-productos-admin')
-            tabla[0].innerHTML = ""
-            
-            if (estado === 0)
-                mostrarProductos()
-            else
-                mostrarProductosInactivos()
-        }
-    })
-    .catch(error => {
-        alert(error.message);
-    });
+                let tabla = document.getElementsByClassName('items-productos-admin')
+                tabla[0].innerHTML = ""
 
+                if (estado === 0)
+                    mostrarProductos()
+                else
+                    mostrarProductosInactivos()
+            }
+        })
+        .catch(error => {
+            alert(error.message);
+        });
 }
 
 
@@ -352,30 +390,10 @@ function cambiarVistaProductos() {
     let tabla = document.getElementsByClassName('items-productos-admin')
     tabla[0].innerHTML = ""
 
-    if(opcion === "activos"){
-        mostrarProductos()
+    if (opcion === "activos") {
+        mostrarProductos(1)
     }
-    else{
-        mostrarProductosInactivos()
-    }
-}
-
-
-// Ocultar elementos del Nav Bar en modo para moviles con Event Listener
-/*function tamañoPantalla() {
-    let tamaño = document.documentElement.clientWidth
-
-    if (tamaño > 800) {
-        document.getElementById("menu-item-1").style.display = "flex"
-        document.getElementById("menu-item-2").style.display = "flex"
-        document.getElementById("menu-item-3").style.display = "flex"
-        //document.getElementById("menu-item-4").style.display = "flex"
-    } else if (tamaño <= 800) {
-        document.getElementById("menu-item-1").style.display = "none"
-        document.getElementById("menu-item-2").style.display = "none"
-        document.getElementById("menu-item-3").style.display = "none"
-        //document.getElementById("menu-item-4").style.display = "none"
+    else {
+        mostrarProductosInactivos(1)
     }
 }
-
-window.addEventListener('resize', tamañoPantalla)*/

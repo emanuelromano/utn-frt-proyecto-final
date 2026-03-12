@@ -30,6 +30,8 @@ function menuHamburguesa() {
 
 // Funciones a ejecutarse al cargar completamente la página
 window.addEventListener('load', function () {
+    if (localStorage.getItem("pagina_productos")) localStorage.removeItem("pagina_productos")
+        
     cargarContadorCarrito()
 })
 
